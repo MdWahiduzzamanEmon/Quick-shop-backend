@@ -1,6 +1,6 @@
 import express from "express";
 import type { Request, Response, NextFunction } from "express";
-import { getAllUsers } from "../../services/getAllUsers/getAllUsers.service";
+import { getAllUsers } from "../../services/Users/getAllUsers/getAllUsers.service";
 
 export const allUsersRoute = express.Router();
 

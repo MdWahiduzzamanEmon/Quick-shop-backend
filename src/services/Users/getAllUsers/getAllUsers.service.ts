@@ -1,4 +1,4 @@
-import { db } from "../../utils/db.server";
+import { db } from "../../../utils/db.server";
 
 export const getAllUsers = async () => {
   const users = await db.user.findMany({

@@ -56,25 +56,28 @@ model administrator {
   role      Role        @default(ADMINISTRATOR)
   isActive  user_status @default(ACTIVE)
 
+  loggin_history loggin_history[] //one user can have multiple loggin history
+
   @@index([userId, email, mobile, username])
   @@map("adminastators")
 }
 
 model otherUsers {
-  id              String      @id @default(cuid())
-  User            User        @relation(fields: [userId], references: [id])
-  userId          String      @unique
-  email           String      @unique
+  id              String           @id @default(cuid())
+  User            User             @relation(fields: [userId], references: [id])
+  userId          String           @unique
+  email           String           @unique
   firstName       String?
   lastName        String?
-  username        String      @unique
-  mobile          String      @unique
-  profile_picture Json        @default("{}")
+  username        String           @unique
+  mobile          String           @unique
+  profile_picture Json             @default("{}")
   password        String
-  role            Role        @default(GENERAL_USER)
-  isActive        user_status @default(ACTIVE)
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  role            Role             @default(GENERAL_USER)
+  isActive        user_status      @default(ACTIVE)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  loggin_history  loggin_history[] //one user can have multiple loggin history
 
   @@index([userId, email, mobile, username])
   @@map("allUsers")
@@ -88,18 +91,22 @@ enum loggin_status {
 }
 
 model loggin_history {
-  id        String        @id @default(cuid())
-  User      User          @relation(fields: [userId], references: [id])
-  userId    String        @unique
-  ipAddress String?
-  device    String?
-  browser   String?
-  os        String?
-  location  String?
-  status    loggin_status
-  loginAt   DateTime      @default(now())
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  id              String         @id @default(cuid())
+  User            User           @relation(fields: [userId], references: [id])
+  userId          String         @unique
+  ipAddress       String?
+  device          String?
+  browser         String?
+  os              String?
+  location        String?
+  status          loggin_status
+  loginAt         DateTime       @default(now())
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  otherUsers      otherUsers?    @relation(fields: [otherUsersId], references: [id], onDelete: SetNull)
+  otherUsersId    String?
+  administrator   administrator? @relation(fields: [administratorId], references: [id])
+  administratorId String?
 
   @@index([userId, ipAddress, device, browser, os, location]) //indexing for faster search
   @@map("logginInfo") //table name
