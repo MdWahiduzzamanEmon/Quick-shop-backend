@@ -13,3 +13,39 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Role {
+  ADMINISTRATOR
+  GENERAL_USER
+  RETAILER
+  SUPPLIER
+  RAIDER
+  OPERATOR
+  REPRESENTATIVE
+}
+
+model User {
+  id            String         @id @default(cuid())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  administrator administrator?
+}
+
+model administrator {
+  id        String   @id @default(cuid())
+  User      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
+  email     String   @unique
+  firstName String
+  lastName  String
+  username  String   @unique
+  mobile    String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role      Role     @default(ADMINISTRATOR)
+  isActive  Boolean  @default(true)
+
+  @@index([userId, email, mobile, username])
+  @@map("adminastators")
+}
