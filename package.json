@@ -2,8 +2,11 @@
   "name": "quick-shop",
   "version": "1.0.0",
   "main": "server.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+ "scripts": {
+    "start:dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "start:seed": "ts-node prisma/seed.ts",
+    "build": "tsc",
+    "start:server": "node --require esbuild-register src/server.ts"
   },
   "repository": {
     "type": "git",
