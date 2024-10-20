@@ -60,3 +60,17 @@
 
 ::1 - - [20/Oct/2024:21:13:01 +0000] "GET /api/v1/others-users HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [20/Oct/2024:21:21:12 +0000] "GET /api/v1/others-users HTTP/1.1" 500 466 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:21:21:14 +0000] "GET /api/v1/others-users HTTP/1.1" 500 466 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:21:21:47 +0000] "GET /api/v1/others-users HTTP/1.1" 200 328 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:21:22:03 +0000] "GET /api/v1/all-users HTTP/1.1" 500 869 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:21:22:05 +0000] "GET /api/v1/all-users HTTP/1.1" 500 869 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:21:22:51 +0000] "GET /api/v1/all-users HTTP/1.1" 500 2605 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:21:23:51 +0000] "GET /api/v1/all-users HTTP/1.1" 200 460 "-" "PostmanRuntime/7.42.0"
+

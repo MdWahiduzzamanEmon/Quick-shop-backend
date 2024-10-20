@@ -6,7 +6,7 @@ const ErrorHandler = (err: any, req: any, res: any, next: any) => {
     success: false,
     status: errStatus,
     message: errMsg,
-    stack: process.env.NODE_ENV === "development" ? err.stack : {},
+    stack: process.env.NODE_ENV !== "development" ? err.stack : {},
   });
 };
 

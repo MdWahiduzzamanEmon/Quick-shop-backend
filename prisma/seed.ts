@@ -28,14 +28,15 @@ async function seed() {
 
   await db.user.create({
     data: {
-      administrator: {
+      otherUsers: {
         create: {
           firstName: "admin",
           lastName: "admin",
           username: "admin",
           email: "admin",
-          mobile: "00000000000",
+          mobile: "123456789",
           password: "1516",
+          role: "ADMINISTRATOR",
         },
       },
     },

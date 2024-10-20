@@ -7,11 +7,6 @@ export const getAllUsers = async () => {
       updatedAt: true,
     },
     include: {
-      administrator: {
-        omit: {
-          password: true,
-        },
-      },
       otherUsers: {
         omit: {
           password: true,

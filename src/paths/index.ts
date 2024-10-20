@@ -1,5 +1,5 @@
-import { administratorRoute } from "../routes/users/administrator/administrator";
+import { authRoute } from "../routes/Auth/auth";
 import { allUsersRoute } from "../routes/users/getAllUsers/getAllUsers";
 import { othersUsersRoute } from "../routes/users/othersUsers/othersUsers";
 
-export const routes = [allUsersRoute, administratorRoute, othersUsersRoute];
+export const routes = [allUsersRoute, othersUsersRoute, authRoute];

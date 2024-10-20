@@ -36,30 +36,10 @@ model User {
   id             String          @id @default(cuid())
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
-  administrator  administrator?
   otherUsers     otherUsers?
   loggin_history loggin_history?
-}
 
-model administrator {
-  id        String      @id @default(cuid())
-  User      User        @relation(fields: [userId], references: [id])
-  userId    String      @unique
-  email     String      @unique
-  firstName String
-  lastName  String
-  username  String      @unique
-  mobile    String      @unique
-  password  String
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  role      Role        @default(ADMINISTRATOR)
-  isActive  user_status @default(ACTIVE)
-
-  loggin_history loggin_history[] //one user can have multiple loggin history
-
-  @@index([userId, email, mobile, username])
-  @@map("adminastators")
+  @@index([id])
 }
 
 model otherUsers {
@@ -91,22 +71,20 @@ enum loggin_status {
 }
 
 model loggin_history {
-  id              String         @id @default(cuid())
-  User            User           @relation(fields: [userId], references: [id])
-  userId          String         @unique
-  ipAddress       String?
-  device          String?
-  browser         String?
-  os              String?
-  location        String?
-  status          loggin_status
-  loginAt         DateTime       @default(now())
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  otherUsers      otherUsers?    @relation(fields: [otherUsersId], references: [id], onDelete: SetNull)
-  otherUsersId    String?
-  administrator   administrator? @relation(fields: [administratorId], references: [id])
-  administratorId String?
+  id           String        @id @default(cuid())
+  User         User          @relation(fields: [userId], references: [id])
+  userId       String        @unique
+  ipAddress    String?
+  device       String?
+  browser      String?
+  os           String?
+  location     String?
+  status       loggin_status
+  loginAt      DateTime      @default(now())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  otherUsers   otherUsers?   @relation(fields: [otherUsersId], references: [id], onDelete: SetNull)
+  otherUsersId String?
 
   @@index([userId, ipAddress, device, browser, os, location]) //indexing for faster search
   @@map("logginInfo") //table name
