@@ -36,3 +36,27 @@
 
 ::1 - - [20/Oct/2024:20:43:00 +0000] "GET /api/v1/all-users HTTP/1.1" 200 458 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [20/Oct/2024:20:54:58 +0000] "GET /api/v1/administrator HTTP/1.1" 200 297 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:20:59:13 +0000] "GET /api/v1/others-users HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:21:10:47 +0000] "GET /api/v1/others-users HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:21:10:49 +0000] "GET /api/v1/others-users HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:21:10:58 +0000] "GET /api/v1/others-users HTTP/1.1" 400 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:21:11:17 +0000] "GET /api/v1/others-users HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:21:11:31 +0000] "GET /api/v1/others-users HTTP/1.1" 404 58 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:21:11:42 +0000] "GET /api/v1/others-users HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:21:11:55 +0000] "GET /api/v1/others-users HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:21:12:42 +0000] "GET /api/v1/administrator HTTP/1.1" 200 317 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:21:12:47 +0000] "GET /api/v1/all-users HTTP/1.1" 200 462 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:21:13:01 +0000] "GET /api/v1/others-users HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
