@@ -1,5 +1,5 @@
 import { getFromCache, StoreInCache } from "../../Redis/redis";
-import { verifyOtp } from "../../Services/Auth/auth.service";
+import { checkUserExist, verifyOtp } from "../../Services/Auth/auth.service";
 import { findUserByEmailandUsername } from "../../Services/Users/user.service";
 import generateOTP from "../OTP/otp";
 import generatePDFfromHTML from "../PDF/generatePdf";
@@ -71,9 +71,6 @@ const sendOtpMiddleware = async (req: any, res: any, next: any) => {
       });
     }
 
-    // Check cache in parallel
-    let checkUserExistPromise = getFromCache("user:forCheckExist:", email);
-
     // console.log(await checkUserExistPromise, "checkUserExistPromise");
 
     // Check OTP cache before proceeding with user lookup
@@ -84,21 +81,9 @@ const sendOtpMiddleware = async (req: any, res: any, next: any) => {
     }
 
     // Check if user exists, fallback to database lookup if not cached
-    let checkUserExist = JSON.parse(await checkUserExistPromise);
-    if (!checkUserExist) {
-      checkUserExist = await findUserByEmailandUsername({ email });
+    const userExist = await checkUserExist(email);
 
-      if (checkUserExist) {
-        // Cache user info for future use (non-blocking)
-        StoreInCache(
-          "user:forCheckExist:",
-          email,
-          JSON.stringify(checkUserExist)
-        );
-      }
-    }
-
-    if (!checkUserExist) {
+    if (!userExist) {
       return res
         .status(400)
         .json({ message: "User not found with this email: " + email });

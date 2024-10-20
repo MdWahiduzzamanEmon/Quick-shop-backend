@@ -13,7 +13,8 @@ const getLoginHistoryHandler: express.RequestHandler = async (
   next: NextFunction
 ) => {
   try {
-    const history = await getLoginHistory();
+    const { last_login } = _req.query as unknown as { last_login: boolean };
+    const history = await getLoginHistory(last_login);
     showResponse(res, {
       message: "Login History fetched successfully",
       data: history,

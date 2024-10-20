@@ -248,3 +248,13 @@
 
 ::1 - - [20/Oct/2024:22:53:10 +0000] "POST /api/v1/login HTTP/1.1" 200 801 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [20/Oct/2024:22:59:07 +0000] "POST /api/v1/login HTTP/1.1" 200 801 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:22:59:15 +0000] "GET /api/v1/login-history?last_login=true HTTP/1.1" 200 3056 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:22:59:21 +0000] "GET /api/v1/login-history HTTP/1.1" 200 3056 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:22:59:25 +0000] "GET /api/v1/login-history?last_login=true HTTP/1.1" 200 3056 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [20/Oct/2024:23:00:19 +0000] "GET /api/v1/login-history?last_login=true HTTP/1.1" 200 509 "-" "PostmanRuntime/7.42.0"
+
