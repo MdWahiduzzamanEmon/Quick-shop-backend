@@ -11,6 +11,7 @@ export const comparePassword = async (
   hashedPassword: string
 ) => {
   const isMatch = await bcrypt.compare(password, hashedPassword);
+  console.log(isMatch);
   return isMatch;
 };
 

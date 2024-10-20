@@ -1,9 +1,13 @@
 import { db } from "../../utils/db.server";
 
-export const login = async (email: string, password: string) => {
-  const user = await db.user.findUnique({
+export const checkUserExist = async (email: string, mobile: number) => {
+  const user = await db.otherUsers.findFirst({
     where: {
-      email,
+      OR: [{ email }, { mobile: String(mobile) }],
+    },
+    omit: {
+      createdAt: true,
+      updatedAt: true,
     },
   });
   return user;
