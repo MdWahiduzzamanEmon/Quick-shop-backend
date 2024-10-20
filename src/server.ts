@@ -109,7 +109,7 @@ app.use((err: any, req: any, res: any, next: any) => {
   });
 });
 
-const PORT: number = parseInt(process.env.PORT || "8181", 10);
+const PORT: number = parseInt(process.env.PORT || "4000", 10);
 
 serverInstance.listen(PORT, () => {
   console.log(`Server running on port http://localhost:${PORT}`);
