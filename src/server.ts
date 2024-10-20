@@ -11,6 +11,8 @@ import cookieParser from "cookie-parser";
 import responseTime from "response-time";
 import { corsOptions } from "./constant";
 import { createServer } from "http";
+import ErrorHandler from "./middlewares/errorHandle";
+import { routes } from "./paths";
 
 config();
 
@@ -70,6 +72,11 @@ app.use(
   })
 );
 
+// Register routes dynamically
+for (const route of routes) {
+  app.use("/api/v1", route);
+}
+
 //redis client connection
 export let client: any;
 
@@ -99,15 +106,8 @@ app.get("/", (req, res) => {
 });
 
 //error middleware
-app.use((err: any, req: any, res: any, next: any) => {
-  console.error(err.message);
-  const statusCode = err?.status || 400;
-  res.status(statusCode).json({
-    success: false,
-    status: statusCode,
-    message: err || err?.message,
-  });
-});
+
+app.use(ErrorHandler);
 
 const PORT: number = parseInt(process.env.PORT || "4000", 10);
 
