@@ -1,2 +1,11 @@
-node_modules
+
+dist
+build
+coverage
+*.log
+*.out
+*.tgz
+*.zip
 .DS_Store
+
+/node_modules
