@@ -2,6 +2,7 @@ import express from "express";
 import type { Request, Response, NextFunction } from "express";
 import { showResponse } from "../../../constant/showResponse";
 import { getLoginHistory } from "../../../services/History/LoginHistory/loginHistory.service";
+import { verifyTokenMiddleware } from "../../../Others/JWT";
 
 export const loginHistoryRoute = express.Router();
 
@@ -24,4 +25,8 @@ const getLoginHistoryHandler: express.RequestHandler = async (
   }
 };
 
-loginHistoryRoute.get("/login-history", getLoginHistoryHandler);
+loginHistoryRoute.get(
+  "/login-history",
+  verifyTokenMiddleware,
+  getLoginHistoryHandler
+);

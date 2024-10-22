@@ -8,6 +8,7 @@ export const checkUserExist = async (email?: string, mobile?: number) => {
     omit: {
       createdAt: true,
       updatedAt: true,
+      profile_picture: true,
     },
   });
   return user;

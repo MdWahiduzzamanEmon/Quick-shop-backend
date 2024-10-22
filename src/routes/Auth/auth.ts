@@ -4,7 +4,7 @@ import { showResponse } from "../../constant/showResponse";
 import { checkUserExist } from "../../services/Auth/auth.service";
 import { comparePassword } from "../../Others/SecurePassword";
 import exclude from "../../Others/DataExcludeFunction/exclude";
-import { generateToken } from "../../Others/JWT";
+import { cookieResponse, generateToken } from "../../Others/JWT";
 import { loggin_status } from "@prisma/client";
 import { createLoginHistory } from "../../services/History/LoginHistory/loginHistory.service";
 
@@ -142,6 +142,9 @@ const loginHandler: express.RequestHandler = async (
         ...excludePassword,
       },
     };
+    //step 2: set the token in the cookie
+
+    await cookieResponse(res, token);
 
     showResponse(res, {
       status: 200,

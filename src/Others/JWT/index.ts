@@ -11,7 +11,8 @@ export const generateToken = async (user: any, expiry = "1h") => {
     algorithm: "HS256",
   });
   //   add token with bearer
-  return `Bearer ${token}`;
+  // return `Bearer ${token}`;
+  return `${token}`;
 };
 
 //verify token
@@ -41,8 +42,9 @@ export const verifyTokenMiddleware = async (req: any, res: any, next: any) => {
 
   //get token from cookie
   const headerToken = req.headers.authorization;
-  const BearerToken = req.cookies?.token; //get token from cookie
-
+  const BearerToken = `Bearer ${req.cookies.token}`;
+  // console.log(BearerToken, "BearerToken");
+  // console.log(headerToken == BearerToken, "headerToken");
   if (headerToken !== BearerToken) {
     return res.status(401).json({ message: "Unauthorized" });
   }
@@ -50,7 +52,7 @@ export const verifyTokenMiddleware = async (req: any, res: any, next: any) => {
   // console.log(BearerToken, "BearerToken");
 
   const token = BearerToken?.split(" ")?.[1];
-  // // console.log(token);
+  // console.log(token);
   if (!token) {
     res.clearCookie("token");
     return res.status(401).json({ message: "Unauthorized" });
@@ -65,19 +67,7 @@ export const verifyTokenMiddleware = async (req: any, res: any, next: any) => {
   }
 };
 
-/**
- * Sets a cookie with the given token on the response, with the following properties:
- * - `httpOnly`: true (cookie is not accessible by client side)
- * - `secure`: true (cookie can only be transmitted over a secure protocol, i.e. HTTPS)
- * - `sameSite`: "none" (cookie can be sent with cross-site requests)
- * - `maxAge`: 1 hour (cookie will expire in 1 hour)
- *
- * @param {Response} res - the response object
- * @param {string} token - the token to set as the cookie value
- * @returns {Response} the response object with the set cookie
- */
-
-export const cookieResponse = (res: any, token: string) => {
+export const cookieResponse = async (res: any, token: string) => {
   // expire in 1 hour
   const oneHour = 60 * 60 * 1000;
   res.cookie("token", token, {

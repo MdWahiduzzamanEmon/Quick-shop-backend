@@ -28,6 +28,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(responseTime());
+app.use("/media", express.static("uploadFile"));
 
 // Log middleware
 const makeLogFolder = async () => {
