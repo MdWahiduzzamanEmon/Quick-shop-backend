@@ -1,4 +1,6 @@
-const errorMessage = (res: any, error: any) => {
+import { NextFunction, Request, Response } from "express";
+
+const errorMessage = (res: Response, error: any, next: NextFunction) => {
   console.log("Error:", error);
   if (error.code === "P2002") {
     return res.status(400).json({
@@ -24,7 +26,7 @@ const errorMessage = (res: any, error: any) => {
     });
   }
 
-  return res.status(500).json({ message: "Internal server error", error });
+  return next(error);
 };
 
 export default errorMessage;

@@ -1,11 +1,21 @@
 import express from "express";
 import type { Request, Response, NextFunction } from "express";
 import { showResponse } from "../../constant/showResponse";
-import { checkUserExist, register } from "../../services/Auth/auth.service";
+import {
+  checkUserExist,
+  checkWorkerExist,
+  deleteUser,
+  register,
+  workerRegister,
+} from "../../services/Auth/auth.service";
 import { comparePassword, hashPassword } from "../../Others/SecurePassword";
 import exclude from "../../Others/DataExcludeFunction/exclude";
-import { cookieResponse, generateToken } from "../../Others/JWT";
-import { loggin_status, Role } from "@prisma/client";
+import {
+  cookieResponse,
+  generateToken,
+  verifyTokenMiddleware,
+} from "../../Others/JWT";
+import { loggin_status, Role, WorkerRole } from "@prisma/client";
 import { createLoginHistory } from "../../services/History/LoginHistory/loginHistory.service";
 import { StoreInCache } from "../../Redis/redis";
 import { leftPushToList } from "../../Redis";
@@ -14,6 +24,8 @@ import {
   uploadMiddleware,
 } from "../../Others/File/fileUploadController";
 import axios from "axios";
+import { emailRegex, passwordRegex, usernameRegex } from "../../constant";
+import errorMessage from "../../Others/ErrorMessage/errorMessage";
 
 export const authRoute = express.Router();
 
@@ -236,7 +248,6 @@ const registerHandler: express.RequestHandler = async (
     }
 
     //if email then check email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (email && !emailRegex.test(email)) {
       showResponse(res, {
@@ -246,8 +257,7 @@ const registerHandler: express.RequestHandler = async (
       return;
     }
 
-    //vlaidate username
-    const usernameRegex = /^[a-zA-Z0-9_]{1,15}$/;
+    //validate username
 
     if (username && !usernameRegex.test(username)) {
       showResponse(res, {
@@ -270,9 +280,15 @@ const registerHandler: express.RequestHandler = async (
       return;
     }
 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    if (!password) {
+      showResponse(res, {
+        message: "Please provide password",
+      });
+      await unlinkFile(profile_picture?.filename);
+      return;
+    }
 
-    if (!password || !passwordRegex.test(password)) {
+    if (!passwordRegex.test(password)) {
       showResponse(res, {
         message:
           "Please provide a valid password. It must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number",
@@ -330,8 +346,215 @@ const registerHandler: express.RequestHandler = async (
 
 authRoute.post("/register", uploadMiddleware, registerHandler);
 
+//employee-register
+
+export type EmployeeRegisterType = {
+  fullName?: string;
+  surname: string;
+  role?: WorkerRole;
+  fatherName?: string;
+  whatsapp?: string;
+  mobile: string;
+  NID?: string;
+  education?: string;
+  bankName?: string;
+  branchName?: string;
+  accountNumber?: string;
+  mobileBanking?: string;
+  mobileBankingNumber?: string;
+  address?: string;
+  zipCode?: string;
+  email?: string;
+  password?: string;
+};
+
+const employeeRegisterHandler: express.RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  const reqData = req as any;
+  try {
+    const {
+      fullName,
+      surname,
+      role,
+      fatherName,
+      whatsapp,
+      mobile,
+      NID,
+      education,
+      bankName,
+      branchName,
+      accountNumber,
+      mobileBanking,
+      mobileBankingNumber,
+      address,
+      zipCode,
+      email,
+      password,
+    } = reqData.body;
+
+    //check if checkWorkerExist already exist
+    // console.log(reqData?.fileUrl);
+    const existWorker = await checkWorkerExist(
+      email,
+      mobile,
+      surname,
+      NID,
+      whatsapp
+    );
+
+    if (existWorker) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message:
+          "Employee already exist with your provided email or mobile number or NID or whatsapp.Please login or change your email, mobile or NID or whatsapp to continue",
+      });
+      for (let i = 0; i < reqData?.fileUrl?.length; i++) {
+        await unlinkFile(reqData?.fileUrl[i]?.filename as unknown as any);
+      }
+      return;
+    }
+
+    //make password hash
+    if (!password) {
+      showResponse(res, {
+        message: "Please provide password",
+      });
+      return;
+    }
+    const hashedPassword = await hashPassword(password);
+
+    //email
+    if (email && !emailRegex.test(email)) {
+      showResponse(res, {
+        message: "Please provide a valid email",
+      });
+      return;
+    }
+
+    //mobile
+    if (!mobile) {
+      showResponse(res, {
+        message: "Please provide mobile number",
+      });
+      return;
+    }
+
+    //role
+    if (role && WorkerRole[role as keyof typeof WorkerRole] === undefined) {
+      showResponse(res, {
+        message:
+          "Please provide a valid role. If you did't know, then contact our support",
+      });
+      for (let i = 0; i < reqData?.fileUrl?.length; i++) {
+        await unlinkFile(reqData?.fileUrl[i]?.filename as unknown as any);
+      }
+      return;
+    }
+
+    //surname
+    if (surname && !usernameRegex.test(surname)) {
+      showResponse(res, {
+        message: "Please provide a valid surname",
+      });
+      return;
+    }
+
+    //create worker
+    const body = {
+      fullName,
+      surname,
+      role,
+      fatherName,
+      whatsapp,
+      mobile,
+      NID,
+      education,
+      bankName,
+      branchName,
+      accountNumber,
+      mobileBanking,
+      mobileBankingNumber,
+      address,
+      zipCode,
+      email,
+      password: hashedPassword,
+    };
+
+    //NID image + profile picture
+
+    for (let i = 0; i < reqData?.fileUrl?.length; i++) {
+      body[reqData?.fileUrl[i]?.fieldName as keyof typeof body] = {
+        url: reqData?.fileUrl[i]?.url,
+        filename: reqData?.fileUrl[i]?.filename,
+        extension: reqData?.fileUrl[i]?.extension,
+        size: reqData?.fileUrl[i]?.size,
+      };
+    }
+
+    // console.log(body);
+
+    const worker = await workerRegister(body);
+
+    if (!worker) {
+      for (let i = 0; i < reqData?.fileUrl?.length; i++) {
+        await unlinkFile(reqData?.fileUrl[i]?.filename as unknown as any);
+      }
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Employee creation failed",
+      });
+      return;
+    }
+
+    showResponse(res, {
+      message: `A new ${role} has been created successfully`,
+    });
+    return;
+  } catch (error: any) {
+    next(error);
+
+    for (let i = 0; i < reqData?.fileUrl?.length; i++) {
+      await unlinkFile(reqData?.fileUrl[i]?.filename as unknown as any);
+    }
+  }
+};
+
+authRoute.post("/employee-register", uploadMiddleware, employeeRegisterHandler);
+
 //logout
 
 //forgot password
 
 //reset password
+
+//delete User
+const deleteUserHandler: express.RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const deletedWorker = await deleteUser(id);
+    if (!deletedWorker) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "User deletion failed",
+      });
+      return;
+    }
+    showResponse(res, {
+      message: "User deleted successfully",
+    });
+  } catch (error: any) {
+    errorMessage(res, error, next);
+  }
+};
+
+authRoute.delete("/delete-user/:id", verifyTokenMiddleware, deleteUserHandler);

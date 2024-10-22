@@ -12,6 +12,11 @@ export const getAllUsers = async () => {
           password: true,
         },
       },
+      worker: {
+        omit: {
+          password: true,
+        },
+      },
     },
   });
   return users;

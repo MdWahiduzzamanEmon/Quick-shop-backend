@@ -47,7 +47,7 @@ export const uploadMiddleware = async (req: any, res: any, next: any) => {
       req?.files?.length > 0
         ? req.files.map((file: any) => {
             return {
-              // fieldname: file.fieldname,
+              fieldName: file.fieldname,
               filename: file.filename,
               url: `${process.env.LIVE_URL}/media/${file.filename}`,
               extension: file?.mimetype.split("/")[1],
