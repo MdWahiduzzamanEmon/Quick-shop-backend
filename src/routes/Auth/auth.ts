@@ -3,7 +3,6 @@ import type { Request, Response, NextFunction } from "express";
 import { showResponse } from "../../constant/showResponse";
 import {
   checkUserExist,
-  checkWorkerExist,
   deleteUser,
   register,
   workerRegister,
@@ -108,7 +107,6 @@ const loginHandler: express.RequestHandler = async (
     }
 
     //if email then check email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (email && !emailRegex.test(email)) {
       showResponse(res, {
@@ -151,14 +149,13 @@ const loginHandler: express.RequestHandler = async (
       //create login history
       const IP = await trackIpLocation(ipAddress);
       const dataRes = await createLoginHistory({
-        userId: existUser?.userId,
+        userId: existUser?.id,
         ipAddress,
         device,
         browser,
         os,
         location: `${IP?.country},${IP?.region},${IP?.city}`,
         status: loggin_status.FAILED,
-        otherUsersId: existUser?.id,
         note: "Incorrect password",
       });
       await leftPushToList("login-history", dataRes);
@@ -194,14 +191,13 @@ const loginHandler: express.RequestHandler = async (
       const IP = await trackIpLocation(ipAddress);
       // console.log(IP, "IP");
       const result = await createLoginHistory({
-        userId: existUser?.userId,
+        userId: existUser?.id,
         ipAddress,
         device,
         browser,
         os,
         location: `${IP?.country},${IP?.region},${IP?.city}`,
         status: loggin_status.SUCCESS,
-        otherUsersId: existUser?.id,
         note: "Login successful",
       });
 
@@ -350,7 +346,7 @@ authRoute.post("/register", uploadMiddleware, registerHandler);
 
 export type EmployeeRegisterType = {
   fullName?: string;
-  surname: string;
+  username: string;
   role?: WorkerRole;
   fatherName?: string;
   whatsapp?: string;
@@ -377,7 +373,7 @@ const employeeRegisterHandler: express.RequestHandler = async (
   try {
     const {
       fullName,
-      surname,
+      username,
       role,
       fatherName,
       whatsapp,
@@ -397,20 +393,14 @@ const employeeRegisterHandler: express.RequestHandler = async (
 
     //check if checkWorkerExist already exist
     // console.log(reqData?.fileUrl);
-    const existWorker = await checkWorkerExist(
-      email,
-      mobile,
-      surname,
-      NID,
-      whatsapp
-    );
+    const existWorker = await checkUserExist(email, mobile, username);
 
     if (existWorker) {
       showResponse(res, {
         status: 400,
         success: false,
         message:
-          "Employee already exist with your provided email or mobile number or NID or whatsapp.Please login or change your email, mobile or NID or whatsapp to continue",
+          "Employee already exist with your provided email or mobile number .Please login or change your email, mobile or username to continue",
       });
       for (let i = 0; i < reqData?.fileUrl?.length; i++) {
         await unlinkFile(reqData?.fileUrl[i]?.filename as unknown as any);
@@ -456,7 +446,7 @@ const employeeRegisterHandler: express.RequestHandler = async (
     }
 
     //surname
-    if (surname && !usernameRegex.test(surname)) {
+    if (username && !usernameRegex.test(username)) {
       showResponse(res, {
         message: "Please provide a valid surname",
       });
@@ -466,7 +456,7 @@ const employeeRegisterHandler: express.RequestHandler = async (
     //create worker
     const body = {
       fullName,
-      surname,
+      username,
       role,
       fatherName,
       whatsapp,
@@ -516,7 +506,7 @@ const employeeRegisterHandler: express.RequestHandler = async (
     });
     return;
   } catch (error: any) {
-    next(error);
+    errorMessage(res, error, next);
 
     for (let i = 0; i < reqData?.fileUrl?.length; i++) {
       await unlinkFile(reqData?.fileUrl[i]?.filename as unknown as any);

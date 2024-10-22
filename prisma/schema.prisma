@@ -37,34 +37,33 @@ enum user_status {
 
 model User {
   id             String           @id @default(cuid())
+  email          String           @unique
+  mobile         String           @unique
+  username       String           @unique
+  password       String
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   otherUsers     otherUsers? //only for general user and retailer
   worker         worker? //only for operator, raider, representative
   loggin_history loggin_history[]
 
-  @@index([id])
+  @@index([id, email, mobile, username])
 }
 
 model otherUsers {
-  id              String           @id @default(cuid())
-  User            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId          String           @unique
-  email           String           @unique
+  id              String      @id @default(cuid())
+  User            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String      @unique
   firstName       String?
   lastName        String?
-  username        String           @unique
-  mobile          String           @unique
-  profile_picture Json             @default("{}")
-  password        String
-  role            Role             @default(GENERAL_USER)
-  isActive        user_status      @default(ACTIVE)
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  loggin_history  loggin_history[] //one user can have multiple loggin history
+  profile_picture Json        @default("{}")
+  role            Role        @default(GENERAL_USER)
+  isActive        user_status @default(ACTIVE)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
 
-  @@index([userId, email, mobile, username])
-  @@map("allUsers")
+  @@index([id, userId, role, isActive])
+  @@map("otherUsers")
 }
 
 // model for operator, raider, representative
@@ -72,25 +71,21 @@ model otherUsers {
 model worker {
   id                  String      @id @default(cuid())
   fullName            String?
-  surname             String
   role                WorkerRole  @default(OPERATOR)
-  email               String?     @unique
-  password            String
   fatherName          String?
   employeeID          String?     @unique @default(cuid())
   whatsapp            String?     @unique
-  mobile              String      @unique
   NID                 String?     @unique
   NIDImage            Json        @default("{}")
-  education           String?     @default(" ")
-  bankName            String?     @default(" ")
-  branchName          String?     @default(" ")
-  accountNumber       String?     @default(" ")
-  mobileBanking       String?     @default(" ")
-  mobileBankingNumber String?     @default(" ")
+  education           String?     @default("")
+  bankName            String?     @default("")
+  branchName          String?     @default("")
+  accountNumber       String?     @default("")
+  mobileBanking       String?     @default("")
+  mobileBankingNumber String?     @default("")
   profile_picture     Json        @default("{}")
-  address             String?     @default(" ")
-  zipCode             String?     @default(" ")
+  address             String?     @default("")
+  zipCode             String?     @default("")
   createdAt           DateTime    @default(now())
   updatedAt           DateTime    @updatedAt
   isActive            user_status @default(ACTIVE)
@@ -98,7 +93,7 @@ model worker {
   user                User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId              String      @unique
 
-  @@index([id, employeeID, mobile, NID, accountNumber, mobileBankingNumber, userId, email])
+  @@index([id, userId, role, isActive, NID, employeeID, whatsapp])
   @@map("workers")
 }
 
@@ -110,22 +105,20 @@ enum loggin_status {
 }
 
 model loggin_history {
-  id           String        @id @default(cuid())
-  userId       String
-  user         User          @relation(fields: [userId], references: [id])
-  ipAddress    String?
-  device       String?
-  browser      String?
-  os           String?
-  location     String?
-  status       loggin_status
-  note         String?
-  loginAt      DateTime      @default(now())
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  otherUsers   otherUsers?   @relation(fields: [otherUsersId], references: [id], onDelete: SetNull)
-  otherUsersId String?
+  id        String        @id @default(cuid())
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ipAddress String?
+  device    String?
+  browser   String?
+  os        String?
+  location  String?
+  status    loggin_status
+  note      String?
+  loginAt   DateTime      @default(now())
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 
-  @@index([userId, otherUsersId, status]) //indexing for faster search
+  @@index([userId, status]) //indexing for faster search
   @@map("logginInfo") //table name
 }

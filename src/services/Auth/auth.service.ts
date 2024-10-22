@@ -6,47 +6,32 @@ export const checkUserExist = async (
   mobile?: number,
   username?: string
 ) => {
-  const user = await db.otherUsers.findFirst({
+  const user = await db.user.findFirst({
     where: {
       OR: [{ email }, { mobile: mobile?.toString() }, { username }],
     },
     omit: {
       createdAt: true,
       updatedAt: true,
-      profile_picture: true,
     },
-  });
-  return user;
-};
-
-//check already exist user in worker model
-
-export const checkWorkerExist = async (
-  email?: string,
-  mobile?: number,
-  surname?: string,
-  NID?: string,
-  whatsapp?: string
-) => {
-  const worker = await db.worker.findFirst({
-    where: {
-      OR: [
-        { email },
-        { mobile: mobile?.toString() },
-        { surname },
-        { NID },
-        { whatsapp },
-      ],
-    },
-    omit: {
-      createdAt: true,
-      updatedAt: true,
-      profile_picture: true,
-      NIDImage: true,
+    include: {
+      otherUsers: {
+        select: {
+          role: true,
+        },
+      },
+      worker: {
+        select: {
+          role: true,
+        },
+      },
     },
   });
 
-  return worker;
+  const role = user?.otherUsers ? user?.otherUsers?.role : user?.worker?.role;
+  const { otherUsers, worker, ...userWithoutOtherUsers } = user ?? {};
+
+  return role ? { ...userWithoutOtherUsers, role } : false;
 };
 
 //register (general user+retailer)
@@ -63,14 +48,14 @@ export const register = async (
 ) => {
   const user = await db.user.create({
     data: {
+      email,
+      mobile: mobile.toString(),
+      username,
+      password,
       otherUsers: {
         create: {
-          email,
-          mobile: mobile.toString(),
           firstName,
           lastName,
-          username,
-          password,
           ...(profile_picture && { profile_picture }),
           ...(role && { role }),
         },
@@ -85,7 +70,7 @@ export const register = async (
 
 export const workerRegister = async ({
   fullName,
-  surname,
+  username,
   role,
   fatherName,
   whatsapp,
@@ -106,14 +91,16 @@ export const workerRegister = async ({
 }: any) => {
   const workerRes = await db.user.create({
     data: {
+      email,
+      password,
+      username,
+      mobile,
       worker: {
         create: {
           fullName,
-          surname,
           role,
           fatherName,
           whatsapp,
-          mobile,
           NID,
           education,
           bankName,
@@ -123,8 +110,6 @@ export const workerRegister = async ({
           mobileBankingNumber,
           address,
           zipCode,
-          email,
-          password,
           ...(profile_picture && { profile_picture }),
           ...(NIDImage && { NIDImage }),
         },
@@ -141,8 +126,8 @@ export const workerRegister = async ({
   });
 
   //syncronasly update worker employeeId : EM-{current_year}{current_month}{current_date}
-  const employeeID = `EM-${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}.${
-    workerRes.worker?.order ?? Math.floor(Math.random() * 100)
+  const employeeID = `EM-${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}-${
+    workerRes.worker?.order
   }`;
 
   Promise.all([

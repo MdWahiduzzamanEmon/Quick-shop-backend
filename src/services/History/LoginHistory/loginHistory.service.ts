@@ -19,21 +19,25 @@ export const getLoginHistory = async ({
         skip: (pageNumbers - 1) * resultPerPage,
         take: resultPerPage,
       }),
-      include: {
-        otherUsers: {
-          select: {
-            id: true,
-            role: true,
-            email: true,
-            username: true,
-            mobile: true,
-          },
-        },
-      },
+      // include: {
+      //   user: {
+      //     select: {
+      //       otherUsers: {
+      //         select: {
+      //           role: true,
+      //         },
+      //       },
+      //       worker: {
+      //         select: {
+      //           role: true,
+      //         },
+      //       },
+      //     },
+      //   },
+      // },
       omit: {
         createdAt: true,
         updatedAt: true,
-        otherUsersId: true,
       },
       orderBy: {
         loginAt: "desc",
@@ -65,14 +69,17 @@ export const getLoginHistory = async ({
 export const createLoginHistory = async (body: ILoginHistory) => {
   const loginHistory = await db.loggin_history.create({
     data: {
-      userId: body.userId,
+      user: {
+        connect: {
+          id: body.userId,
+        },
+      },
       ipAddress: body.ipAddress,
       device: body.device,
       browser: body.browser,
       os: body.os,
       location: body.location,
       status: body.status,
-      otherUsersId: body.otherUsersId,
       note: body.note,
     },
   });

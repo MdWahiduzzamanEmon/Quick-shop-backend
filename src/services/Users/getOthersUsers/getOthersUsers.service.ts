@@ -5,7 +5,6 @@ export const getOthersUsers = async () => {
     omit: {
       createdAt: true,
       updatedAt: true,
-      password: true,
     },
   });
   return users;

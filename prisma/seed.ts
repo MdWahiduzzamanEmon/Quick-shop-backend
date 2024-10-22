@@ -6,14 +6,14 @@ async function seed() {
 
   await db.user.create({
     data: {
+      username: "admin",
+      password: convertHashedPassword,
+      mobile: "123456789",
+      email: "admin@admin.com",
       otherUsers: {
         create: {
           firstName: "admin",
           lastName: "admin",
-          username: "admin",
-          email: "admin@admin.com",
-          mobile: "123456789",
-          password: convertHashedPassword,
           role: "ADMINISTRATOR",
         },
       },

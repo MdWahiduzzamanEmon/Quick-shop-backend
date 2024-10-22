@@ -5,18 +5,11 @@ export const getAllUsers = async () => {
     omit: {
       createdAt: true,
       updatedAt: true,
+      password: true,
     },
     include: {
-      otherUsers: {
-        omit: {
-          password: true,
-        },
-      },
-      worker: {
-        omit: {
-          password: true,
-        },
-      },
+      otherUsers: true,
+      worker: true,
     },
   });
   return users;

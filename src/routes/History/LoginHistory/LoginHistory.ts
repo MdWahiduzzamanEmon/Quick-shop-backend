@@ -7,6 +7,7 @@ import {
 } from "../../../services/History/LoginHistory/loginHistory.service";
 import { verifyTokenMiddleware } from "../../../Others/JWT";
 import { setInitialArray, getListFromRedis } from "../../../Redis";
+import errorMessage from "../../../Others/ErrorMessage/errorMessage";
 
 export const loginHistoryRoute = express.Router();
 
@@ -61,7 +62,7 @@ const getLoginHistoryHandler: express.RequestHandler = async (
     });
     return;
   } catch (error: any) {
-    next(error);
+    errorMessage(res, error, next);
   }
 };
 
@@ -78,8 +79,11 @@ const getSingleLoginHistoryHandler: express.RequestHandler = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
+  const reqData = req as any;
   try {
-    const { userId } = req.user as any;
+    const { id: userId } = reqData?.user as {
+      id: string;
+    };
 
     const { last_login } = req.query as unknown as {
       last_login: boolean;
