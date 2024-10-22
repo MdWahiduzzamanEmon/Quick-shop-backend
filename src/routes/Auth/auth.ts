@@ -42,12 +42,15 @@ function parseOSFromUserAgent(userAgent: any) {
 
 //get location from ip
 
-export const trackIpLocation = async (ip: string, query: any = 61439) => {
+export const trackIpLocation = async (
+  ip: string
+  // query: any = 61439
+) => {
   try {
     const response = await axios.get(
-      `http://ip-api.com/json/${ip}/?fields=${query}`
+      `http://ip-api.com/json/${ip?.toString()}`
     );
-    // console.log(response.data, 'response.data');
+    // console.log(response.data, "response.data");
     return response.data;
   } catch (error) {
     return error;
@@ -81,8 +84,7 @@ const loginHandler: express.RequestHandler = async (
     const device = req.headers["user-agent"] || "";
     const os = parseOSFromUserAgent(req.headers["user-agent"] || "");
 
-    const location = req.headers["location"] || "Unknown Location";
-
+    // const location = req.headers["location"] || "Unknown Location";
     //   console.log(req.headers, "login info");
 
     // check emial or mobile
@@ -178,6 +180,7 @@ const loginHandler: express.RequestHandler = async (
 
     try {
       const IP = await trackIpLocation(ipAddress);
+      // console.log(IP, "IP");
       const result = await createLoginHistory({
         userId: existUser?.userId,
         ipAddress,
