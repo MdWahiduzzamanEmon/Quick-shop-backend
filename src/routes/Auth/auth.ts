@@ -13,6 +13,7 @@ import {
   unlinkFile,
   uploadMiddleware,
 } from "../../Others/File/fileUploadController";
+import axios from "axios";
 
 export const authRoute = express.Router();
 
@@ -38,6 +39,20 @@ function parseOSFromUserAgent(userAgent: any) {
   if (/iphone|ipad/i.test(userAgent)) return "iOS";
   return "Unknown OS";
 }
+
+//get location from ip
+
+export const trackIpLocation = async (ip: string, query: any = 61439) => {
+  try {
+    const response = await axios.get(
+      `http://ip-api.com/json/${ip}/?fields=${query}`
+    );
+    // console.log(response.data, 'response.data');
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
 
 const loginHandler: express.RequestHandler = async (
   req: Request,
@@ -119,13 +134,15 @@ const loginHandler: express.RequestHandler = async (
         message: `Incorrect password`,
       });
 
+      //create login history
+      const IP = await trackIpLocation(ipAddress);
       const dataRes = await createLoginHistory({
         userId: existUser?.userId,
         ipAddress,
         device,
         browser,
         os,
-        location,
+        location: `${IP?.country},${IP?.region},${IP?.city}`,
         status: loggin_status.FAILED,
         otherUsersId: existUser?.id,
         note: "Incorrect password",
@@ -160,13 +177,14 @@ const loginHandler: express.RequestHandler = async (
     });
 
     try {
+      const IP = await trackIpLocation(ipAddress);
       const result = await createLoginHistory({
         userId: existUser?.userId,
         ipAddress,
         device,
         browser,
         os,
-        location,
+        location: `${IP?.country},${IP?.region},${IP?.city}`,
         status: loggin_status.SUCCESS,
         otherUsersId: existUser?.id,
         note: "Login successful",

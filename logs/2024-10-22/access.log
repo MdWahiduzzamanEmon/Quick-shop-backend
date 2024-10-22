@@ -846,3 +846,9 @@
 
 ::1 - - [22/Oct/2024:13:26:27 +0000] "POST /api/v1/login HTTP/1.1" 200 738 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [22/Oct/2024:14:54:32 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [22/Oct/2024:14:54:59 +0000] "POST /api/v1/login HTTP/1.1" 200 738 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:15:05:50 +0000] "POST /api/v1/login HTTP/1.1" 200 738 "-" "PostmanRuntime/7.42.0"
+
