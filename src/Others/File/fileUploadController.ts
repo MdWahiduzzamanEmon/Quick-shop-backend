@@ -76,10 +76,10 @@ export const fileUploadAndGetUrlFunc = async (file: any) => {
 
 //unlink file from folder
 
-export const unlinkFile = async (path: any) => {
-  // console.log(path);
+export const unlinkFile = async (fileName: any) => {
+  // console.log(fileName);
   try {
-    fs.unlink("uploadFile/" + path?.split("/")[4], (err) => {
+    fs.unlink("uploadFile/" + fileName, (err) => {
       if (err) {
         return { message: "Error deleting file" };
       } else {

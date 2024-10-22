@@ -704,3 +704,145 @@
 
 ::1 - - [22/Oct/2024:12:33:20 +0000] "GET /api/v1/user-login-history?last_login=true HTTP/1.1" 200 240 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [22/Oct/2024:12:34:06 +0000] "POST /api/v1/register HTTP/1.1" 404 155 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:38:29 +0000] "POST /api/v1/register HTTP/1.1" 200 94 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:38:30 +0000] "POST /api/v1/register HTTP/1.1" 200 94 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:38:31 +0000] "POST /api/v1/register HTTP/1.1" 200 94 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:38:32 +0000] "POST /api/v1/register HTTP/1.1" 200 94 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:38:33 +0000] "POST /api/v1/register HTTP/1.1" 200 94 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:38:34 +0000] "POST /api/v1/register HTTP/1.1" 200 94 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:38:51 +0000] "POST /api/v1/register HTTP/1.1" 200 92 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:39:12 +0000] "POST /api/v1/register HTTP/1.1" 400 92 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:39:13 +0000] "POST /api/v1/register HTTP/1.1" 400 92 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:39:21 +0000] "POST /api/v1/register HTTP/1.1" 400 91 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:39:44 +0000] "POST /api/v1/register HTTP/1.1" 400 91 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:40:20 +0000] "POST /api/v1/register HTTP/1.1" 400 91 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:40:20 +0000] "POST /api/v1/register HTTP/1.1" 400 91 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:40:43 +0000] "POST /api/v1/register HTTP/1.1" 200 70 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:41:08 +0000] "POST /api/v1/register HTTP/1.1" 400 66 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:43:22 +0000] "POST /api/v1/register HTTP/1.1" - - "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:44:33 +0000] "POST /api/v1/register HTTP/1.1" 400 65 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:45:01 +0000] "POST /api/v1/register HTTP/1.1" 400 61 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:46:13 +0000] "POST /api/v1/register HTTP/1.1" 400 158 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:46:28 +0000] "POST /api/v1/register HTTP/1.1" 400 30 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:46:31 +0000] "POST /api/v1/register HTTP/1.1" 400 30 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:47:35 +0000] "POST /api/v1/register HTTP/1.1" 400 82 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:47:56 +0000] "POST /api/v1/register HTTP/1.1" 400 72 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:48:19 +0000] "POST /api/v1/register HTTP/1.1" 400 102 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:49:44 +0000] "POST /api/v1/register HTTP/1.1" 400 62 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:50:20 +0000] "POST /api/v1/register HTTP/1.1" - - "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:50:44 +0000] "POST /api/v1/register HTTP/1.1" 500 2443 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:51:00 +0000] "POST /api/v1/register HTTP/1.1" 400 62 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:51:02 +0000] "POST /api/v1/register HTTP/1.1" 400 62 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:51:40 +0000] "POST /api/v1/register HTTP/1.1" 400 92 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:12:52:24 +0000] "POST /api/v1/register HTTP/1.1" 400 172 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:00:03 +0000] "POST /api/v1/register HTTP/1.1" 500 129 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:01:00 +0000] "POST /api/v1/register HTTP/1.1" 400 71 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:02:35 +0000] "POST /api/v1/register HTTP/1.1" 400 115 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:11:03 +0000] "POST /api/v1/register HTTP/1.1" 400 115 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:12:11 +0000] "POST /api/v1/register HTTP/1.1" 400 115 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:12:34 +0000] "POST /api/v1/register HTTP/1.1" 400 115 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:13:56 +0000] "POST /api/v1/register HTTP/1.1" 400 115 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:14:40 +0000] "POST /api/v1/register HTTP/1.1" 400 115 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:15:37 +0000] "POST /api/v1/register HTTP/1.1" 400 115 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:16:05 +0000] "POST /api/v1/register HTTP/1.1" 400 115 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:16:17 +0000] "POST /api/v1/register HTTP/1.1" 400 115 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:16:22 +0000] "POST /api/v1/register HTTP/1.1" 400 115 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:16:24 +0000] "POST /api/v1/register HTTP/1.1" 400 115 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:16:26 +0000] "POST /api/v1/register HTTP/1.1" 400 115 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:16:28 +0000] "POST /api/v1/register HTTP/1.1" 400 115 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:16:29 +0000] "POST /api/v1/register HTTP/1.1" 400 115 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:17:20 +0000] "POST /api/v1/register HTTP/1.1" 500 827 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:18:52 +0000] "POST /api/v1/register HTTP/1.1" 500 827 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:19:50 +0000] "POST /api/v1/register HTTP/1.1" 200 192 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:19:51 +0000] "POST /api/v1/register HTTP/1.1" 200 192 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:20:09 +0000] "POST /api/v1/register HTTP/1.1" 200 67 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:20:31 +0000] "GET /api/v1/all-users HTTP/1.1" 401 26 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:20:37 +0000] "POST /api/v1/login HTTP/1.1" 200 745 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:20:42 +0000] "GET /api/v1/all-users HTTP/1.1" 200 982 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:21:04 +0000] "POST /api/v1/register HTTP/1.1" 200 192 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:21:46 +0000] "POST /api/v1/register HTTP/1.1" 400 172 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:21:49 +0000] "POST /api/v1/register HTTP/1.1" 400 172 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:21:54 +0000] "POST /api/v1/register HTTP/1.1" 400 172 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:23:21 +0000] "POST /api/v1/login HTTP/1.1" 404 57 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:23:41 +0000] "POST /api/v1/login HTTP/1.1" 404 57 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:23:43 +0000] "POST /api/v1/login HTTP/1.1" 404 57 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:23:45 +0000] "POST /api/v1/login HTTP/1.1" 404 57 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:23:54 +0000] "GET /api/v1/others-users HTTP/1.1" 401 26 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:24:18 +0000] "POST /api/v1/login HTTP/1.1" 404 57 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:24:32 +0000] "POST /api/v1/login HTTP/1.1" 200 745 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:24:44 +0000] "GET /api/v1/all-users HTTP/1.1" 200 982 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:25:19 +0000] "POST /api/v1/login HTTP/1.1" 400 45 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:26:10 +0000] "POST /api/v1/login HTTP/1.1" 200 738 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [22/Oct/2024:13:26:27 +0000] "POST /api/v1/login HTTP/1.1" 200 738 "-" "PostmanRuntime/7.42.0"
+

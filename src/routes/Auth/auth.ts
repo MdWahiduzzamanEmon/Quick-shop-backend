@@ -1,14 +1,18 @@
 import express from "express";
 import type { Request, Response, NextFunction } from "express";
 import { showResponse } from "../../constant/showResponse";
-import { checkUserExist } from "../../services/Auth/auth.service";
-import { comparePassword } from "../../Others/SecurePassword";
+import { checkUserExist, register } from "../../services/Auth/auth.service";
+import { comparePassword, hashPassword } from "../../Others/SecurePassword";
 import exclude from "../../Others/DataExcludeFunction/exclude";
 import { cookieResponse, generateToken } from "../../Others/JWT";
-import { loggin_status } from "@prisma/client";
+import { loggin_status, Role } from "@prisma/client";
 import { createLoginHistory } from "../../services/History/LoginHistory/loginHistory.service";
 import { StoreInCache } from "../../Redis/redis";
 import { leftPushToList } from "../../Redis";
+import {
+  unlinkFile,
+  uploadMiddleware,
+} from "../../Others/File/fileUploadController";
 
 export const authRoute = express.Router();
 
@@ -90,7 +94,7 @@ const loginHandler: express.RequestHandler = async (
     }
 
     //check if user exists
-    const existUser = (await checkUserExist(email, mobile)) as any;
+    const existUser = (await checkUserExist(email, mobile, username)) as any;
     //   console.log(existUser);
     if (!existUser) {
       showResponse(res, {
@@ -187,6 +191,123 @@ const loginHandler: express.RequestHandler = async (
 authRoute.post("/login", loginHandler);
 
 //register
+
+const registerHandler: express.RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  const reqData = req as any;
+  try {
+    const { email, mobile, firstName, lastName, username, password, role } =
+      reqData.body;
+    const profile_picture = reqData?.fileUrl?.[0] || {};
+
+    // console.log(profile_picture);
+
+    if (!email || !mobile || !username) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide email ,mobile number and username",
+      });
+      return;
+    }
+
+    //if email then check email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (email && !emailRegex.test(email)) {
+      showResponse(res, {
+        message: "Please provide a valid email",
+      });
+      await unlinkFile(profile_picture?.filename);
+      return;
+    }
+
+    //vlaidate username
+    const usernameRegex = /^[a-zA-Z0-9_]{1,15}$/;
+
+    if (username && !usernameRegex.test(username)) {
+      showResponse(res, {
+        message:
+          "Please provide a valid username. Username must be alphanumeric and less than 15 characters",
+      });
+      await unlinkFile(profile_picture?.filename);
+      return;
+    }
+
+    //check if user already exist
+    const existUser = await checkUserExist(email, mobile, username);
+    if (existUser) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: `User already exist with your provided email, mobile or username.Please login or change your email, mobile or username to continue`,
+      });
+      await unlinkFile(profile_picture?.filename);
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
+    if (!password || !passwordRegex.test(password)) {
+      showResponse(res, {
+        message:
+          "Please provide a valid password. It must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number",
+      });
+      await unlinkFile(profile_picture?.filename);
+      return;
+    }
+
+    if (role && Role[role as keyof typeof Role] === undefined) {
+      await unlinkFile(profile_picture?.filename);
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message:
+          "Please provide a valid role. If you did't know, then contact our support",
+      });
+
+      return;
+    }
+
+    //make password hash
+    const hashedPassword = await hashPassword(password);
+    //create user
+    const user = await register(
+      email,
+      mobile,
+      firstName,
+      lastName,
+      username,
+      hashedPassword,
+      profile_picture,
+      role
+    );
+
+    if (!user) {
+      await unlinkFile(profile_picture?.filename);
+
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "User creation failed",
+      });
+      return;
+    }
+
+    showResponse(res, {
+      message: "User created successfully",
+    });
+    return;
+  } catch (error: any) {
+    await unlinkFile(reqData?.fileUrl?.[0]?.filename as unknown as any);
+    next(error);
+  }
+};
+
+authRoute.post("/register", uploadMiddleware, registerHandler);
 
 //logout
 
