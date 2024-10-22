@@ -7,9 +7,6 @@ export const getOthersUsers = async () => {
       updatedAt: true,
       password: true,
     },
-    include: {
-      loggin_history: true,
-    },
   });
   return users;
 };

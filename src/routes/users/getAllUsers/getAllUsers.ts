@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import { getAllUsers } from "../../../services/Users/getAllUsers/getAllUsers.service";
 import { showResponse } from "../../../constant/showResponse";
+import { verifyTokenMiddleware } from "../../../Others/JWT";
 
 export const allUsersRoute = express.Router();
 
@@ -23,4 +24,4 @@ const getAllUsersHandler: express.RequestHandler = async (
   }
 };
 
-allUsersRoute.get("/all-users", getAllUsersHandler);
+allUsersRoute.get("/all-users", verifyTokenMiddleware, getAllUsersHandler);

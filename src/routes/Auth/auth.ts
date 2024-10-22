@@ -8,6 +8,7 @@ import { cookieResponse, generateToken } from "../../Others/JWT";
 import { loggin_status } from "@prisma/client";
 import { createLoginHistory } from "../../services/History/LoginHistory/loginHistory.service";
 import { StoreInCache } from "../../Redis/redis";
+import { leftPushToList } from "../../Redis";
 
 export const authRoute = express.Router();
 
@@ -114,7 +115,7 @@ const loginHandler: express.RequestHandler = async (
         message: `Incorrect password`,
       });
 
-      await createLoginHistory({
+      const dataRes = await createLoginHistory({
         userId: existUser?.userId,
         ipAddress,
         device,
@@ -125,7 +126,7 @@ const loginHandler: express.RequestHandler = async (
         otherUsersId: existUser?.id,
         note: "Incorrect password",
       });
-
+      await leftPushToList("login-history", dataRes);
       return;
     }
 
@@ -171,7 +172,7 @@ const loginHandler: express.RequestHandler = async (
 
       if (result) {
         //store in redis
-        StoreInCache("login_history", "login_history", result);
+        await leftPushToList("login-history", result);
       }
     } catch (error: any) {
       next(error);

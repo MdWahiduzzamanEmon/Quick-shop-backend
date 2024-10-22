@@ -2,6 +2,7 @@ import express from "express";
 import type { Request, Response, NextFunction } from "express";
 import { getOthersUsers } from "../../../services/Users/getOthersUsers/getOthersUsers.service";
 import { showResponse } from "../../../constant/showResponse";
+import { verifyTokenMiddleware } from "../../../Others/JWT";
 
 export const othersUsersRoute = express.Router();
 
@@ -23,4 +24,8 @@ const getOthersUsersHandler: express.RequestHandler = async (
   }
 };
 
-othersUsersRoute.get("/others-users", getOthersUsersHandler);
+othersUsersRoute.get(
+  "/others-users",
+  verifyTokenMiddleware,
+  getOthersUsersHandler
+);

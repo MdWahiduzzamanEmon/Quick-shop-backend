@@ -12,7 +12,6 @@ export const getAllUsers = async () => {
           password: true,
         },
       },
-      loggin_history: true,
     },
   });
   return users;

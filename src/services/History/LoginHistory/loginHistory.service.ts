@@ -79,3 +79,26 @@ export const createLoginHistory = async (body: ILoginHistory) => {
 
   return loginHistory;
 };
+
+//single user login history
+export const getSingleLoginHistory = async (
+  id: string,
+  last_login?: boolean
+) => {
+  // Set default value for last_login
+  const loginHistory = await db.loggin_history.findFirst({
+    where: {
+      AND: [{ userId: id }, { status: "SUCCESS" }],
+    },
+    select: {
+      id: true,
+      userId: true,
+      loginAt: true,
+      location: true,
+      ipAddress: true,
+    },
+    orderBy: last_login ? { loginAt: "desc" } : undefined, // Order by loginAt if last_login is true
+  });
+
+  return loginHistory;
+};

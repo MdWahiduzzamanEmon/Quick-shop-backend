@@ -1,29 +1,41 @@
-// In-memory cache implementation
-type CacheStore = {
-  [key: string]: { data: any; expiresAt: number };
-};
+import { client } from "../server";
 
-const cache: CacheStore = {};
-
-// Function to set data in the cache
-const setCache = (key: string, data: any, expirySeconds: number = 3600) => {
-  const expiresAt = Date.now() + expirySeconds * 1000; // Calculate expiry timestamp in milliseconds = expirySeconds * 1000=> 1 hour
-  cache[key] = { data, expiresAt };
-};
-
-// Function to get data from the cache
-const getCache = (key: string): any | null => {
-  const cachedItem = cache[key];
-
-  if (!cachedItem) return null;
-
-  // Check if the cache has expired
-  if (Date.now() > cachedItem.expiresAt) {
-    delete cache[key]; // Remove expired item
-    return null;
+// Function to set initial array in Redis
+const setInitialArray = async (listKey: string, initialArray: any[]) => {
+  try {
+    // Use RPUSH to set the initial array
+    await client.rPush(
+      listKey,
+      initialArray.map((item) => JSON.stringify(item))
+    );
+    // console.log(`Initialized ${listKey} with array:`, initialArray);
+  } catch (error) {
+    console.error("Error initializing array in Redis:", error);
   }
-
-  return cachedItem.data;
 };
 
-export { setCache, getCache };
+// Function to Left Push an item into a Redis List
+const leftPushToList = async (listKey: string, value: any) => {
+  try {
+    await client.lPush(listKey, JSON.stringify(value));
+    console.log(`Pushed ${value} to ${listKey}`);
+  } catch (error) {
+    console.error("Error pushing to Redis list:", error);
+  }
+};
+
+// Function to retrieve the list from Redis
+const getListFromRedis = async (listKey: string) => {
+  try {
+    const list = await client.lRange(listKey, 0, -1);
+    // console.log(`Retrieved list from ${listKey}:`, list);
+    const parsedList = list?.map((item) => JSON.parse(item));
+
+    return parsedList;
+  } catch (error) {
+    console.error("Error retrieving list from Redis:", error);
+    return [];
+  }
+};
+
+export { setInitialArray, leftPushToList, getListFromRedis };
