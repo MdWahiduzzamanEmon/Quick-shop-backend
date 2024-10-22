@@ -7,6 +7,7 @@ import exclude from "../../Others/DataExcludeFunction/exclude";
 import { cookieResponse, generateToken } from "../../Others/JWT";
 import { loggin_status } from "@prisma/client";
 import { createLoginHistory } from "../../services/History/LoginHistory/loginHistory.service";
+import { StoreInCache } from "../../Redis/redis";
 
 export const authRoute = express.Router();
 
@@ -154,7 +155,7 @@ const loginHandler: express.RequestHandler = async (
     });
 
     try {
-      await createLoginHistory({
+      const result = await createLoginHistory({
         userId: existUser?.userId,
         ipAddress,
         device,
@@ -165,6 +166,13 @@ const loginHandler: express.RequestHandler = async (
         otherUsersId: existUser?.id,
         note: "Login successful",
       });
+
+      //contact new result in redis store previous result
+
+      if (result) {
+        //store in redis
+        StoreInCache("login_history", "login_history", result);
+      }
     } catch (error: any) {
       next(error);
     }

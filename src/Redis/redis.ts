@@ -7,6 +7,11 @@ async function StoreInCache(
   data: any,
   expiry = 3600
 ) {
+  const existingData = await client.hGet(key, field);
+  const dataArray = existingData ? JSON.parse(existingData) : [];
+
+  // Push new data to the array
+  dataArray.push(data);
   // Store binary data directly in Redis
   await client.hSet(key, field, JSON.stringify(data));
   await client.expire(key, expiry);

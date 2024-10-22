@@ -110,6 +110,16 @@ app.get("/", (req, res) => {
 
 app.use(ErrorHandler);
 
+app.get("/clearCache", async (_req, res) => {
+  const keys = (await client?.keys("*")) || [];
+  console.log(keys);
+  //clear cache
+  for (const key of keys) {
+    await client.del(key);
+  }
+  res.send("Cache cleared successfully");
+});
+
 const PORT: number = parseInt(process.env.PORT || "4000", 10);
 
 serverInstance.listen(PORT, () => {

@@ -1,29 +1,60 @@
+import { paginationCustomResult } from "../../../Others/paginationCustomResult";
 import { ILoginHistory } from "../../../routes/Auth/auth";
+import { LoginHistoryQuery } from "../../../routes/History/LoginHistory/LoginHistory";
 import { db } from "../../../utils/db.server";
 
-export const getLoginHistory = async (last_login?: boolean) => {
-  const res = await db.loggin_history.findMany({
-    include: {
-      otherUsers: {
-        select: {
-          id: true,
-          role: true,
-          email: true,
-          username: true,
-          mobile: true,
+export const getLoginHistory = async ({
+  last_login,
+  pageNumber,
+  rowPerPage,
+  pagination,
+}: LoginHistoryQuery) => {
+  //pagination
+  const pageNumbers = pageNumber ? parseInt(pageNumber.toString()) : 1;
+  const resultPerPage = rowPerPage ? parseInt(rowPerPage.toString()) : 10;
+
+  const [result, total] = await Promise.all([
+    db.loggin_history.findMany({
+      ...(pagination && {
+        skip: (pageNumbers - 1) * resultPerPage,
+        take: resultPerPage,
+      }),
+      include: {
+        otherUsers: {
+          select: {
+            id: true,
+            role: true,
+            email: true,
+            username: true,
+            mobile: true,
+          },
         },
       },
-    },
-    omit: {
-      createdAt: true,
-      updatedAt: true,
-      otherUsersId: true,
-    },
-    orderBy: {
-      loginAt: "desc",
-    },
-    //if last_login then only last success status login history
-    ...(last_login && { take: 1, where: { status: "SUCCESS" } }),
+      omit: {
+        createdAt: true,
+        updatedAt: true,
+        otherUsersId: true,
+      },
+      orderBy: {
+        loginAt: "desc",
+      },
+      //if last_login then only last success status login history
+      ...(last_login && { take: 1, where: { status: "SUCCESS" } }),
+    }),
+    pagination
+      ? db.loggin_history.count({
+          ...(last_login && { take: 1, where: { status: "SUCCESS" } }),
+        })
+      : Promise.resolve(0),
+  ]);
+
+  if (!pagination) return result;
+
+  const res = paginationCustomResult({
+    pageNumbers,
+    resultPerPage,
+    result,
+    totalResultCount: total,
   });
 
   return res;
