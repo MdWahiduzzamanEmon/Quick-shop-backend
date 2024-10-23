@@ -213,7 +213,7 @@ const loginHandler: express.RequestHandler = async (
 
     //
   } catch (error: any) {
-    next(error);
+    errorMessage(res, error, next);
   }
 };
 

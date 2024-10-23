@@ -69,7 +69,7 @@ export const verifyTokenMiddleware = async (req: any, res: any, next: any) => {
 
 export const cookieResponse = async (res: any, token: string) => {
   // expire in 1 hour
-  const oneHour = 60 * 60 * 1000;
+  const oneHour = 60 * 60 * 1000; //1 hour
   res.cookie("token", token, {
     httpOnly: true, //cookie is not accessible by client side
     secure: true, //https

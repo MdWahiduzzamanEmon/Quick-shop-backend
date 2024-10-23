@@ -396,3 +396,29 @@
 
 ::1 - - [22/Oct/2024:22:39:24 +0000] "GET /api/v1/login-history?pagination=true HTTP/1.1" 200 1966 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [23/Oct/2024:17:33:04 +0000] "POST /api/v1/login HTTP/1.1" 200 521 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [23/Oct/2024:17:35:56 +0000] "POST /api/v1/login HTTP/1.1" 200 521 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [23/Oct/2024:17:36:07 +0000] "POST /api/v1/employee-register HTTP/1.1" 400 174 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [23/Oct/2024:17:36:55 +0000] "GET /api/v1/all-users HTTP/1.1" 200 3045 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [23/Oct/2024:17:37:43 +0000] "GET /api/v1/others-users HTTP/1.1" 200 622 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [23/Oct/2024:17:38:33 +0000] "GET /api/v1/all-users/cm2kz96ji0001uzo7d82etdis HTTP/1.1" 404 181 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [23/Oct/2024:17:38:37 +0000] "GET /api/v1/all-users/ HTTP/1.1" 200 3045 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [23/Oct/2024:17:38:42 +0000] "GET /api/v1/others-users/cm2kz96ji0001uzo7d82etdis HTTP/1.1" 404 184 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [23/Oct/2024:17:38:44 +0000] "GET /api/v1/others-users/ HTTP/1.1" 200 622 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [23/Oct/2024:17:38:47 +0000] "GET /api/v1/others-users/cm2kz96ji0001uzo7d82etdis HTTP/1.1" 404 184 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [23/Oct/2024:17:38:50 +0000] "GET /api/v1/others-users/ HTTP/1.1" 200 622 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [23/Oct/2024:17:38:59 +0000] "GET /api/v1/login-history HTTP/1.1" 200 4600 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [23/Oct/2024:17:49:11 +0000] "GET /api/v1/all-users/ HTTP/1.1" 200 3045 "-" "PostmanRuntime/7.42.0"
+
