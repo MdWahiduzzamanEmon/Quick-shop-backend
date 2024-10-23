@@ -71,7 +71,7 @@ export const cookieResponse = async (res: any, token: string) => {
   // expire in 1 hour
   const oneHour = 60 * 60 * 1000; //1 hour
   res.cookie("token", token, {
-    httpOnly: false, //cookie is not accessible by client side
+    httpOnly: false, //cookie can't be accessed or modified in the client side
     secure: true, //https
     sameSite: "none", //cross site
     maxAge: oneHour, //1 hour
