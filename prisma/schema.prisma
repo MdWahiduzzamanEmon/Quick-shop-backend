@@ -15,7 +15,6 @@ datasource db {
 }
 
 enum Role {
-  ADMINISTRATOR
   GENERAL_USER
   RETAILER
   SUPPLIER
@@ -46,9 +45,27 @@ model User {
   otherUsers     otherUsers? //only for general user and retailer
   worker         worker? //only for operator, raider, representative
   loggin_history loggin_history[]
+  admin          admin?
 
   @@index([id, email, mobile, username])
 }
+
+// model for admin
+model admin {
+  id        String      @id @default(cuid())
+  User      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String      @unique
+  fullName  String?
+  role      String      @default("ADMIN")
+  isActive  user_status @default(ACTIVE)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([id, userId, role, isActive])
+  @@map("admin")
+}
+
+// model for general user and retailer
 
 model otherUsers {
   id              String      @id @default(cuid())
@@ -59,10 +76,13 @@ model otherUsers {
   profile_picture Json        @default("{}")
   role            Role        @default(GENERAL_USER)
   isActive        user_status @default(ACTIVE)
+  userUniqueId    String?     @unique @default(cuid())
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
+  order           Int         @default(0) //for sorting purpose
+  userJoinDate    DateTime    @default(now())
 
-  @@index([id, userId, role, isActive])
+  @@index([id, userId, role, isActive, userUniqueId])
   @@map("otherUsers")
 }
 
@@ -86,6 +106,7 @@ model worker {
   profile_picture     Json        @default("{}")
   address             String?     @default("")
   zipCode             String?     @default("")
+  userJoinDate        DateTime    @default(now())
   createdAt           DateTime    @default(now())
   updatedAt           DateTime    @updatedAt
   isActive            user_status @default(ACTIVE)

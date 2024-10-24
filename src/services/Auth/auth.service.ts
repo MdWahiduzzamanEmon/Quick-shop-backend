@@ -17,26 +17,51 @@ export const checkUserExist = async (
     include: {
       otherUsers: {
         select: {
+          id: true,
           role: true,
         },
       },
       worker: {
         select: {
+          id: true,
+          role: true,
+        },
+      },
+      admin: {
+        select: {
+          id: true,
           role: true,
         },
       },
     },
   });
 
-  const role = user?.otherUsers ? user?.otherUsers?.role : user?.worker?.role;
-  const { otherUsers, worker, ...userWithoutOtherUsers } = user ?? {};
+  const role = user?.otherUsers
+    ? user?.otherUsers?.role
+    : user?.worker
+    ? user?.worker?.role
+    : user?.admin?.role;
 
-  return role ? { ...userWithoutOtherUsers, role } : false;
+  const customerId = user?.otherUsers?.id || null;
+  const employeeId = user?.worker?.id || null;
+  const adminId = user?.admin?.id || null;
+
+  const { otherUsers, worker, admin, ...userWithoutOtherUsers } = user ?? {};
+
+  return role
+    ? {
+        ...userWithoutOtherUsers,
+        customerId,
+        adminId,
+        employeeId,
+        role,
+      }
+    : false;
 };
 
 //register (general user+retailer)
 
-export const register = async (
+export const customerRegister = async (
   email: string,
   mobile: number,
   firstName: string,
@@ -61,7 +86,40 @@ export const register = async (
         },
       },
     },
+    include: {
+      otherUsers: {
+        select: {
+          id: true,
+          order: true,
+        },
+      },
+    },
   });
+
+  const userUniqueId = `CS-${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}-${
+    user.otherUsers?.order
+  }`;
+
+  // Use Promise.all to handle concurrent operations
+  await Promise.all([
+    // Update the userUniqueId in parallel (no need to wait)
+    db.otherUsers
+      .update({
+        where: {
+          id: user.otherUsers?.id,
+        },
+        data: {
+          userUniqueId,
+          order: {
+            increment: 1,
+          },
+        },
+      })
+      .catch((error) => {
+        // Handle any errors during the update process
+        console.error("Error updating userUniqueId:", error);
+      }),
+  ]);
 
   return user;
 };
@@ -130,7 +188,7 @@ export const workerRegister = async ({
     workerRes.worker?.order
   }`;
 
-  Promise.all([
+  await Promise.all([
     db.worker.update({
       where: {
         id: workerRes.worker?.id,

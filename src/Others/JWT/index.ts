@@ -69,11 +69,11 @@ export const verifyTokenMiddleware = async (req: any, res: any, next: any) => {
 
 export const cookieResponse = async (res: any, token: string) => {
   // expire in 1 hour
-  const oneHour = 60 * 60 * 1000; //1 hour
+  const oneHour = 60 * 60 * 1000; // 1 hour
   res.cookie("token", token, {
-    httpOnly: false, //cookie can't be accessed or modified in the client side
+    httpOnly: true, //cookie is not accessible by client side
     secure: true, //https
-    sameSite: "none", //cross site
+    sameSite: "none", //cross site request
     maxAge: oneHour, //1 hour
   });
   // Access-Control-Allow-Origin

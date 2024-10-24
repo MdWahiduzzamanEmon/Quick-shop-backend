@@ -4,7 +4,7 @@ import { showResponse } from "../../constant/showResponse";
 import {
   checkUserExist,
   deleteUser,
-  register,
+  customerRegister,
   workerRegister,
 } from "../../services/Auth/auth.service";
 import { comparePassword, hashPassword } from "../../Others/SecurePassword";
@@ -16,7 +16,7 @@ import {
 } from "../../Others/JWT";
 import { loggin_status, Role, WorkerRole } from "@prisma/client";
 import { createLoginHistory } from "../../services/History/LoginHistory/loginHistory.service";
-import { StoreInCache } from "../../Redis/redis";
+// import { StoreInCache } from "../../Redis/redis";
 import { leftPushToList } from "../../Redis";
 import {
   unlinkFile,
@@ -219,9 +219,9 @@ const loginHandler: express.RequestHandler = async (
 
 authRoute.post("/login", loginHandler);
 
-//register
+//customerRegister
 
-const registerHandler: express.RequestHandler = async (
+const customerRegisterHandler: express.RequestHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -308,7 +308,7 @@ const registerHandler: express.RequestHandler = async (
     //make password hash
     const hashedPassword = await hashPassword(password);
     //create user
-    const user = await register(
+    const user = await customerRegister(
       email,
       mobile,
       firstName,
@@ -340,7 +340,7 @@ const registerHandler: express.RequestHandler = async (
   }
 };
 
-authRoute.post("/register", uploadMiddleware, registerHandler);
+authRoute.post("/customer-register", uploadMiddleware, customerRegisterHandler);
 
 //employee-register
 
@@ -370,7 +370,18 @@ const employeeRegisterHandler: express.RequestHandler = async (
   next: NextFunction
 ): Promise<void> => {
   const reqData = req as any;
+  const { user } = reqData;
+  // console.log(user);
   try {
+    if (user?.role !== "ADMIN") {
+      showResponse(res, {
+        status: 403,
+        success: false,
+        message: "Unauthorized access.Only Admin can perform this action",
+      });
+      return;
+    }
+
     const {
       fullName,
       username,
@@ -514,7 +525,12 @@ const employeeRegisterHandler: express.RequestHandler = async (
   }
 };
 
-authRoute.post("/employee-register", uploadMiddleware, employeeRegisterHandler);
+authRoute.post(
+  "/employee-register",
+  verifyTokenMiddleware,
+  uploadMiddleware,
+  employeeRegisterHandler
+);
 
 //logout
 

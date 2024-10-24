@@ -10,11 +10,10 @@ async function seed() {
       password: convertHashedPassword,
       mobile: "123456789",
       email: "admin@admin.com",
-      otherUsers: {
+      admin: {
         create: {
-          firstName: "admin",
-          lastName: "admin",
-          role: "ADMINISTRATOR",
+          fullName: "admin",
+          role: "ADMIN",
         },
       },
     },

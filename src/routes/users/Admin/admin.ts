@@ -1,30 +1,30 @@
 import express, { Request, Response, NextFunction } from "express";
-import { getAllUsers } from "../../../services/Users/getAllUsers/getAllUsers.service";
 import { showResponse } from "../../../constant/showResponse";
 import { verifyTokenMiddleware } from "../../../Others/JWT";
+import { getAdminUser } from "../../../services/Users/Admin/admin.service";
 
-export const allUsersRoute = express.Router();
+export const adminRoute = express.Router();
 
 // Get all users
 
-const getAllUsersHandler: express.RequestHandler = async (
-  _req: Request,
+const getAdminHandler: express.RequestHandler = async (
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { user } = _req as any;
+  const { user } = req as any;
   try {
     if (user?.role !== "ADMIN") {
       showResponse(res, {
         status: 403,
         success: false,
-        message: "Unauthorized access.Only Admin can perform this action",
+        message: "Unauthorized access",
       });
       return;
     }
-    const users = await getAllUsers();
+    const users = await getAdminUser();
     showResponse(res, {
-      message: "All Users fetched successfully",
+      message: "Admin Users fetched successfully",
       data: users,
     });
     return;
@@ -33,4 +33,4 @@ const getAllUsersHandler: express.RequestHandler = async (
   }
 };
 
-allUsersRoute.get("/all-users", verifyTokenMiddleware, getAllUsersHandler);
+adminRoute.get("/admin", verifyTokenMiddleware, getAdminHandler);

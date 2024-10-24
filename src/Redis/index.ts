@@ -18,7 +18,7 @@ const setInitialArray = async (listKey: string, initialArray: any[]) => {
 const leftPushToList = async (listKey: string, value: any) => {
   try {
     await client.lPush(listKey, JSON.stringify(value));
-    console.log(`Pushed ${value} to ${listKey}`);
+    console.log(`Pushed to ${listKey}:`, value);
   } catch (error) {
     console.error("Error pushing to Redis list:", error);
   }

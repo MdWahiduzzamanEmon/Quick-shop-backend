@@ -1,20 +1,24 @@
 import { db } from "../../../utils/db.server";
 
-export const getOthersUsers = async () => {
-  const users = await db.otherUsers.findMany({
+export const getEmployees = async () => {
+  return await db.worker.findMany({
     omit: {
       createdAt: true,
       updatedAt: true,
     },
   });
-  return users;
 };
 
-//get single customer by id
-export const getSingleCustomerByID = async (customerID: string) => {
-  return await db.otherUsers.findFirst({
+//get single employee
+export const getSingleEmployeeByID = async (employeeID: string) => {
+  return await db.worker.findFirst({
     where: {
-      id: customerID,
+      id: employeeID,
+    },
+    omit: {
+      createdAt: true,
+      updatedAt: true,
+      userId: true,
     },
     include: {
       user: {
