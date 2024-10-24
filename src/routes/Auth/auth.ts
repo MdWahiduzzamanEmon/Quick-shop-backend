@@ -247,6 +247,8 @@ const customerRegisterHandler: express.RequestHandler = async (
 
     if (email && !emailRegex.test(email)) {
       showResponse(res, {
+        status: 400,
+        success: false,
         message: "Please provide a valid email",
       });
       await unlinkFile(profile_picture?.filename);
@@ -257,6 +259,8 @@ const customerRegisterHandler: express.RequestHandler = async (
 
     if (username && !usernameRegex.test(username)) {
       showResponse(res, {
+        status: 400,
+        success: false,
         message:
           "Please provide a valid username. Username must be alphanumeric and less than 15 characters",
       });
@@ -278,6 +282,8 @@ const customerRegisterHandler: express.RequestHandler = async (
 
     if (!password) {
       showResponse(res, {
+        status: 400,
+        success: false,
         message: "Please provide password",
       });
       await unlinkFile(profile_picture?.filename);
@@ -286,6 +292,8 @@ const customerRegisterHandler: express.RequestHandler = async (
 
     if (!passwordRegex.test(password)) {
       showResponse(res, {
+        status: 400,
+        success: false,
         message:
           "Please provide a valid password. It must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number",
       });
@@ -422,6 +430,8 @@ const employeeRegisterHandler: express.RequestHandler = async (
     //make password hash
     if (!password) {
       showResponse(res, {
+        status: 400,
+        success: false,
         message: "Please provide password",
       });
       return;
@@ -431,6 +441,8 @@ const employeeRegisterHandler: express.RequestHandler = async (
     //email
     if (email && !emailRegex.test(email)) {
       showResponse(res, {
+        status: 400,
+        success: false,
         message: "Please provide a valid email",
       });
       return;
@@ -439,6 +451,8 @@ const employeeRegisterHandler: express.RequestHandler = async (
     //mobile
     if (!mobile) {
       showResponse(res, {
+        status: 400,
+        success: false,
         message: "Please provide mobile number",
       });
       return;
@@ -447,6 +461,8 @@ const employeeRegisterHandler: express.RequestHandler = async (
     //role
     if (role && WorkerRole[role as keyof typeof WorkerRole] === undefined) {
       showResponse(res, {
+        status: 400,
+        success: false,
         message:
           "Please provide a valid role. If you did't know, then contact our support",
       });
@@ -459,6 +475,8 @@ const employeeRegisterHandler: express.RequestHandler = async (
     //surname
     if (username && !usernameRegex.test(username)) {
       showResponse(res, {
+        status: 400,
+        success: false,
         message: "Please provide a valid surname",
       });
       return;
