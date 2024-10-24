@@ -41,6 +41,15 @@ const getSingleEmployeeByIDHandler: express.RequestHandler = async (
 
     const user = await getSingleEmployeeByID(employeeID);
 
+    if (!user) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Employee not found with this ID",
+      });
+      return;
+    }
+
     //http cache
     // res.setHeader("Cache-Control", "public, max-age=86400 must-revalidate"); // 1 day
 

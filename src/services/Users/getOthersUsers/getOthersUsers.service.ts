@@ -17,7 +17,7 @@ export const getSingleCustomerByID = async (customerID: string) => {
       id: customerID,
     },
     include: {
-      user: {
+      User: {
         select: {
           id: true,
           email: true,

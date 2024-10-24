@@ -29,7 +29,7 @@ const getListFromRedis = async (listKey: string) => {
   try {
     const list = await client.lRange(listKey, 0, -1);
     // console.log(`Retrieved list from ${listKey}:`, list);
-    const parsedList = list?.map((item) => JSON.parse(item));
+    const parsedList = list?.map((item: any) => JSON.parse(item));
 
     return parsedList;
   } catch (error) {

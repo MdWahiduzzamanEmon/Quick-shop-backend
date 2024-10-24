@@ -166,3 +166,29 @@
 
 ::1 - - [24/Oct/2024:14:19:22 +0000] "GET /api/v1/customers/ HTTP/1.1" 403 97 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [24/Oct/2024:14:30:39 +0000] "POST /api/v1/customer-register HTTP/1.1" 400 115 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:14:30:50 +0000] "POST /api/v1/customer-register HTTP/1.1" 200 67 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:14:31:44 +0000] "POST /api/v1/login HTTP/1.1" 200 686 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:14:32:05 +0000] "GET /api/v1/customers/ HTTP/1.1" 403 97 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:14:32:06 +0000] "GET /api/v1/customers/ HTTP/1.1" 403 97 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:14:32:46 +0000] "GET /api/v1/customers/ HTTP/1.1" 200 529 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:14:32:59 +0000] "GET /api/v1/employees/cm2nehwd80001nawowocctja8 HTTP/1.1" 200 83 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:14:33:31 +0000] "GET /api/v1/employees/cm2nehwd80001nawowocctja8 HTTP/1.1" 400 61 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:14:33:49 +0000] "GET /api/v1/customers/cm2nehwd80001nawowocctja8 HTTP/1.1" 200 710 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:14:34:20 +0000] "GET /api/v1/customers/cm2nehwd80001nawowocctja8 HTTP/1.1" 200 710 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:14:34:21 +0000] "GET /api/v1/customers/cm2nehwd80001nawowocctja8 HTTP/1.1" 200 710 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:14:34:23 +0000] "GET /api/v1/customers/cm2nehwd80001nawowocctja8 HTTP/1.1" 200 710 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:14:34:24 +0000] "GET /api/v1/customers/cm2nehwd80001nawowocctja8 HTTP/1.1" 200 710 "-" "PostmanRuntime/7.42.0"
+
