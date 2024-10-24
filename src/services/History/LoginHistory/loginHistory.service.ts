@@ -19,22 +19,7 @@ export const getLoginHistory = async ({
         skip: (pageNumbers - 1) * resultPerPage,
         take: resultPerPage,
       }),
-      // include: {
-      //   user: {
-      //     select: {
-      //       otherUsers: {
-      //         select: {
-      //           role: true,
-      //         },
-      //       },
-      //       worker: {
-      //         select: {
-      //           role: true,
-      //         },
-      //       },
-      //     },
-      //   },
-      // },
+
       omit: {
         createdAt: true,
         updatedAt: true,

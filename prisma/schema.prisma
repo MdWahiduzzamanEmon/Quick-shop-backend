@@ -143,3 +143,28 @@ model loggin_history {
   @@index([userId, status]) //indexing for faster search
   @@map("logginInfo") //table name
 }
+
+// MASTER MODULES STARTS HERE
+
+enum product_status {
+  ACTIVE
+  INACTIVE
+  PENDING
+  SUSPENDED
+  DELETED
+}
+
+//product category
+model product_category {
+  id           String         @id @default(cuid())
+  product_name String
+  description  String?
+  image        Json           @default("{}")
+  isActive     product_status @default(PENDING)
+  order        Int            @default(0) //for sorting purpose
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([id, product_name, isActive])
+  @@map("product_category")
+}

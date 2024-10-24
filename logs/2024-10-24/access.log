@@ -192,3 +192,173 @@
 
 ::1 - - [24/Oct/2024:14:34:24 +0000] "GET /api/v1/customers/cm2nehwd80001nawowocctja8 HTTP/1.1" 200 710 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [24/Oct/2024:15:06:08 +0000] "GET /api/v1/product-category HTTP/1.1" 404 162 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:18:23 +0000] "GET /api/v1/product-category HTTP/1.1" 401 26 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:18:34 +0000] "POST /api/v1/login HTTP/1.1" 200 686 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:18:36 +0000] "GET /api/v1/product-category HTTP/1.1" 401 26 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:18:48 +0000] "GET /api/v1/product-category HTTP/1.1" 401 26 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:19:01 +0000] "GET /api/v1/product-category HTTP/1.1" 200 83 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:21:54 +0000] "GET /api/v1/product-category HTTP/1.1" 200 83 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:22:06 +0000] "GET /api/v1/product-category?pagination=true HTTP/1.1" 200 164 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:22:21 +0000] "GET /api/v1/product-category?pagination=true&pageNumber=1&rowPerPage=10 HTTP/1.1" 200 164 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:22:32 +0000] "GET /api/v1/product-category?pageNumber=1&rowPerPage=10 HTTP/1.1" 200 83 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:32:32 +0000] "GET /api/v1/product-category?isActive=true HTTP/1.1" 200 83 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:42:30 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:42:40 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:42:58 +0000] "POST /api/v1/product-category HTTP/1.1" 200 138 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:49:06 +0000] "POST /api/v1/product-category HTTP/1.1" 200 143 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:49:22 +0000] "POST /api/v1/product-category HTTP/1.1" 200 154 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:50:03 +0000] "POST /api/v1/product-category HTTP/1.1" 200 175 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:51:38 +0000] "POST /api/v1/product-category HTTP/1.1" 200 192 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:51:55 +0000] "POST /api/v1/product-category HTTP/1.1" 200 207 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:52:17 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:52:31 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:53:04 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:53:32 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:54:55 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:56:14 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:15:59:29 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:01:15 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:01:53 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:02:12 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:02:15 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:12:28 +0000] "GET / HTTP/1.1" 200 11 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:12:28 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:12:57 +0000] "POST /product-category HTTP/1.1" 404 156 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:13:38 +0000] "POST /api/v1/product-category HTTP/1.1" 401 26 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:13:55 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:14:10 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:15:20 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:17:18 +0000] "POST /api/v1/product-category HTTP/1.1" 200 120 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:17:27 +0000] "POST /api/v1/product-category HTTP/1.1" 200 238 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:17:49 +0000] "POST /api/v1/product-category HTTP/1.1" 200 238 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:18:37 +0000] "POST /api/v1/product-category HTTP/1.1" 200 106 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:22:06 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:22:57 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:26:12 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:26:27 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:27:33 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:28:14 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:28:34 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:29:46 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1242 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:30:15 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:30:30 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:30:58 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:31:24 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:31:57 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:32:59 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1152 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:33:12 +0000] "POST /api/v1/product-category HTTP/1.1" 200 79 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:35:32 +0000] "POST /api/v1/product-category HTTP/1.1" 200 194 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:36:52 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1231 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:37:10 +0000] "POST /api/v1/product-category HTTP/1.1" 200 124 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:37:58 +0000] "POST /api/v1/product-category HTTP/1.1" 200 532 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:49:57 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1380 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:50:35 +0000] "POST /api/v1/product-category HTTP/1.1" 200 83 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [24/Oct/2024:16:50:47 +0000] "GET /api/v1/product-category HTTP/1.1" 401 26 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:50:55 +0000] "POST /api/v1/login HTTP/1.1" 200 686 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:51:02 +0000] "GET /api/v1/product-category HTTP/1.1" 200 738 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:52:16 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1136 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:55:00 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1136 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:55:21 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1136 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:55:37 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1136 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:56:26 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1152 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:57:04 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1152 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:57:52 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1183 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:58:29 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1183 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:58:40 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1183 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:59:13 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1183 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:59:22 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1183 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:59:44 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1183 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:16:59:59 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1402 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:17:00:16 +0000] "POST /api/v1/product-category HTTP/1.1" 500 1362 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:17:00:34 +0000] "POST /api/v1/product-category HTTP/1.1" 400 76 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:17:00:43 +0000] "POST /api/v1/product-category HTTP/1.1" 400 81 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:17:00:57 +0000] "POST /api/v1/product-category HTTP/1.1" 400 81 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:17:04:13 +0000] "GET /api/v1/product-category/ HTTP/1.1" 200 738 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:17:04:18 +0000] "GET /api/v1/product-category HTTP/1.1" 200 738 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [24/Oct/2024:17:04:24 +0000] "GET /api/v1/product-category/cm2njhoeh0000c1mrz6tkzjoz HTTP/1.1" 200 500 "-" "PostmanRuntime/7.42.0"
+
