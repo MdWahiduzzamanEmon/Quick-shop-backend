@@ -96,9 +96,9 @@ export const customerRegister = async (
     },
   });
 
-  const userUniqueId = `CS-${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}-${
-    user.otherUsers?.order
-  }`;
+  const userUniqueId = `CS-${new Date().getFullYear()}${new Date().getMonth()}${Math.floor(
+    Math.random() * 1000 // 0-999
+  )}-${user.otherUsers?.order}`;
 
   // Use Promise.all to handle concurrent operations
   await Promise.all([
@@ -184,9 +184,9 @@ export const workerRegister = async ({
   });
 
   //syncronasly update worker employeeId : EM-{current_year}{current_month}{current_date}
-  const employeeID = `EM-${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}-${
-    workerRes.worker?.order
-  }`;
+  const employeeID = `EM-${new Date().getFullYear()}${new Date().getMonth()}${Math.floor(
+    Math.random() * 1000 // 0-999
+  )}-${workerRes.worker?.order}`;
 
   await Promise.all([
     db.worker.update({
@@ -199,7 +199,10 @@ export const workerRegister = async ({
           increment: 1,
         },
       },
-    }),
+    }).catch((error) => {
+      // Handle any errors during the update process
+      console.error("Error updating employeeID:", error);
+    })
   ]);
 
   return workerRes;

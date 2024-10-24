@@ -20,7 +20,7 @@ enum Role {
   SUPPLIER
 }
 
-enum WorkerRole {
+enum WorkerRole { //employee role
   RAIDER
   OPERATOR
   REPRESENTATIVE
