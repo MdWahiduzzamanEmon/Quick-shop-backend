@@ -157,14 +157,6 @@ const updateProductCategoryHandler: RequestHandler = async (
   const { categoryID } = req.params;
   const reqData = req as any;
   try {
-    if (Object.keys(reqData?.body).length === 0) {
-      showResponse(res, {
-        status: 400,
-        success: false,
-        message: "Please provide product_categories data",
-      });
-    }
-
     const bodyData = reqData?.body as setCategoryType;
     const files = reqData?.fileUrl || [];
 
@@ -184,6 +176,7 @@ const updateProductCategoryHandler: RequestHandler = async (
       message: "Category updated successfully",
     });
   } catch (error: any) {
+    await unlinkFile(reqData?.fileUrl?.[0]?.filename);
     errorMessage(res, error, next);
   }
 };
