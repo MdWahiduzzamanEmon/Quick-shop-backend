@@ -72,7 +72,7 @@ export const cookieResponse = async (res: any, token: string) => {
   const oneHour = 60 * 60 * 1000; // 1 hour
   res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // Use secure only in production
+    secure: process.env.NODE_ENV === "production" ? true : true, // Use secure only in production
     sameSite: "none", // Allows cross-site
     maxAge: oneHour,
   });

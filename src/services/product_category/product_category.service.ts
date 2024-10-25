@@ -85,7 +85,6 @@ export const updateProductCategory = async (
   });
 };
 
-
 //delete product category
 
 export const deleteProductCategory = async (categoryID: string) => {
@@ -96,7 +95,6 @@ export const deleteProductCategory = async (categoryID: string) => {
   });
 };
 
-
 //delete multiple product category
 
 export const deleteMultipleProductCategory = async (categoryIDs: string[]) => {
@@ -105,6 +103,22 @@ export const deleteMultipleProductCategory = async (categoryIDs: string[]) => {
       id: {
         in: categoryIDs,
       },
+    },
+  });
+};
+
+//active inactive product category
+
+export const activeInactiveProductCategory = async (
+  status: product_status,
+  categoryID: string
+) => {
+  return await db.product_category.update({
+    where: {
+      id: categoryID,
+    },
+    data: {
+      isActive: status,
     },
   });
 };

@@ -4,6 +4,7 @@ import { verifyTokenMiddleware } from "../../Others/JWT";
 import errorMessage from "../../Others/ErrorMessage/errorMessage";
 import { showResponse } from "../../constant/showResponse";
 import {
+  activeInactiveProductCategory,
   createMultipleProductCategory,
   deleteMultipleProductCategory,
   deleteProductCategory,
@@ -160,6 +161,17 @@ const updateProductCategoryHandler: RequestHandler = async (
     const bodyData = reqData?.body as setCategoryType;
     const files = reqData?.fileUrl || [];
 
+    // console.log(bodyData);
+
+    if (Object.keys(bodyData)?.length === 0) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide product_categories data",
+      });
+      return;
+    }
+
     const newData: setCategoryType = {
       product_category_name: bodyData?.product_category_name,
       description: bodyData?.description,
@@ -269,4 +281,65 @@ product_categoryRoute.delete(
   "/product-category",
   verifyTokenMiddleware,
   deleteMultipleProductCategoryHandler
+);
+
+//active inactive product category
+
+const activeInactiveProductCategoryHandler: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const reqData = req as any;
+  try {
+    if (reqData?.user?.role !== "ADMIN") {
+      showResponse(res, {
+        status: 403,
+        success: false,
+        message: "Unauthorized access.Only Admin can perform this action",
+      });
+      return;
+    }
+
+    const { categoryID } = req.params;
+
+    const { status } = reqData?.body as {
+      status: product_status;
+    };
+    if (!status) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide status",
+      });
+      return;
+    }
+
+    if (product_status[status] === undefined) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Invalid status",
+      });
+      return;
+    }
+
+    const result = await activeInactiveProductCategory(status, categoryID);
+
+    if (!result) {
+      throw new Error("Error updating product category");
+    }
+
+    showResponse(res, {
+      message: "Category updated successfully",
+    });
+  } catch (error: any) {
+    errorMessage(res, error, next);
+  }
+};
+
+product_categoryRoute.put(
+  "/product-category/active-inactive/:categoryID",
+  verifyTokenMiddleware,
+  activeInactiveProductCategoryHandler
 );
