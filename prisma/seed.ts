@@ -4,16 +4,23 @@ import { hashPassword } from "../src/Others/SecurePassword/index";
 async function seed() {
   const convertHashedPassword = await hashPassword("1516");
 
-  await db.user.create({
+  await db.vendor.create({
     data: {
-      username: "admin",
-      password: convertHashedPassword,
-      mobile: "123456789",
-      email: "admin@admin.com",
-      admin: {
+      name: "Logic-Nexus It Solutions",
+      address: "Jhikargaccha, Jashore",
+      phone: "01703459656",
+      users: {
         create: {
-          fullName: "admin",
-          role: "ADMIN",
+          username: "admin",
+          password: convertHashedPassword,
+          mobile: "123456789",
+          email: "admin@admin.com",
+          admin: {
+            create: {
+              fullName: "admin",
+              role: "ADMIN",
+            },
+          },
         },
       },
     },

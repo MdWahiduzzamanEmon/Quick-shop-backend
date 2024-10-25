@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["omitApi"]
@@ -20,18 +17,42 @@ enum Role {
   SUPPLIER
 }
 
-enum WorkerRole { //employee role
+enum WorkerRole {
   RAIDER
   OPERATOR
   REPRESENTATIVE
 }
 
-enum user_status {
+enum User_status {
   ACTIVE
   INACTIVE
   PENDING
   SUSPENDED
   DELETED
+}
+
+// Main shop model: all models will be connected with this model
+
+enum ShopStatus {
+  ACTIVE
+  INACTIVE
+}
+
+// Vendor Model: Represents a shop owner or person responsible for a shop
+model Vendor {
+  id         String             @id @default(cuid())
+  name       String             @unique
+  address    String
+  phone      String?            @unique
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+  isActive   ShopStatus         @default(ACTIVE)
+  users      User[] // A vendor can have multiple users
+  products   product[] // A vendor can have multiple products
+  categories product_category[] // A vendor can have multiple product categories
+
+  @@index([id, isActive, name])
+  @@map("vendor")
 }
 
 model User {
@@ -42,22 +63,26 @@ model User {
   password       String
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
-  otherUsers     otherUsers? //only for general user and retailer
-  worker         worker? //only for operator, raider, representative
-  loggin_history loggin_history[]
-  admin          admin?
+  otherUsers     otherUsers? // Only for general user and retailer
+  worker         worker? // Only for operator, raider, representative
+  loggin_history loggin_history[] // User's login history
+  admin          admin? // User can be an admin
+  vendor         Vendor           @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId       String // Foreign key to `Vendor`
 
+  @@unique([email, mobile, username]) // Unique constraint: the combination of email, mobile, and username must be unique
   @@index([id, email, mobile, username])
+  @@map("user")
 }
 
-// model for admin
+// Model for admin
 model admin {
   id        String      @id @default(cuid())
   User      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String      @unique
   fullName  String?
   role      String      @default("ADMIN")
-  isActive  user_status @default(ACTIVE)
+  isActive  User_status @default(ACTIVE)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 
@@ -65,8 +90,7 @@ model admin {
   @@map("admin")
 }
 
-// model for general user and retailer
-
+// Model for general user and retailer
 model otherUsers {
   id              String      @id @default(cuid())
   User            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -75,19 +99,18 @@ model otherUsers {
   lastName        String?
   profile_picture Json        @default("{}")
   role            Role        @default(GENERAL_USER)
-  isActive        user_status @default(ACTIVE)
+  isActive        User_status @default(ACTIVE)
   userUniqueId    String?     @unique @default(cuid())
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
-  order           Int         @default(0) //for sorting purpose
+  order           Int         @default(0) // For sorting purpose
   userJoinDate    DateTime    @default(now())
 
   @@index([id, userId, role, isActive, userUniqueId])
   @@map("otherUsers")
 }
 
-// model for operator, raider, representative
-
+// Model for operator, raider, representative
 model worker {
   id                  String      @id @default(cuid())
   fullName            String?
@@ -109,8 +132,8 @@ model worker {
   userJoinDate        DateTime    @default(now())
   createdAt           DateTime    @default(now())
   updatedAt           DateTime    @updatedAt
-  isActive            user_status @default(ACTIVE)
-  order               Int         @default(0) //for sorting purpose
+  isActive            User_status @default(ACTIVE)
+  order               Int         @default(0) // For sorting purpose
   user                User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId              String      @unique
 
@@ -118,8 +141,7 @@ model worker {
   @@map("workers")
 }
 
-//get loggin info
-
+// Get log-in info
 enum loggin_status {
   SUCCESS
   FAILED
@@ -140,12 +162,11 @@ model loggin_history {
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
 
-  @@index([userId, status]) //indexing for faster search
-  @@map("logginInfo") //table name
+  @@index([userId, status]) // Indexing for faster search
+  @@map("logginInfo") // Table name
 }
 
 // MASTER MODULES STARTS HERE
-
 enum product_status {
   ACTIVE
   INACTIVE
@@ -154,17 +175,40 @@ enum product_status {
   DELETED
 }
 
-//product category
+// Product category
 model product_category {
-  id           String         @id @default(cuid())
+  id                    String         @id @default(cuid())
   product_category_name String
-  description  String?
-  image        Json           @default("{}")
-  isActive     product_status @default(PENDING)
-  order        Int            @default(0) //for sorting purpose
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  description           String?
+  image                 Json           @default("{}")
+  isActive              product_status @default(PENDING)
+  order                 Int            @default(0) // For sorting purpose
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  vendor                Vendor         @relation(fields: [vendorId], references: [id], onDelete: Cascade) // Link to vendor
+  vendorId              String
+  product               product[]
 
   @@index([id, product_category_name, isActive])
   @@map("product_category")
+}
+
+// Product model
+model product {
+  id          String           @id @default(cuid())
+  name        String
+  description String?
+  image       Json             @default("{}")
+  price       Float
+  stock       Int
+  isActive    product_status   @default(PENDING)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  vendor      Vendor           @relation(fields: [vendorId], references: [id], onDelete: Cascade) // Link to vendor
+  vendorId    String
+  category    product_category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId  String
+
+  @@index([id, name, isActive])
+  @@map("product")
 }
