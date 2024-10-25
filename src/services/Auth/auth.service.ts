@@ -69,7 +69,8 @@ export const customerRegister = async (
   username: string,
   password: string,
   profile_picture: string,
-  role: Role
+  role: Role,
+  vendorId: string
 ) => {
   const user = await db.user.create({
     data: {
@@ -77,6 +78,7 @@ export const customerRegister = async (
       mobile: mobile.toString(),
       username,
       password,
+      vendorId,
       otherUsers: {
         create: {
           firstName,
@@ -146,6 +148,7 @@ export const workerRegister = async ({
   password,
   profile_picture,
   NIDImage,
+  TOKEN_VENDOR_ID,
 }: any) => {
   const workerRes = await db.user.create({
     data: {
@@ -153,6 +156,7 @@ export const workerRegister = async ({
       password,
       username,
       mobile,
+      vendorId: TOKEN_VENDOR_ID,
       worker: {
         create: {
           fullName,
@@ -168,6 +172,7 @@ export const workerRegister = async ({
           mobileBankingNumber,
           address,
           zipCode,
+
           ...(profile_picture && { profile_picture }),
           ...(NIDImage && { NIDImage }),
         },
@@ -189,20 +194,22 @@ export const workerRegister = async ({
   )}-${workerRes.worker?.order}`;
 
   await Promise.all([
-    db.worker.update({
-      where: {
-        id: workerRes.worker?.id,
-      },
-      data: {
-        employeeID,
-        order: {
-          increment: 1,
+    db.worker
+      .update({
+        where: {
+          id: workerRes.worker?.id,
         },
-      },
-    }).catch((error) => {
-      // Handle any errors during the update process
-      console.error("Error updating employeeID:", error);
-    })
+        data: {
+          employeeID,
+          order: {
+            increment: 1,
+          },
+        },
+      })
+      .catch((error) => {
+        // Handle any errors during the update process
+        console.error("Error updating employeeID:", error);
+      }),
   ]);
 
   return workerRes;

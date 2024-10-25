@@ -228,11 +228,28 @@ const customerRegisterHandler: express.RequestHandler = async (
 ): Promise<void> => {
   const reqData = req as any;
   try {
-    const { email, mobile, firstName, lastName, username, password, role } =
-      reqData.body;
+    const {
+      email,
+      mobile,
+      firstName,
+      lastName,
+      username,
+      password,
+      role,
+      vendorId,
+    } = reqData.body;
     const profile_picture = reqData?.fileUrl?.[0] || {};
 
     // console.log(profile_picture);
+
+    if (!vendorId) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide vendor id",
+      });
+      return;
+    }
 
     if (!email || !mobile || !username) {
       showResponse(res, {
@@ -324,7 +341,8 @@ const customerRegisterHandler: express.RequestHandler = async (
       username,
       hashedPassword,
       profile_picture,
-      role
+      role,
+      vendorId
     );
 
     if (!user) {
@@ -378,6 +396,8 @@ const employeeRegisterHandler: express.RequestHandler = async (
   next: NextFunction
 ): Promise<void> => {
   const reqData = req as any;
+  const { vendorId: TOKEN_VENDOR_ID } = reqData?.user;
+
   const { user } = reqData;
   // console.log(user);
   try {
@@ -408,8 +428,26 @@ const employeeRegisterHandler: express.RequestHandler = async (
       zipCode,
       email,
       password,
+      vendorId,
     } = reqData.body;
 
+    if (!vendorId) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide vendor id",
+      });
+      return;
+    }
+
+    if (TOKEN_VENDOR_ID !== vendorId) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide valid vendor id",
+      });
+      return;
+    }
     //check if checkWorkerExist already exist
     // console.log(reqData?.fileUrl);
     const existWorker = await checkUserExist(email, mobile, username);
@@ -501,6 +539,7 @@ const employeeRegisterHandler: express.RequestHandler = async (
       zipCode,
       email,
       password: hashedPassword,
+      TOKEN_VENDOR_ID,
     };
 
     //NID image + profile picture
