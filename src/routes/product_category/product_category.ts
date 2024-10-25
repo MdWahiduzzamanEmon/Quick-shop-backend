@@ -175,7 +175,7 @@ const updateProductCategoryHandler: RequestHandler = async (
 
     // console.log(bodyData);
 
-    if (Object.keys(bodyData)?.length === 0) {
+    if (Object.keys(bodyData)?.length === 0 && files?.length === 0) {
       showResponse(res, {
         status: 400,
         success: false,
