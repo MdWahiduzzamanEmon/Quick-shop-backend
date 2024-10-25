@@ -10,3 +10,19 @@
 
 ::1 - - [25/Oct/2024:10:57:29 +0000] "DELETE /api/v1/product-category HTTP/1.1" 200 73 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [25/Oct/2024:11:02:18 +0000] "GET /api/v1/product-category HTTP/1.1" 500 1939 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:11:02:31 +0000] "GET /api/v1/product-category?pagination=true HTTP/1.1" 500 1939 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:11:02:34 +0000] "GET /api/v1/product-category HTTP/1.1" 500 1939 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:11:05:08 +0000] "GET /api/v1/product-category HTTP/1.1" 500 1939 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:11:05:10 +0000] "GET /api/v1/product-category HTTP/1.1" 500 1939 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:11:05:11 +0000] "GET /api/v1/product-category HTTP/1.1" 500 1939 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:11:05:28 +0000] "GET /api/v1/product-category HTTP/1.1" 500 1939 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:11:06:28 +0000] "GET /api/v1/product-category HTTP/1.1" 200 83 "-" "PostmanRuntime/7.42.0"
+

@@ -113,7 +113,8 @@ const createProductCategoryHandler: RequestHandler = async (
 
     bodyData?.forEach((category: any, index: number) => {
       newData.push({
-        ...category,
+        product_category_name: category?.product_category_name,
+        description: category?.description,
         ...(files && { image: files[index] }),
         order: index + 1,
         ...(role === "ADMIN" && { isActive: product_status.ACTIVE }),
@@ -168,7 +169,8 @@ const updateProductCategoryHandler: RequestHandler = async (
     const files = reqData?.fileUrl || [];
 
     const newData: setCategoryType = {
-      ...bodyData,
+      product_category_name: bodyData?.product_category_name,
+      description: bodyData?.description,
       ...(files && { image: files[0] }),
     };
 
