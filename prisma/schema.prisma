@@ -157,7 +157,7 @@ enum product_status {
 //product category
 model product_category {
   id           String         @id @default(cuid())
-  product_name String
+  product_category_name String
   description  String?
   image        Json           @default("{}")
   isActive     product_status @default(PENDING)
@@ -165,6 +165,6 @@ model product_category {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
 
-  @@index([id, product_name, isActive])
+  @@index([id, product_category_name, isActive])
   @@map("product_category")
 }

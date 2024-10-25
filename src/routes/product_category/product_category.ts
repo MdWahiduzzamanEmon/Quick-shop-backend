@@ -76,7 +76,7 @@ product_categoryRoute.get(
 //multiple create product category
 
 export type setCategoryType = {
-  product_name: string;
+  product_category_name: string;
   description: string;
   image: string;
   order: number;
