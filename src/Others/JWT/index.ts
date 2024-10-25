@@ -71,13 +71,10 @@ export const cookieResponse = async (res: any, token: string) => {
   // expire in 1 hour
   const oneHour = 60 * 60 * 1000; // 1 hour
   res.cookie("token", token, {
-    httpOnly: true, //cookie is not accessible by client side
-    secure: true, //https
-    sameSite: "none", //cross site request
-    maxAge: oneHour, //1 hour
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production", // Use secure only in production
+    sameSite: "none", // Allows cross-site
+    maxAge: oneHour,
   });
-  // Access-Control-Allow-Origin
-  // res.setHeader("Access-Control-Allow-Credentials", "true");
-  // res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
   return res;
 };

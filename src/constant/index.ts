@@ -1,8 +1,7 @@
 const corsOptions = {
-  origin: ["http://localhost:5173"], // Use environment variable if available
+  origin: ["http://localhost:5173"], // or use environment variable for production
   optionsSuccessStatus: 200,
   credentials: true,
-  // exposeHeaders: ["Set-Cookie", "ETag"], // Add "Set-Cookie" header to the list
   methods: ["GET", "POST", "PUT", "DELETE"],
 };
 
