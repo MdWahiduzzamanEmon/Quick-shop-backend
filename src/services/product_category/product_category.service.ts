@@ -7,7 +7,7 @@ export const getAllProductCategory = async (
   pageNumber?: number,
   rowPerPage?: number,
   pagination?: boolean,
-  isActive?: product_status
+  status?: product_status
 ) => {
   //pagination
   const pageNumbers = pageNumber ? parseInt(pageNumber.toString()) : 1;
@@ -15,7 +15,7 @@ export const getAllProductCategory = async (
   const [result, total] = await Promise.all([
     db.product_category.findMany({
       where: {
-        ...(isActive && { isActive: "ACTIVE" }),
+        ...(status && { isActive: status }),
       },
       ...(pagination && {
         skip: (pageNumbers - 1) * resultPerPage,
@@ -32,7 +32,7 @@ export const getAllProductCategory = async (
     pagination
       ? db.product_category.count({
           where: {
-            ...(isActive && { isActive: "ACTIVE" }),
+            ...(status && { isActive: status }),
           },
         })
       : Promise.resolve(0),

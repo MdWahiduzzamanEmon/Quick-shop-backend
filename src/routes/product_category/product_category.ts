@@ -28,13 +28,24 @@ const getCategoryHandler: RequestHandler = async (
   next: NextFunction
 ) => {
   try {
-    const { pageNumber, rowPerPage, pagination, isActive } = _req.query as any;
+    const { pageNumber, rowPerPage, pagination, status } = _req.query as any;
+
+    if (status && !(status in product_status)) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide valid status",
+      });
+      return;
+    }
+
     const categories = await getAllProductCategory(
       pageNumber,
       rowPerPage,
       pagination,
-      isActive
+      status
     );
+
     showResponse(res, {
       message: "Categories fetched successfully",
       data: categories,
