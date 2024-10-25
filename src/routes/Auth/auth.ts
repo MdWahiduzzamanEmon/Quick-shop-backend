@@ -268,7 +268,7 @@ const customerRegisterHandler: express.RequestHandler = async (
         success: false,
         message: "Please provide a valid email",
       });
-      await unlinkFile(profile_picture?.filename);
+      await unlinkFile(profile_picture?.publicId);
       return;
     }
 
@@ -281,7 +281,7 @@ const customerRegisterHandler: express.RequestHandler = async (
         message:
           "Please provide a valid username. Username must be alphanumeric and less than 15 characters",
       });
-      await unlinkFile(profile_picture?.filename);
+      await unlinkFile(profile_picture?.publicId);
       return;
     }
 
@@ -293,7 +293,7 @@ const customerRegisterHandler: express.RequestHandler = async (
         success: false,
         message: `User already exist with your provided email, mobile or username.Please login or change your email, mobile or username to continue`,
       });
-      await unlinkFile(profile_picture?.filename);
+      await unlinkFile(profile_picture?.publicId);
       return;
     }
 
@@ -303,7 +303,7 @@ const customerRegisterHandler: express.RequestHandler = async (
         success: false,
         message: "Please provide password",
       });
-      await unlinkFile(profile_picture?.filename);
+      await unlinkFile(profile_picture?.publicId);
       return;
     }
 
@@ -314,12 +314,12 @@ const customerRegisterHandler: express.RequestHandler = async (
         message:
           "Please provide a valid password. It must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number",
       });
-      await unlinkFile(profile_picture?.filename);
+      await unlinkFile(profile_picture?.publicId);
       return;
     }
 
     if (role && Role[role as keyof typeof Role] === undefined) {
-      await unlinkFile(profile_picture?.filename);
+      await unlinkFile(profile_picture?.publicId);
       showResponse(res, {
         status: 400,
         success: false,
@@ -346,7 +346,7 @@ const customerRegisterHandler: express.RequestHandler = async (
     );
 
     if (!user) {
-      await unlinkFile(profile_picture?.filename);
+      await unlinkFile(profile_picture?.publicId);
 
       showResponse(res, {
         status: 400,
@@ -361,7 +361,9 @@ const customerRegisterHandler: express.RequestHandler = async (
     });
     return;
   } catch (error: any) {
-    await unlinkFile(reqData?.fileUrl?.[0]?.filename as unknown as any);
+    if (reqData?.fileUrl?.[0]?.publicId) {
+      await unlinkFile(reqData?.fileUrl?.[0]?.publicId);
+    }
     next(error);
   }
 };
@@ -460,7 +462,7 @@ const employeeRegisterHandler: express.RequestHandler = async (
           "Employee already exist with your provided email or mobile number .Please login or change your email, mobile or username to continue",
       });
       for (let i = 0; i < reqData?.fileUrl?.length; i++) {
-        await unlinkFile(reqData?.fileUrl[i]?.filename as unknown as any);
+        await unlinkFile(reqData?.fileUrl[i]?.publicId as unknown as any);
       }
       return;
     }
@@ -505,7 +507,7 @@ const employeeRegisterHandler: express.RequestHandler = async (
           "Please provide a valid role. If you did't know, then contact our support",
       });
       for (let i = 0; i < reqData?.fileUrl?.length; i++) {
-        await unlinkFile(reqData?.fileUrl[i]?.filename as unknown as any);
+        await unlinkFile(reqData?.fileUrl[i]?.publicId);
       }
       return;
     }
@@ -559,7 +561,7 @@ const employeeRegisterHandler: express.RequestHandler = async (
 
     if (!worker) {
       for (let i = 0; i < reqData?.fileUrl?.length; i++) {
-        await unlinkFile(reqData?.fileUrl[i]?.filename as unknown as any);
+        await unlinkFile(reqData?.fileUrl[i]?.publicId as unknown as any);
       }
       showResponse(res, {
         status: 400,
@@ -577,7 +579,7 @@ const employeeRegisterHandler: express.RequestHandler = async (
     errorMessage(res, error, next);
 
     for (let i = 0; i < reqData?.fileUrl?.length; i++) {
-      await unlinkFile(reqData?.fileUrl[i]?.filename as unknown as any);
+      await unlinkFile(reqData?.fileUrl[i]?.publicId as unknown as any);
     }
   }
 };
