@@ -19,7 +19,16 @@ const getVendorsHandler: express.RequestHandler = async (
   next: NextFunction
 ) => {
   const reqData = _req as any;
+  const { user } = reqData;
   try {
+    if (user?.role !== "ADMIN") {
+      showResponse(res, {
+        status: 403,
+        success: false,
+        message: "Unauthorized access.Only Admin can perform this action",
+      });
+      return;
+    }
     const { status } = reqData?.query;
 
     if (status && !(status in ShopStatus)) {
@@ -51,7 +60,16 @@ const getSingleVendorHandler: express.RequestHandler = async (
   next: NextFunction
 ) => {
   const { id } = req.params as { id: string };
+  const { user } = req as any;
   try {
+    if (user?.role !== "ADMIN") {
+      showResponse(res, {
+        status: 403, // Forbidden
+        success: false,
+        message: "Unauthorized access.Only Admin can perform this action",
+      });
+      return;
+    }
     if (typeof id !== "string") {
       throw new Error("id must be a string");
     }

@@ -72,3 +72,13 @@
 
 ::1 - - [25/Oct/2024:19:34:41 +0000] "POST /api/v1/login HTTP/1.1" 200 777 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [25/Oct/2024:19:35:21 +0000] "GET /api/v1/all-users HTTP/1.1" 403 97 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:19:35:22 +0000] "GET /api/v1/all-users HTTP/1.1" 403 97 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:19:36:08 +0000] "GET /api/v1/vendors?status=ACTIVE HTTP/1.1" 403 97 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:19:36:09 +0000] "GET /api/v1/vendors?status=ACTIVE HTTP/1.1" 403 97 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:19:53:01 +0000] "GET /api/v1/vendors?status=ACTIVE HTTP/1.1" 403 97 "-" "PostmanRuntime/7.42.0"
+

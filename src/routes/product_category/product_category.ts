@@ -94,6 +94,7 @@ export type setCategoryType = {
   image: string;
   order: number;
   isActive: product_status;
+  vendorId: string;
 };
 
 const createProductCategoryHandler: RequestHandler = async (
@@ -102,8 +103,9 @@ const createProductCategoryHandler: RequestHandler = async (
   next: NextFunction
 ) => {
   const reqData = _req as any;
+
   try {
-    const { role } = reqData?.user || {};
+    const { role, vendorId: TOKEN_VENDOR_ID } = reqData?.user || {};
     // console.log(reqData?.body);
 
     if (Object.keys(reqData?.body).length === 0) {
@@ -130,6 +132,7 @@ const createProductCategoryHandler: RequestHandler = async (
         description: category?.description,
         ...(files && { image: files[index] }),
         order: index + 1,
+        vendorId: TOKEN_VENDOR_ID,
         ...(role === "ADMIN" && { isActive: product_status.ACTIVE }),
       });
     });
@@ -167,8 +170,9 @@ const updateProductCategoryHandler: RequestHandler = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { categoryID } = req.params;
   const reqData = req as any;
+  const { categoryID } = reqData?.params || {};
+  const { vendorId: TOKEN_VENDOR_ID } = reqData?.user || {};
   try {
     const bodyData = reqData?.body as setCategoryType;
     const files = reqData?.fileUrl || [];
@@ -187,6 +191,7 @@ const updateProductCategoryHandler: RequestHandler = async (
     const newData: setCategoryType = {
       product_category_name: bodyData?.product_category_name,
       description: bodyData?.description,
+      vendorId: TOKEN_VENDOR_ID,
       ...(files && { image: files[0] }),
     };
 
