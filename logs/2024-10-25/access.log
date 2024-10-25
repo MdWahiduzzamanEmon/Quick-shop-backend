@@ -136,3 +136,11 @@
 
 ::1 - - [25/Oct/2024:13:34:03 +0000] "PUT /api/v1/product-category/active-inactive/cm2onazss0007air5u5w7okjv HTTP/1.1" 401 26 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [25/Oct/2024:13:47:49 +0000] "GET /api/v1/product-category HTTP/1.1" 401 26 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:13:47:57 +0000] "POST /api/v1/login HTTP/1.1" 200 675 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:13:48:01 +0000] "GET /api/v1/product-category HTTP/1.1" 200 2159 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:13:48:07 +0000] "GET /api/v1/product-category?isActive=true HTTP/1.1" 200 2159 "-" "PostmanRuntime/7.42.0"
+
