@@ -7,18 +7,34 @@ import {
   getEmployees,
   getSingleEmployeeByID,
 } from "../../../services/Users/employees/employees.service";
+import { User_status } from "@prisma/client";
 
 export const employeesRoute = express.Router();
 
 // Get all othersUsers
+
+export type EmployeeQuery = {
+  status?: User_status;
+  pageNumber?: number;
+  rowPerPage?: number;
+  pagination?: boolean;
+};
 
 const getOthersUsersHandler: express.RequestHandler = async (
   _req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  const reqData = _req as any;
   try {
-    const users = await getEmployees();
+    const { status, pageNumber, rowPerPage, pagination } =
+      reqData?.query as EmployeeQuery;
+    const users = await getEmployees({
+      status,
+      pageNumber,
+      rowPerPage,
+      pagination,
+    });
     showResponse(res, {
       message: "Employees fetched successfully",
       data: users,

@@ -6,18 +6,35 @@ import {
 } from "../../../services/Users/getOthersUsers/getOthersUsers.service";
 import { showResponse } from "../../../constant/showResponse";
 import { verifyTokenMiddleware } from "../../../Others/JWT";
+import { User_status } from "@prisma/client";
 
 export const othersUsersRoute = express.Router();
 
 // Get all othersUsers
+
+export type OtherUserQuery = {
+  status?: User_status;
+  pageNumber?: number;
+  rowPerPage?: number;
+  pagination?: boolean;
+};
 
 const getCustomersHandler: express.RequestHandler = async (
   _req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  const reqData = _req as any;
   try {
-    const users = await getOthersUsers();
+    const { status, pageNumber, rowPerPage, pagination } =
+      reqData?.query as OtherUserQuery;
+
+    const users = await getOthersUsers({
+      status,
+      pageNumber,
+      rowPerPage,
+      pagination,
+    });
     showResponse(res, {
       message: "Users fetched successfully",
       data: users,

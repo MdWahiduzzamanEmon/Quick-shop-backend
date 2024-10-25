@@ -29,7 +29,7 @@ const getVendorsHandler: express.RequestHandler = async (
       });
       return;
     }
-    const { status } = reqData?.query;
+    const { status, pageNumber, rowPerPage, pagination } = reqData?.query;
 
     if (status && !(status in ShopStatus)) {
       showResponse(res, {
@@ -39,7 +39,12 @@ const getVendorsHandler: express.RequestHandler = async (
       });
       return;
     }
-    const vendors = await getVendors({ status });
+    const vendors = await getVendors({
+      status,
+      pageNumber,
+      rowPerPage,
+      pagination,
+    });
     res.setHeader("Cache-Control", "public, max-age=3600 must-revalidate"); // 1 hour
 
     showResponse(res, {

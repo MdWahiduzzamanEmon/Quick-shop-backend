@@ -82,3 +82,81 @@
 
 ::1 - - [25/Oct/2024:19:53:01 +0000] "GET /api/v1/vendors?status=ACTIVE HTTP/1.1" 403 97 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [25/Oct/2024:19:56:40 +0000] "POST /api/v1/login HTTP/1.1" 200 777 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:19:56:53 +0000] "GET /api/v1/login-history HTTP/1.1" 200 1987 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:00:57 +0000] "GET /api/v1/vendors?status=ACTIVE&pagination=true HTTP/1.1" 403 97 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:01:15 +0000] "POST /api/v1/login HTTP/1.1" 200 766 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:01:20 +0000] "GET /api/v1/vendors?status=ACTIVE&pagination=true HTTP/1.1" 200 819 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:01:33 +0000] "GET /api/v1/vendors?status=ACTIVE&pagination=true&pageNumber=1&rowPerPage=10 HTTP/1.1" 200 819 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:01:35 +0000] "GET /api/v1/vendors?status=ACTIVE&pagination=true&pageNumber=1&rowPerPage=10 HTTP/1.1" 200 819 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:03:32 +0000] "GET /api/v1/vendors?status=ACTIVE&pagination=true&pageNumber=1&rowPerPage=10 HTTP/1.1" 200 1000 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:03:48 +0000] "GET /api/v1/vendors?status=ACTIVE&pagination=true&pageNumber=1&rowPerPage=10 HTTP/1.1" 200 1000 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:03:50 +0000] "GET /api/v1/vendors?status=ACTIVE&pagination=true&pageNumber=1&rowPerPage=10 HTTP/1.1" 200 1000 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:04:09 +0000] "GET /api/v1/vendors?status=ACTIVE&pagination=true&pageNumber=1&rowPerPage=10 HTTP/1.1" 200 1000 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:04:24 +0000] "GET /api/v1/vendors?status=ACTIVE&pageNumber=1&rowPerPage=10 HTTP/1.1" 200 919 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:04:27 +0000] "GET /api/v1/vendors?status=ACTIVE&pageNumber=1&rowPerPage=10 HTTP/1.1" 200 919 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:04:30 +0000] "GET /api/v1/vendors?status=ACTIVE&pageNumber=1&rowPerPage=10 HTTP/1.1" 200 919 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:04:35 +0000] "GET /api/v1/vendors/cm2p39mis0000ijvh85q8mlcf HTTP/1.1" 200 916 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:04:37 +0000] "GET /api/v1/vendors/cm2p39mis0000ijvh85q8mlcf HTTP/1.1" 200 916 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:05:15 +0000] "GET /api/v1/employees HTTP/1.1" 200 915 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:11:35 +0000] "GET /api/v1/employees?status=ACTIVE HTTP/1.1" 200 915 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:11:42 +0000] "GET /api/v1/employees?status=INACTIVE HTTP/1.1" 200 82 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:11:49 +0000] "GET /api/v1/employees?status=ACTIVE HTTP/1.1" 200 915 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:11:58 +0000] "GET /api/v1/employees?status=ACTIVE&pagination=true HTTP/1.1" 200 996 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:12:54 +0000] "GET /api/v1/customers/?pagination=true&status=ACTIVE HTTP/1.1" 200 530 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:15:04 +0000] "GET /api/v1/customers/?pagination=true&status=ACTIVE HTTP/1.1" 200 611 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:15:05 +0000] "GET /api/v1/customers/?pagination=true&status=ACTIVE HTTP/1.1" 200 611 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:15:07 +0000] "GET /api/v1/customers/?pagination=true&status=ACTIVE HTTP/1.1" 200 611 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:15:08 +0000] "GET /api/v1/customers/?pagination=true&status=ACTIVE HTTP/1.1" 200 611 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:15:09 +0000] "GET /api/v1/customers/?pagination=true&status=ACTIVE HTTP/1.1" 200 611 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:15:09 +0000] "GET /api/v1/customers/?pagination=true&status=ACTIVE HTTP/1.1" 200 611 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:15:24 +0000] "GET /api/v1/customers/?status=INACTIVE HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:15:27 +0000] "GET /api/v1/customers/ HTTP/1.1" 200 530 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:15:48 +0000] "GET /api/v1/all-users HTTP/1.1" 200 2036 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:21:11 +0000] "GET /api/v1/all-users?status=INACTIVE HTTP/1.1" 200 82 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:21:18 +0000] "GET /api/v1/all-users?status=ACTIVE HTTP/1.1" 200 367 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:21:46 +0000] "GET /api/v1/all-users?status=ACTIVE&pagination=true HTTP/1.1" 200 448 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:22:00 +0000] "GET /api/v1/all-users?status=ACTIVE&pagination=true HTTP/1.1" 200 448 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:22:02 +0000] "GET /api/v1/all-users?status=ACTIVE&pagination=true HTTP/1.1" 200 448 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:22:19 +0000] "GET /api/v1/all-users?status=ACTIVE HTTP/1.1" 200 367 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:22:29 +0000] "GET /api/v1/all-users HTTP/1.1" 200 507 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [25/Oct/2024:20:23:25 +0000] "GET /api/v1/all-users HTTP/1.1" 200 507 "-" "PostmanRuntime/7.42.0"
+
