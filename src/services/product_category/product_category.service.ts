@@ -122,3 +122,13 @@ export const activeInactiveProductCategory = async (
     },
   });
 };
+
+export const getMultipleProductCategory = async (categoryIDs: string[]) => {
+  return await db.product_category.findMany({
+    where: {
+      id: {
+        in: categoryIDs,
+      },
+    },
+  });
+};

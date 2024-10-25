@@ -9,6 +9,7 @@ import {
   deleteMultipleProductCategory,
   deleteProductCategory,
   getAllProductCategory,
+  getMultipleProductCategory,
   getSingleProductCategory,
   updateProductCategory,
 } from "../../services/product_category/product_category.service";
@@ -188,6 +189,17 @@ const updateProductCategoryHandler: RequestHandler = async (
       return;
     }
 
+    // first check if category exists
+    const existCategory = (await getSingleProductCategory(categoryID)) as any;
+    if (!existCategory) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Category not found",
+      });
+      return;
+    }
+
     const newData: setCategoryType = {
       product_category_name: bodyData?.product_category_name,
       description: bodyData?.description,
@@ -204,8 +216,16 @@ const updateProductCategoryHandler: RequestHandler = async (
     showResponse(res, {
       message: "Category updated successfully",
     });
+
+    // Delete old image file if it exists
+    if (existCategory?.image?.publicId) {
+      await unlinkFile(existCategory.image.publicId);
+    }
   } catch (error: any) {
-    await unlinkFile(reqData?.fileUrl?.[0]?.filename);
+    // Attempt to clean up any uploaded files on error
+    if (reqData?.fileUrl?.[0]?.publicId) {
+      await unlinkFile(reqData.fileUrl[0].publicId);
+    }
     errorMessage(res, error, next);
   }
 };
@@ -237,6 +257,12 @@ const deleteProductCategoryHandler: RequestHandler = async (
       return;
     }
 
+    //first check if category exists
+    const category = (await getSingleProductCategory(categoryID)) as any;
+    if (!category) {
+      throw new Error("Category does not exist");
+    }
+
     const result = await deleteProductCategory(categoryID);
 
     if (!result) {
@@ -246,6 +272,8 @@ const deleteProductCategoryHandler: RequestHandler = async (
     showResponse(res, {
       message: "Category deleted successfully",
     });
+
+    await unlinkFile(category?.image?.publicId);
   } catch (error: any) {
     errorMessage(res, error, next);
   }
@@ -280,6 +308,12 @@ const deleteMultipleProductCategoryHandler: RequestHandler = async (
       throw new Error("Ids must be an array of strings");
     }
 
+    //first check if category exists
+    const categories = (await getMultipleProductCategory(ids)) as any;
+    if (categories?.length !== ids?.length) {
+      throw new Error("Some categories do not exist");
+    }
+
     const result = await deleteMultipleProductCategory(ids);
 
     if (!result) {
@@ -289,6 +323,10 @@ const deleteMultipleProductCategoryHandler: RequestHandler = async (
     showResponse(res, {
       message: "Categories deleted successfully",
     });
+
+    for (const category of categories) {
+      await unlinkFile(category?.image?.publicId);
+    }
   } catch (error: any) {
     errorMessage(res, error, next);
   }
