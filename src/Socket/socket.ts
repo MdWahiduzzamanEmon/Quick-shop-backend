@@ -41,7 +41,11 @@ function initializeSocket() {
           role: user.role,
           userUniqueId: user?.id,
           vendorId: user?.vendorId,
-          IP: socket?.remoteAddress || socket?.handshake?.address || "",
+          IP:
+            socket.handshake.headers["x-forwarded-for"].split(",")[0] ||
+            socket?.remoteAddress ||
+            socket?.handshake?.address ||
+            "",
         });
       } else {
         // User already exists, update the socket ID
