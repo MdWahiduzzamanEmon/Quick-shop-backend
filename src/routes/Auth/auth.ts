@@ -25,6 +25,7 @@ import {
 import axios from "axios";
 import { emailRegex, passwordRegex, usernameRegex } from "../../constant";
 import errorMessage from "../../Others/ErrorMessage/errorMessage";
+// import userActivityLiveResponse from "../../UserLiveActivity/userLiveActivity";
 
 export const authRoute = express.Router();
 
@@ -186,6 +187,8 @@ const loginHandler: express.RequestHandler = async (
       message: "Login successful",
       data: resData,
     });
+
+    // await userActivityLiveResponse();
 
     try {
       const IP = await trackIpLocation(ipAddress);

@@ -104,12 +104,21 @@ export const ioInstance = new SocketIOServer(serverInstance, {
 ioInstance.use((socket, next) => {
   const SOCKET = socket as any;
   const req = SOCKET.request as any; // Cast to any to access cookies
+  const getExtraHeadersAuth = req?.headers?.authorization;
+  // console.log(getExtraHeadersAuth, "getExtraHeaders");
+
   const res = {} as any; // Mock response object for cookieParser
+
+  if (!getExtraHeadersAuth) {
+    SOCKET.user = null;
+    return next(new Error("Authentication error: No token provided"));
+  }
 
   // Parse cookies using cookie-parser
   cookieParser()(req, res, async () => {
     const token = req?.cookies?.token;
 
+    // console.log(token, "token");
     if (!token) {
       return next(new Error("Authentication error: No token provided"));
     }

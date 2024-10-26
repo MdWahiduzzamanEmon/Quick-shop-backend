@@ -1,4 +1,5 @@
 import { client, ioInstance } from "../server"; // Assuming serverInstance is the HTTP server from server.ts
+import userActivityLiveResponse from "../UserLiveActivity/userLiveActivity";
 
 // Initialize socket connections and events
 function initializeSocket() {
@@ -10,6 +11,7 @@ function initializeSocket() {
   ioInstance.on("connection", async (socket: any) => {
     count++;
     console.log(`Client connected: ${socket.id} (${count} total)`);
+    console.log(`Client connected: ${socket.IP}`);
 
     // Safely access user data from the socket
     const user = socket?.user;
@@ -37,6 +39,9 @@ function initializeSocket() {
           email: user.email,
           socketId: socket.id,
           role: user.role,
+          userUniqueId: user?.id,
+          vendorId: user?.vendorId,
+          IP: socket?.remoteAddress || socket?.handshake?.address || "",
         });
       } else {
         // User already exists, update the socket ID
@@ -44,8 +49,9 @@ function initializeSocket() {
       }
 
       // Update connected users in Redis
-      await client.set("connectedUsers", JSON.stringify(connectedUsers));
-      console.log("Updated connected users:", connectedUsers);
+      await client?.set("connectedUsers", JSON.stringify(connectedUsers));
+      // console.log("Updated connected users:", connectedUsers);
+      await userActivityLiveResponse();
     } catch (err) {
       console.error("Error fetching or updating connected users:", err);
     }
@@ -60,7 +66,8 @@ function initializeSocket() {
       );
 
       // Update connected users in Redis after disconnect
-      await client.set("connectedUsers", JSON.stringify(connectedUsers));
+      await client?.set("connectedUsers", JSON.stringify(connectedUsers));
+      await userActivityLiveResponse();
     });
   });
 }

@@ -6,6 +6,7 @@ import { adminRoute } from "../routes/users/Admin/admin";
 import { employeesRoute } from "../routes/users/employees/employees";
 import { allUsersRoute } from "../routes/users/getAllUsers/getAllUsers";
 import { othersUsersRoute } from "../routes/users/othersUsers/othersUsers";
+import { getConnectedUsersRoute } from "../routes/getConnectedUsers/getConnectedUsers";
 
 export const routes = [
   vendorRoute,
@@ -16,4 +17,5 @@ export const routes = [
   adminRoute,
   employeesRoute,
   product_categoryRoute,
+  getConnectedUsersRoute,
 ];
