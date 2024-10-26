@@ -13,7 +13,7 @@ async function initializeRedis() {
           );
           return new Error("Too many retries.");
         }
-        return retries * 500; // Reconnect after 500ms * retries
+        return Math.min(retries * 50, 500); // Reconnect after 500ms * retries
       },
     },
   });

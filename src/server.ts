@@ -13,6 +13,9 @@ import { corsOptions } from "./constant";
 import { createServer } from "http";
 import ErrorHandler from "./middlewares/errorHandle";
 import { routes } from "./paths";
+import { Server as SocketIOServer } from "socket.io";
+import { initializeSocket } from "./Socket/socket";
+import { verifyToken } from "./Others/JWT";
 
 config();
 
@@ -92,15 +95,37 @@ initializeRedis()
     // Log the error but continue starting the server
   });
 
-app.get("/clearCache", async (_req, res) => {
-  const keys = (await client?.keys("*")) || [];
-  console.log(keys);
-  //clear cache
-  for (const key of keys) {
-    await client.del(key);
-  }
-  res.send("Cache cleared successfully");
+// Initialize Socket.IO with CORS options
+export const ioInstance = new SocketIOServer(serverInstance, {
+  cors: corsOptions,
 });
+
+// Socket.IO middleware to extract cookies and authenticate users
+ioInstance.use((socket, next) => {
+  const SOCKET = socket as any;
+  const req = SOCKET.request as any; // Cast to any to access cookies
+  const res = {} as any; // Mock response object for cookieParser
+
+  // Parse cookies using cookie-parser
+  cookieParser()(req, res, async () => {
+    const token = req?.cookies?.token;
+
+    if (!token) {
+      return next(new Error("Authentication error: No token provided"));
+    }
+
+    try {
+      const verifiedToken = await verifyToken(token);
+      SOCKET.user = verifiedToken; // Attach user info to socket
+      next();
+    } catch (err) {
+      next(new Error("Authentication error: Invalid token"));
+    }
+  });
+});
+
+// Initialize Socket.IO events
+initializeSocket();
 
 app.get("/", (req, res) => {
   res.send("Hello World");
