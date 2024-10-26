@@ -50,7 +50,7 @@ function initializeSocket() {
 
       // Update connected users in Redis
       await client?.set("connectedUsers", JSON.stringify(connectedUsers));
-      // console.log("Updated connected users:", connectedUsers);
+      console.log("Updated connected users:", connectedUsers);
       await userActivityLiveResponse();
     } catch (err) {
       console.error("Error fetching or updating connected users:", err);
