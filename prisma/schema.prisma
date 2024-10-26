@@ -69,6 +69,7 @@ model User {
   admin          admin? // User can be an admin
   vendor         Vendor           @relation(fields: [vendorId], references: [id], onDelete: Cascade)
   vendorId       String // Foreign key to `Vendor`
+  product        product[] // A user can have multiple products
 
   @@unique([email, mobile, username]) // Unique constraint: the combination of email, mobile, and username must be unique
   @@index([id, email, mobile, username])
@@ -201,14 +202,32 @@ model product {
   image       Json             @default("{}")
   price       Float
   stock       Int
-  isActive    product_status   @default(PENDING)
+  isActive    product_status   @default(ACTIVE)
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
   vendor      Vendor           @relation(fields: [vendorId], references: [id], onDelete: Cascade) // Link to vendor
   vendorId    String
   category    product_category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId  String
+  createdBy   User             @relation(fields: [createdById], references: [id])
+  createdById String
+
+  product_images product_image[] // A product can have multiple images
 
   @@index([id, name, isActive])
   @@map("product")
+}
+
+//product image model 
+model product_image {
+  id        String         @id @default(cuid())
+  image     Json           @default("{}")
+  isActive  product_status @default(ACTIVE)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  product   product        @relation(fields: [productId], references: [id], onDelete: Cascade) // Link to product
+  productId String
+
+  @@index([id, isActive])
+  @@map("product_image")
 }
