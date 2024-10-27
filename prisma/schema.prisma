@@ -14,7 +14,6 @@ datasource db {
 enum Role {
   GENERAL_USER
   RETAILER
-  SUPPLIER
 }
 
 enum WorkerRole {
@@ -63,10 +62,11 @@ model User {
   password       String
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
+  admin          admin? // User can be an admin
   otherUsers     otherUsers? // Only for general user and retailer
   worker         worker? // Only for operator, raider, representative
+  Supplier       Supplier? // Only for supplier
   loggin_history loggin_history[] // User's login history
-  admin          admin? // User can be an admin
   vendor         Vendor           @relation(fields: [vendorId], references: [id], onDelete: Cascade)
   vendorId       String // Foreign key to `Vendor`
   product        product[] // A user can have multiple products
@@ -89,6 +89,25 @@ model admin {
 
   @@index([id, userId, role, isActive])
   @@map("admin")
+}
+
+//supplier model 
+
+model Supplier {
+  id              String      @id @default(cuid())
+  fullName        String
+  address         String
+  whatsapp        String
+  profile_picture Json        @default("{}")
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  isActive        User_status @default(ACTIVE)
+  User            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String      @unique
+  role            String      @default("SUPPLIER")
+
+  @@index([id, userId, isActive])
+  @@map("supplier")
 }
 
 // Model for general user and retailer
