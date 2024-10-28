@@ -106,6 +106,69 @@ export const getZoneById = async (id: string | number) => {
     where: {
       id: typeof id === "string" ? parseInt(id, 10) : id,
     },
+    omit: {
+      createdAt: true,
+      updatedAt: true,
+      division_id: true,
+      district_id: true,
+      upazila_id: true,
+      union_id: true,
+      operatorId: true,
+    },
+    include: {
+      division: {
+        select: {
+          id: true,
+          name: true,
+          bn_name: true,
+        },
+      },
+      district: {
+        select: {
+          id: true,
+          name: true,
+          bn_name: true,
+        },
+      },
+      upazila: {
+        select: {
+          id: true,
+          name: true,
+          bn_name: true,
+        },
+      },
+      union: {
+        select: {
+          id: true,
+          name: true,
+          bn_name: true,
+        },
+      },
+      operator: {
+        select: {
+          id: true,
+          fullName: true,
+          whatsapp: true,
+          employeeID: true,
+        },
+      },
+      representatives: {
+        select: {
+          id: true,
+          fullName: true,
+          whatsapp: true,
+          employeeID: true,
+        },
+      },
+      riders: {
+        select: {
+          id: true,
+          fullName: true,
+          whatsapp: true,
+          employeeID: true,
+        },
+      },
+    },
   });
 };
 

@@ -874,3 +874,35 @@
 
 ::1 - - [28/Oct/2024:22:37:07 +0000] "GET /api/v1/zones HTTP/1.1" 200 868 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [28/Oct/2024:22:37:48 +0000] "GET /api/v1/zones/1 HTTP/1.1" 200 486 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:37:49 +0000] "GET /api/v1/zones/1 HTTP/1.1" 200 486 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:38:17 +0000] "GET /api/v1/zones/1 HTTP/1.1" 200 1050 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:38:21 +0000] "GET /api/v1/zones/1 HTTP/1.1" 200 1050 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:38:29 +0000] "GET /api/v1/zones/1 HTTP/1.1" 200 1050 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:38:34 +0000] "GET /api/v1/zones/1 HTTP/1.1" 200 1050 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:38:56 +0000] "GET /api/v1/zones/1 HTTP/1.1" 200 1050 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:39:10 +0000] "GET /api/v1/zones/1 HTTP/1.1" 200 865 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:39:17 +0000] "GET /api/v1/zones/1 HTTP/1.1" 200 865 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:39:21 +0000] "GET /api/v1/zones/1 HTTP/1.1" 200 865 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:39:32 +0000] "GET /api/v1/unions?name=Jhikargachha HTTP/1.1" 200 204 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:39:36 +0000] "GET /api/v1/unions HTTP/1.1" 200 558652 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:40:18 +0000] "GET /api/v1/zones?district_id=33 HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:40:26 +0000] "GET /api/v1/zones?district_id=20 HTTP/1.1" 200 868 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:40:55 +0000] "GET /api/v1/unions HTTP/1.1" 200 572297 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:41:40 +0000] "GET /api/v1/unions HTTP/1.1" 200 579724 "-" "PostmanRuntime/7.42.0"
+
