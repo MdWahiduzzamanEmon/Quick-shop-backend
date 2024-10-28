@@ -49,6 +49,7 @@ model Vendor {
   users      User[] // A vendor can have multiple users
   products   product[] // A vendor can have multiple products
   categories product_category[] // A vendor can have multiple product categories
+  Zone       Zone[]
 
   @@index([id, isActive, name])
   @@map("vendor")
@@ -71,6 +72,7 @@ model User {
   vendorId         String // Foreign key to `Vendor`
   product          product[] // A user can have multiple products
   product_category product_category[]
+  Zone             Zone[]
 
   @@unique([email, mobile, username]) // Unique constraint: the combination of email, mobile, and username must be unique
   @@index([id, email, mobile, username])
@@ -331,16 +333,21 @@ model Union {
   @@map("union")
 }
 
+enum Zone_status {
+  ACTIVE
+  INACTIVE
+}
+
 model Zone {
-  id           Int     @id @default(autoincrement())
+  id           Int         @id @default(autoincrement())
   village_name String
   ward_no      String
   zone_name    String
   contact_no   String?
   whatsapp_no  String?
-
-  division_id Int?
-  division    Division? @relation(fields: [division_id], references: [id]) // 1-to-1
+  isActive     Zone_status @default(ACTIVE)
+  division_id  Int?
+  division     Division?   @relation(fields: [division_id], references: [id]) // 1-to-1
 
   district_id Int?
   district    District? @relation(fields: [district_id], references: [id])
@@ -359,5 +366,14 @@ model Zone {
   representatives worker[] @relation("ZoneRepresentatives")
   riders          worker[] @relation("ZoneRiders")
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  createdBy   User   @relation(fields: [createdById], references: [id])
+  createdById String
+  vendor      Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade) // Link to vendor
+  vendorId    String
+
+  @@index([id, isActive, division_id, district_id, upazila_id, union_id, operatorId, vendorId])
   @@map("zone")
 }

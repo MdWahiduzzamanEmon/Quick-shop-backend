@@ -8,27 +8,27 @@ import upazilas from "../src/bd-geo-code/upazilas.json";
 async function seed() {
   const convertHashedPassword = await hashPassword("1516");
 
-  // await db.vendor.create({
-  //   data: {
-  //     name: "Logic-Nexus It Solutions",
-  //     address: "Jhikargaccha, Jashore",
-  //     phone: "01703459656",
-  //     users: {
-  //       create: {
-  //         username: "admin",
-  //         password: convertHashedPassword,
-  //         mobile: "123456789",
-  //         email: "admin@admin.com",
-  //         admin: {
-  //           create: {
-  //             fullName: "admin",
-  //             role: "ADMIN",
-  //           },
-  //         },
-  //       },
-  //     },
-  //   },
-  // });
+  await db.vendor.create({
+    data: {
+      name: "Logic-Nexus It Solutions",
+      address: "Jhikargaccha, Jashore",
+      phone: "01703459656",
+      users: {
+        create: {
+          username: "admin",
+          password: convertHashedPassword,
+          mobile: "123456789",
+          email: "admin@admin.com",
+          admin: {
+            create: {
+              fullName: "admin",
+              role: "ADMIN",
+            },
+          },
+        },
+      },
+    },
+  });
 
   // Seed Divisions
   for (const division of divisions.data) {
@@ -67,17 +67,23 @@ async function seed() {
     });
   }
 
-  // Seed Unions
-  for (const union of unions.data) {
-    await db.union.create({
-      data: {
-        name: union.name,
-        bn_name: union.bn_name,
-        url: union.url,
-        upazila: { connect: { id: parseInt(union.upazilla_id) } },
-      },
-    });
-  }
+  //   // Seed Unions
+  //   for (const union of unions.data) {
+  //     await db.union.create({
+  //       data: {
+  //         name: union.name,
+  //         bn_name: union.bn_name,
+  //         url: union.url,
+  //         upazila: { connect: { id: parseInt(union.upazilla_id) } },
+  //       },
+  //     });
+  //   }
+
+  //delete all data
+  // await db.division.deleteMany();
+  // await db.district.deleteMany();
+  // await db.upazila.deleteMany();
+  // await db.union.deleteMany();
 }
 
 seed()
