@@ -750,3 +750,127 @@
 
 ::1 - - [28/Oct/2024:21:16:10 +0000] "GET /api/v1/upazilas HTTP/1.1" 200 79960 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [28/Oct/2024:21:54:11 +0000] "GET /api/v1/unions HTTP/1.1" 200 77934 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:21:54:18 +0000] "GET /api/v1/unions HTTP/1.1" 200 79588 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:21:54:27 +0000] "GET /api/v1/unions?name=Jhikargachha HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:21:54:34 +0000] "GET /api/v1/unions?upazila_id=175&name=Jhikargachha HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:21:54:39 +0000] "GET /api/v1/unions?upazila_id=175 HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:04:45 +0000] "GET /api/v1/zones HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:10:53 +0000] "GET /api/v1/divisions?bn_name=%E0%A6%96%E0%A7%81%E0%A6%B2%E0%A6%A8%E0%A6%BE HTTP/1.1" 200 187 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:11:09 +0000] "GET /api/v1/districts?division_id=3 HTTP/1.1" 200 1457 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:11:13 +0000] "GET /api/v1/districts?division_id=3&name=Jashore HTTP/1.1" 200 301 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:11:30 +0000] "GET /api/v1/upazilas?district_id=20 HTTP/1.1" 200 1007 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:11:33 +0000] "GET /api/v1/upazilas?district_id=20&bn_name=%E0%A6%9D%E0%A6%BF%E0%A6%95%E0%A6%B0%E0%A6%97%E0%A6%BE%E0%A6%9B%E0%A6%BE HTTP/1.1" 200 201 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:11:47 +0000] "GET /api/v1/unions?upazila_id=175 HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:11:50 +0000] "GET /api/v1/unions?upazila_id=175&name=Jhikargachha HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:11:52 +0000] "GET /api/v1/unions?name=Jhikargachha HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:12:05 +0000] "GET /api/v1/unions HTTP/1.1" 200 269794 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:12:17 +0000] "GET /api/v1/unions?bn_name=%E0%A6%9D%E0%A6%BF%E0%A6%95%E0%A6%B0%E0%A6%97%E0%A6%BE%E0%A6%9B%E0%A6%BE HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:12:21 +0000] "GET /api/v1/unions?upazila_id=175 HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:13:25 +0000] "POST /api/v1/employee-register HTTP/1.1" 401 26 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:13:31 +0000] "POST /api/v1/login HTTP/1.1" 200 766 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:13:42 +0000] "POST /api/v1/customer-register HTTP/1.1" 500 1454 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:16:43 +0000] "POST /api/v1/customer-register HTTP/1.1" 200 67 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:17:03 +0000] "POST /api/v1/employee-register HTTP/1.1" 200 86 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:17:37 +0000] "POST /api/v1/employee-register HTTP/1.1" 400 174 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:18:23 +0000] "POST /api/v1/employee-register HTTP/1.1" 400 65 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:18:49 +0000] "POST /api/v1/employee-register HTTP/1.1" 200 92 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:19:12 +0000] "GET /api/v1/employees?status=ACTIVE&pagination=true&pageNumber&rowPerPage HTTP/1.1" 200 1795 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:19:41 +0000] "GET /api/v1/unions?upazila_id=175 HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:19:46 +0000] "GET /api/v1/unions HTTP/1.1" 200 348851 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:21:48 +0000] "GET /api/v1/unions HTTP/1.1" 200 369055 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:22:09 +0000] "GET /api/v1/unions HTTP/1.1" 200 372644 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:22:29 +0000] "GET /api/v1/unions HTTP/1.1" 200 376131 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:23:22 +0000] "GET /api/v1/unions HTTP/1.1" 200 385060 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:23:31 +0000] "GET /api/v1/unions HTTP/1.1" 200 386561 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:23:44 +0000] "GET /api/v1/unions?name=Jhikargachha HTTP/1.1" 200 204 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:23:53 +0000] "POST /api/v1/zones/ HTTP/1.1" 400 75 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:24:04 +0000] "POST /api/v1/zones/ HTTP/1.1" 500 3000 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:25:08 +0000] "POST /api/v1/zones/ HTTP/1.1" 200 486 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:25:28 +0000] "GET /api/v1/zones?id&status&district_id&upazila_id&union_id&operatorId&vendorId HTTP/1.1" 500 2665 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:25:36 +0000] "GET /api/v1/zones HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:25:38 +0000] "GET /api/v1/zones HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:25:39 +0000] "GET /api/v1/zones HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:27:01 +0000] "GET /api/v1/zones/1 HTTP/1.1" 200 486 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:27:06 +0000] "GET /api/v1/zones HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:27:32 +0000] "GET /api/v1/zones HTTP/1.1" 200 489 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:27:49 +0000] "GET /api/v1/zones HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:28:24 +0000] "GET /api/v1/zones HTTP/1.1" 200 489 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:28:52 +0000] "GET /api/v1/zones HTTP/1.1" 200 3049 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:32:47 +0000] "GET /api/v1/zones HTTP/1.1" 200 987 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:32:52 +0000] "GET /api/v1/zones HTTP/1.1" 200 987 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:32:56 +0000] "GET /api/v1/zones HTTP/1.1" 200 987 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:33:00 +0000] "GET /api/v1/zones HTTP/1.1" 200 987 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:34:25 +0000] "GET /api/v1/zones HTTP/1.1" 200 843 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:34:29 +0000] "GET /api/v1/zones HTTP/1.1" 200 843 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:34:45 +0000] "GET /api/v1/zones HTTP/1.1" 200 843 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:34:50 +0000] "GET /api/v1/zones HTTP/1.1" 200 843 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:36:18 +0000] "GET /api/v1/zones HTTP/1.1" 200 583 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:36:22 +0000] "GET /api/v1/zones HTTP/1.1" 200 583 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:36:26 +0000] "GET /api/v1/zones HTTP/1.1" 200 583 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:36:28 +0000] "GET /api/v1/zones HTTP/1.1" 200 583 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:36:51 +0000] "GET /api/v1/zones HTTP/1.1" 200 868 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:37:03 +0000] "GET /api/v1/zones HTTP/1.1" 200 868 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [28/Oct/2024:22:37:07 +0000] "GET /api/v1/zones HTTP/1.1" 200 868 "-" "PostmanRuntime/7.42.0"
+

@@ -339,7 +339,7 @@ enum Zone_status {
 }
 
 model Zone {
-  id           Int         @id @default(autoincrement())
+  id           String      @id @default(cuid())
   village_name String
   ward_no      String
   zone_name    String
@@ -348,15 +348,12 @@ model Zone {
   isActive     Zone_status @default(ACTIVE)
   division_id  Int?
   division     Division?   @relation(fields: [division_id], references: [id]) // 1-to-1
-
-  district_id Int?
-  district    District? @relation(fields: [district_id], references: [id])
-
-  upazila_id Int?
-  upazila    Upazila? @relation(fields: [upazila_id], references: [id])
-
-  union_id Int?
-  union    Union? @relation(fields: [union_id], references: [id]) // 1-to-1 or 1-to-many
+  district_id  Int?
+  district     District?   @relation(fields: [district_id], references: [id])
+  upazila_id   Int?
+  upazila      Upazila?    @relation(fields: [upazila_id], references: [id])
+  union_id     Int?
+  union        Union?      @relation(fields: [union_id], references: [id]) // 1-to-1 or 1-to-many
 
   // Foreign key for Operator (one-to-one relationship)
   operatorId String? @unique

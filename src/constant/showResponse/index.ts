@@ -6,6 +6,7 @@ export type IShowResponseData = {
   message: string;
   data?: any;
   paginationInfo?: any;
+  [key: string]: any;
 };
 
 export const showResponse = (
@@ -16,6 +17,7 @@ export const showResponse = (
     message,
     data,
     paginationInfo,
+    ...rest
   }: IShowResponseData
 ) => {
   return res
@@ -25,6 +27,7 @@ export const showResponse = (
       status,
       message,
       data,
+      ...rest,
       ...(paginationInfo && { paginationInfo }),
     });
 };

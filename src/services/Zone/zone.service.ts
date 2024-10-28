@@ -2,10 +2,101 @@ import { Zone_status } from "@prisma/client";
 import { db } from "../../utils/db.server";
 import { CreateZoneData } from "../../routes/Zone/zone";
 
-export const getZones = async (status?: Zone_status) => {
+export const getZones = async ({
+  zoneId,
+  status,
+  district_id,
+  upazila_id,
+  union_id,
+  operatorId,
+  vendorId,
+}: {
+  zoneId?: string;
+  status?: Zone_status;
+  district_id?: string;
+  upazila_id?: string;
+  union_id?: string;
+  operatorId?: string;
+  vendorId: string;
+}) => {
   return await db.zone.findMany({
     where: {
+      ...(zoneId && {
+        id: typeof zoneId === "string" ? parseInt(zoneId, 10) : zoneId,
+      }),
       ...(status && { isActive: status }),
+      ...(district_id && { district_id: Number(district_id) }),
+      ...(upazila_id && { upazila_id: Number(upazila_id) }),
+      ...(union_id && { union_id: Number(union_id) }),
+      ...(operatorId && { operatorId }),
+      ...(vendorId && { vendorId }),
+    },
+
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      division: {
+        select: {
+          id: true,
+          name: true,
+          bn_name: true,
+        },
+      },
+      district: {
+        select: {
+          id: true,
+          name: true,
+          bn_name: true,
+        },
+      },
+      upazila: {
+        select: {
+          id: true,
+          name: true,
+          bn_name: true,
+        },
+      },
+      union: {
+        select: {
+          id: true,
+          name: true,
+          bn_name: true,
+        },
+      },
+      operator: {
+        select: {
+          id: true,
+          fullName: true,
+          whatsapp: true,
+          employeeID: true,
+        },
+      },
+      representatives: {
+        select: {
+          id: true,
+          fullName: true,
+          whatsapp: true,
+          employeeID: true,
+        },
+      },
+      riders: {
+        select: {
+          id: true,
+          fullName: true,
+          whatsapp: true,
+          employeeID: true,
+        },
+      },
+    },
+    omit: {
+      createdAt: true,
+      updatedAt: true,
+      division_id: true,
+      district_id: true,
+      upazila_id: true,
+      union_id: true,
+      operatorId: true,
     },
   });
 };
@@ -38,7 +129,7 @@ export const createZone = async ({
   return await db.zone.create({
     data: {
       village_name,
-      ward_no,
+      ward_no: String(ward_no),
       zone_name,
       contact_no,
       whatsapp_no,
@@ -100,7 +191,7 @@ export const updateZone = async (
     },
     data: {
       village_name,
-      ward_no,
+      ward_no: String(ward_no),
       zone_name,
       contact_no,
       whatsapp_no,

@@ -32,8 +32,32 @@ async function getAllZoneHandler(
   next: NextFunction
 ) {
   try {
-    const { status } = req.query as {
+    //query
+    // const {
+    //   id: zoneId,
+    //   status,
+    //   district_id: districtId,
+    //   upazila_id: upazilaId,
+    //   union_id: unionId,
+    //   operatorId: operatorID,
+    //   vendorId: vendorID,
+    // } = reqData.query as any;
+    const {
+      status,
+      id: zoneId,
+      district_id,
+      upazila_id,
+      union_id,
+      operatorId,
+      vendorId,
+    } = req.query as {
       status: Zone_status;
+      id: string;
+      district_id: string;
+      upazila_id: string;
+      union_id: string;
+      operatorId: string;
+      vendorId: string;
     };
 
     if (status && !(status in Zone_status)) {
@@ -45,7 +69,15 @@ async function getAllZoneHandler(
       return;
     }
 
-    const zones = await getZones(status);
+    const zones = await getZones({
+      zoneId,
+      status,
+      district_id,
+      upazila_id,
+      union_id,
+      operatorId,
+      vendorId,
+    });
 
     showResponse(res, {
       message: "Zones fetched successfully",
@@ -138,9 +170,38 @@ async function createZoneHandler(
         status: 400,
         success: false,
         message: "Missing required fields",
+        requiredFields: [
+          "village_name",
+          "ward_no",
+          "zone_name",
+          "division_id",
+          "district_id",
+          "upazila_id",
+        ],
       });
       return;
     }
+
+    //if rep but not array
+    if (representatives && !Array.isArray(representatives)) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Representatives must be an array",
+      });
+      return;
+    }
+    //if rider but not array
+    if (riders && !Array.isArray(riders)) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Riders must be an array",
+      });
+      return;
+    }
+
+    //check if zone already exists
 
     const data: CreateZoneData = {
       village_name,
@@ -212,6 +273,26 @@ async function updateZoneHandler(
       representatives,
       riders,
     } = req.body as any;
+
+    //if rep but not array
+    if (representatives && !Array.isArray(representatives)) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Representatives must be an array",
+      });
+      return;
+    }
+    //if rider but not array
+    if (riders && !Array.isArray(riders)) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Riders must be an array",
+      });
+      return;
+    }
+
     const zone = await updateZone(id, {
       village_name,
       ward_no,
