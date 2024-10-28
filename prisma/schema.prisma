@@ -55,21 +55,22 @@ model Vendor {
 }
 
 model User {
-  id             String           @id @default(cuid())
-  email          String           @unique
-  mobile         String           @unique
-  username       String           @unique
-  password       String
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  admin          admin? // User can be an admin
-  otherUsers     otherUsers? // Only for general user and retailer
-  worker         worker? // Only for operator, raider, representative
-  Supplier       Supplier? // Only for supplier
-  loggin_history loggin_history[] // User's login history
-  vendor         Vendor           @relation(fields: [vendorId], references: [id], onDelete: Cascade)
-  vendorId       String // Foreign key to `Vendor`
-  product        product[] // A user can have multiple products
+  id               String             @id @default(cuid())
+  email            String             @unique
+  mobile           String             @unique
+  username         String             @unique
+  password         String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  admin            admin? // User can be an admin
+  otherUsers       otherUsers? // Only for general user and retailer
+  worker           worker? // Only for operator, raider, representative
+  Supplier         Supplier? // Only for supplier
+  loggin_history   loggin_history[] // User's login history
+  vendor           Vendor             @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId         String // Foreign key to `Vendor`
+  product          product[] // A user can have multiple products
+  product_category product_category[]
 
   @@unique([email, mobile, username]) // Unique constraint: the combination of email, mobile, and username must be unique
   @@index([id, email, mobile, username])
@@ -208,17 +209,25 @@ model product_category {
   vendor                Vendor         @relation(fields: [vendorId], references: [id], onDelete: Cascade) // Link to vendor
   vendorId              String
   product               product[]
+  createdBy             User           @relation(fields: [createdById], references: [id])
+  createdById           String
 
   @@index([id, product_category_name, isActive])
   @@map("product_category")
 }
 
-// Product model
-
 enum product_quantity_type {
-  KG
-  LITRE
   UNIT
+  PIECE
+  KG
+  GRAM
+  PER
+  DOZEN
+  BOX
+  CASE
+  FEET
+  LITER
+  SET
 }
 
 enum delivery_charge_type {
@@ -232,12 +241,8 @@ model product {
   id                    String                @id @default(cuid())
   product_name          String
   description           String?
-  product_quantity_type product_quantity_type @default(UNIT)
-  delivery_charge_type  delivery_charge_type? @default(REGULAR)
-  delivery_charge       Float                 @default(0)
-  buying_price          Float                 @default(0)
-  selling_price         Float                 @default(0)
-  stock                 Int                   @default(0)
+  product_quantity_type product_quantity_type
+  delivery_charge_type  delivery_charge_type
   isActive              product_status        @default(ACTIVE)
   createdAt             DateTime              @default(now())
   updatedAt             DateTime              @updatedAt

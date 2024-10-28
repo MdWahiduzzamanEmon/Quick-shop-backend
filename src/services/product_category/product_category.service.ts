@@ -57,6 +57,7 @@ export const createMultipleProductCategory = async (
 ) => {
   return await db.product_category.createMany({
     data: categories,
+
     skipDuplicates: true,
   });
 };

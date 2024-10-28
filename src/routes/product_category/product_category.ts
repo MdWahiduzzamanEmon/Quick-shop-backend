@@ -106,8 +106,18 @@ const createProductCategoryHandler: RequestHandler = async (
   const reqData = _req as any;
 
   try {
-    const { role, vendorId: TOKEN_VENDOR_ID } = reqData?.user || {};
+    const { role, vendorId: TOKEN_VENDOR_ID, id: userId } = reqData?.user || {};
     // console.log(reqData?.body);
+
+    //if role customer,retailer,or supplier then show 403
+    if (role === "CUSTOMER" || role === "RETAILER" || role === "SUPPLIER") {
+      showResponse(res, {
+        status: 403,
+        success: false,
+        message: "You are not authorized to create product categories",
+      });
+      return;
+    }
 
     if (Object.keys(reqData?.body).length === 0) {
       showResponse(res, {
@@ -134,6 +144,7 @@ const createProductCategoryHandler: RequestHandler = async (
         ...(files && { image: files[index] }),
         order: index + 1,
         vendorId: TOKEN_VENDOR_ID,
+        createdById: userId,
         ...(role === "ADMIN" && { isActive: product_status.ACTIVE }),
       });
     });
@@ -175,6 +186,16 @@ const updateProductCategoryHandler: RequestHandler = async (
   const { categoryID } = reqData?.params || {};
   const { vendorId: TOKEN_VENDOR_ID } = reqData?.user || {};
   try {
+    //if role customer,retailer,or supplier then show 403
+    if (role === "CUSTOMER" || role === "RETAILER" || role === "SUPPLIER") {
+      showResponse(res, {
+        status: 403,
+        success: false,
+        message: "You are not authorized to create product categories",
+      });
+      return;
+    }
+
     const bodyData = reqData?.body as setCategoryType;
     const files = reqData?.fileUrl || [];
 
