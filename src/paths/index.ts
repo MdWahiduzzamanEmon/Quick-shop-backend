@@ -7,6 +7,8 @@ import { employeesRoute } from "../routes/users/employees/employees";
 import { allUsersRoute } from "../routes/users/getAllUsers/getAllUsers";
 import { othersUsersRoute } from "../routes/users/othersUsers/othersUsers";
 import { getConnectedUsersRoute } from "../routes/getConnectedUsers/getConnectedUsers";
+import { zoneRoute } from "../routes/Zone/zone";
+import { bd_locationsRoute } from "../routes/BD_location/BD_location";
 
 export const routes = [
   vendorRoute,
@@ -18,4 +20,6 @@ export const routes = [
   employeesRoute,
   product_categoryRoute,
   getConnectedUsersRoute,
+  zoneRoute,
+  bd_locationsRoute,
 ];

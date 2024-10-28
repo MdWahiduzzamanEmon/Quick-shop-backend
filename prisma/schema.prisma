@@ -272,3 +272,81 @@ model product_image {
   @@index([id, isActive])
   @@map("product_image")
 }
+
+//location bd info model
+// schema.prisma
+
+model Division {
+  id        Int        @id @default(autoincrement())
+  name      String
+  bn_name   String
+  url       String
+  districts District[] // 1-to-many relation with District
+  Zone      Zone[]
+}
+
+model District {
+  id          Int       @id @default(autoincrement())
+  name        String
+  bn_name     String
+  lat         Float
+  lon         Float
+  url         String
+  division_id Int
+  division    Division  @relation(fields: [division_id], references: [id])
+  upazilas    Upazila[] // 1-to-many relation with Upazila
+  Zone        Zone[]
+}
+
+model Upazila {
+  id          Int      @id @default(autoincrement())
+  name        String
+  bn_name     String
+  url         String
+  district_id Int
+  district    District @relation(fields: [district_id], references: [id])
+  unions      Union[] // 1-to-many relation with Union
+  Zone        Zone[]
+}
+
+model Union {
+  id         Int     @id @default(autoincrement())
+  name       String
+  bn_name    String
+  url        String
+  upazila_id Int
+  upazila    Upazila @relation(fields: [upazila_id], references: [id])
+  Zone       Zone[] // 1-to-many relation with Zone
+}
+
+// 1. District - d
+// 2. Upazila - d
+// 3. Union - d
+// 4. Ward No/Village name
+// 5. Zone name
+// 6. Contact No
+// 7. WhatsApp No
+// 8. Posted Operator - d (single) [name, mobile, address]
+// 9. Posted Representative - d (can be multiple) [name, mobile, address]
+// 10. Posted Rider - d (can be multipl) [name, mobile, address]
+
+model Zone {
+  id           Int     @id @default(autoincrement())
+  village_name String
+  ward_no      String
+  zone_name    String
+  contact_no   String?
+  whatsapp_no  String?
+
+  division_id Int?
+  division    Division? @relation(fields: [division_id], references: [id]) // 1-to-1
+
+  district_id Int?
+  district    District? @relation(fields: [district_id], references: [id])
+
+  upazila_id Int?
+  upazila    Upazila? @relation(fields: [upazila_id], references: [id])
+
+  union_id Int?
+  union    Union? @relation(fields: [union_id], references: [id]) // 1-to-1 or 1-to-many
+}
