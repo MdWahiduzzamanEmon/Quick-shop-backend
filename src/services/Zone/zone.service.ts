@@ -62,3 +62,72 @@ export const createZone = async ({
     },
   });
 };
+
+//update zone
+export const updateZone = async (
+  id: string | number,
+  {
+    village_name,
+    ward_no,
+    zone_name,
+    contact_no,
+    whatsapp_no,
+    division_id,
+    district_id,
+    upazila_id,
+    union_id,
+    operatorId,
+    representatives,
+    riders,
+  }: {
+    village_name?: string;
+    ward_no?: string;
+    zone_name?: string;
+    contact_no?: string;
+    whatsapp_no?: string;
+    division_id?: number;
+    district_id?: number;
+    upazila_id?: number;
+    union_id?: number;
+    operatorId?: string;
+    representatives?: string[];
+    riders?: string[];
+  }
+) => {
+  return await db.zone.update({
+    where: {
+      id: typeof id === "string" ? parseInt(id, 10) : id,
+    },
+    data: {
+      village_name,
+      ward_no,
+      zone_name,
+      contact_no,
+      whatsapp_no,
+      division_id,
+      district_id,
+      upazila_id,
+      union_id,
+      ...(operatorId && { operatorId }),
+      ...(representatives && {
+        representatives: {
+          connect: representatives.map((id) => ({ id })),
+        },
+      }),
+      ...(riders && {
+        riders: {
+          connect: riders.map((id) => ({ id })),
+        },
+      }),
+    },
+  });
+};
+
+//deleteZone
+export const deleteZone = async (id: string | number) => {
+  return await db.zone.delete({
+    where: {
+      id: typeof id === "string" ? parseInt(id, 10) : id,
+    },
+  });
+};
