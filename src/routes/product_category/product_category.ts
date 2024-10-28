@@ -184,7 +184,7 @@ const updateProductCategoryHandler: RequestHandler = async (
 ) => {
   const reqData = req as any;
   const { categoryID } = reqData?.params || {};
-  const { vendorId: TOKEN_VENDOR_ID } = reqData?.user || {};
+  const { vendorId: TOKEN_VENDOR_ID, role } = reqData?.user || {};
   try {
     //if role customer,retailer,or supplier then show 403
     if (role === "CUSTOMER" || role === "RETAILER" || role === "SUPPLIER") {
