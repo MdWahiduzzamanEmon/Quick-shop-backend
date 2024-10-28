@@ -19,7 +19,13 @@ const divisionsDataHandler = async (
   next: NextFunction
 ) => {
   try {
-    const divisions = await getDivisionsData();
+    const { name: divisionName, bn_name: bnDivisionName } = req.query as any;
+    // console.log(typeof divisionName, bnDivisionName);
+
+    const divisions = await getDivisionsData({
+      divisionName,
+      bnDivisionName,
+    });
     showResponse(res, {
       message: "Divisions fetched successfully",
       data: divisions,
@@ -39,7 +45,16 @@ const districtsDataHandler = async (
   next: NextFunction
 ) => {
   try {
-    const districts = await getDistrictsData();
+    const {
+      name: districtName,
+      bn_name: bnDistrictName,
+      division_id,
+    } = req.query as any;
+    const districts = await getDistrictsData({
+      districtName,
+      bnDistrictName,
+      division_id,
+    });
     showResponse(res, {
       message: "Districts fetched successfully",
       data: districts,
@@ -59,7 +74,16 @@ const upazilasDataHandler = async (
   next: NextFunction
 ) => {
   try {
-    const upazilas = await getUpazilasData();
+    const {
+      name: upazilaName,
+      bn_name: bnUpazilaName,
+      district_id,
+    } = req.query as any;
+    const upazilas = await getUpazilasData({
+      upazilaName,
+      bnUpazilaName,
+      district_id,
+    });
     showResponse(res, {
       message: "Upazilas fetched successfully",
       data: upazilas,
@@ -79,7 +103,16 @@ const unionsDataHandler = async (
   next: NextFunction
 ) => {
   try {
-    const unions = await getUnionsData();
+    const {
+      upazila_id,
+      name: unionName,
+      bn_name: bnUnionName,
+    } = req.query as any;
+    const unions = await getUnionsData({
+      unionName,
+      bnUnionName,
+      upazila_id,
+    });
     showResponse(res, {
       message: "Unions fetched successfully",
       data: unions,

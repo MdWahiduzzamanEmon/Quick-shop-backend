@@ -157,6 +157,10 @@ model worker {
   order               Int         @default(0) // For sorting purpose
   user                User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId              String      @unique
+  // Relations to Zone
+  operatorZone        Zone?       @relation("ZoneOperator")
+  representativeZones Zone[]      @relation("ZoneRepresentatives")
+  riderZones          Zone[]      @relation("ZoneRiders")
 
   @@index([id, userId, role, isActive, NID, employeeID, whatsapp])
   @@map("workers")
@@ -283,6 +287,8 @@ model Division {
   url       String
   districts District[] // 1-to-many relation with District
   Zone      Zone[]
+
+  @@map("division")
 }
 
 model District {
@@ -296,6 +302,8 @@ model District {
   division    Division  @relation(fields: [division_id], references: [id])
   upazilas    Upazila[] // 1-to-many relation with Upazila
   Zone        Zone[]
+
+  @@map("district")
 }
 
 model Upazila {
@@ -307,6 +315,8 @@ model Upazila {
   district    District @relation(fields: [district_id], references: [id])
   unions      Union[] // 1-to-many relation with Union
   Zone        Zone[]
+
+  @@map("upazila")
 }
 
 model Union {
@@ -317,18 +327,9 @@ model Union {
   upazila_id Int
   upazila    Upazila @relation(fields: [upazila_id], references: [id])
   Zone       Zone[] // 1-to-many relation with Zone
-}
 
-// 1. District - d
-// 2. Upazila - d
-// 3. Union - d
-// 4. Ward No/Village name
-// 5. Zone name
-// 6. Contact No
-// 7. WhatsApp No
-// 8. Posted Operator - d (single) [name, mobile, address]
-// 9. Posted Representative - d (can be multiple) [name, mobile, address]
-// 10. Posted Rider - d (can be multipl) [name, mobile, address]
+  @@map("union")
+}
 
 model Zone {
   id           Int     @id @default(autoincrement())
@@ -349,4 +350,14 @@ model Zone {
 
   union_id Int?
   union    Union? @relation(fields: [union_id], references: [id]) // 1-to-1 or 1-to-many
+
+  // Foreign key for Operator (one-to-one relationship)
+  operatorId String? @unique
+  operator   worker? @relation("ZoneOperator", fields: [operatorId], references: [id])
+
+  // Many-to-many relationships for Representatives and Riders
+  representatives worker[] @relation("ZoneRepresentatives")
+  riders          worker[] @relation("ZoneRiders")
+
+  @@map("zone")
 }
