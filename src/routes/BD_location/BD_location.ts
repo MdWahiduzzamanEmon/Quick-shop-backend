@@ -8,6 +8,7 @@ import {
 } from "../../services/bd_locations/bd_locations.service";
 import { showResponse } from "../../constant/showResponse";
 import errorMessage from "../../Others/ErrorMessage/errorMessage";
+import { getFromCache, StoreInCache } from "../../Redis/redis";
 
 export const bd_locationsRoute = express.Router();
 
@@ -22,10 +23,37 @@ const divisionsDataHandler = async (
     const { name: divisionName, bn_name: bnDivisionName } = req.query as any;
     // console.log(typeof divisionName, bnDivisionName);
 
+    const cachedData = await getFromCache("divisions", "divisions");
+    if (cachedData) {
+      //if cache is available and filtered data is available then filter the data and return
+      if (divisionName || bnDivisionName) {
+        const filteredData = cachedData.filter((item: any) => {
+          return (
+            item.name.includes(divisionName) ||
+            item.bn_name.includes(bnDivisionName)
+          );
+        });
+
+        showResponse(res, {
+          message: "Divisions fetched successfully and filtered from cache",
+          data: filteredData,
+        });
+        return;
+      }
+
+      showResponse(res, {
+        message: "Divisions fetched successfully from cache",
+        data: cachedData,
+      });
+      return;
+    }
+
     const divisions = await getDivisionsData({
       divisionName,
       bnDivisionName,
     });
+
+    await StoreInCache("divisions", "divisions", divisions);
     showResponse(res, {
       message: "Divisions fetched successfully",
       data: divisions,
@@ -50,11 +78,13 @@ const districtsDataHandler = async (
       bn_name: bnDistrictName,
       division_id,
     } = req.query as any;
+
     const districts = await getDistrictsData({
       districtName,
       bnDistrictName,
       division_id,
     });
+
     showResponse(res, {
       message: "Districts fetched successfully",
       data: districts,
@@ -79,11 +109,13 @@ const upazilasDataHandler = async (
       bn_name: bnUpazilaName,
       district_id,
     } = req.query as any;
+
     const upazilas = await getUpazilasData({
       upazilaName,
       bnUpazilaName,
       district_id,
     });
+
     showResponse(res, {
       message: "Upazilas fetched successfully",
       data: upazilas,
@@ -108,11 +140,13 @@ const unionsDataHandler = async (
       name: unionName,
       bn_name: bnUnionName,
     } = req.query as any;
+
     const unions = await getUnionsData({
       unionName,
       bnUnionName,
       upazila_id,
     });
+
     showResponse(res, {
       message: "Unions fetched successfully",
       data: unions,

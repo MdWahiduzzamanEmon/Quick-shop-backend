@@ -27,4 +27,17 @@ async function getFromCache(key: string, field: string) {
   return JSON.parse(data);
 }
 
-export { StoreInCache, getFromCache };
+async function cleanCache(key: string, field: string) {
+  const keys = (await client?.keys("*")) || [];
+  console.log(keys);
+
+  if (keys.includes(key)) {
+    await client.del(key);
+  }
+  const keys2 = (await client?.keys("*")) || [];
+  console.log(keys2, "keys2");
+
+  return true;
+}
+
+export { StoreInCache, getFromCache, cleanCache };
