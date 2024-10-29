@@ -6,7 +6,7 @@ import {
   deleteUser,
   customerRegister,
   workerRegister,
-  checkAdminExist,
+  checkSuperAdminExist,
 } from "../../services/Auth/auth.service";
 import { comparePassword, hashPassword } from "../../Others/SecurePassword";
 import exclude from "../../Others/DataExcludeFunction/exclude";
@@ -188,7 +188,7 @@ const loginAllUserInVendor = async (
   }
 };
 
-const loginAdmin = async (
+const loginSuperAdmin = async (
   res: Response,
   next: NextFunction,
   {
@@ -308,7 +308,7 @@ const loginHandler: express.RequestHandler = async (
 
     //admin login ====================================
 
-    const isExistAdmin = await checkAdminExist(email, mobile, username);
+    const isExistAdmin = await checkSuperAdminExist(email, mobile, username);
 
     if (isExistAdmin) {
       const data = {
@@ -322,7 +322,7 @@ const loginHandler: express.RequestHandler = async (
         device,
         os,
       };
-      await loginAdmin(res, next, data);
+      await loginSuperAdmin(res, next, data);
       return;
     }
 

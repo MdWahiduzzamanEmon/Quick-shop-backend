@@ -39,7 +39,7 @@ enum ShopStatus {
 
 // Model for admin
 
-model admin {
+model superAdmin {
   id        String      @id @default(cuid())
   firstName String
   lastName  String
@@ -47,31 +47,32 @@ model admin {
   password  String
   mobile    String      @unique
   username  String      @unique
-  role      String      @default("ADMIN")
+  role      String      @default("SUPER_ADMIN")
   isActive  User_status @default(ACTIVE)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   vendor    Vendor[] // An admin can have multiple vendors
 
   @@index([id, role, isActive])
-  @@map("admin")
+  @@map("superAdmin")
 }
 
 // Vendor Model: Represents a shop owner or person responsible for a shop
 model Vendor {
-  id         String             @id @default(cuid())
-  name       String             @unique
-  address    String
-  phone      String?
-  createdAt  DateTime           @default(now())
-  updatedAt  DateTime           @updatedAt
-  isActive   ShopStatus         @default(ACTIVE)
-  users      User[] // A vendor can have multiple users
-  products   product[] // A vendor can have multiple products
-  categories product_category[] // A vendor can have multiple product categories
-  Zone       Zone[]
-  admin      admin              @relation(fields: [adminId], references: [id], onDelete: Cascade)
-  adminId    String
+  id           String             @id @default(cuid())
+  name         String             @unique
+  address      String
+  phone        String?
+  vendor_image Json?              @default("{}")
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  isActive     ShopStatus         @default(ACTIVE)
+  users        User[] // A vendor can have multiple users
+  products     product[] // A vendor can have multiple products
+  categories   product_category[] // A vendor can have multiple product categories
+  Zone         Zone[]
+  superAdmin   superAdmin         @relation(fields: [superAdminId], references: [id], onDelete: Cascade)
+  superAdminId String
 
   @@index([id, isActive, name])
   @@map("vendor")
@@ -94,10 +95,24 @@ model User {
   product          product[] // A user can have multiple products
   product_category product_category[]
   Zone             Zone[]
+  admin            admin?
 
   @@unique([email, mobile, username]) // Unique constraint: the combination of email, mobile, and username must be unique
   @@index([id, email, mobile, username])
   @@map("user")
+}
+
+model admin {
+  id        String      @id @default(cuid())
+  role      String      @default("ADMIN")
+  isActive  User_status @default(ACTIVE)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  userId    String      @unique
+  User      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([id, role, isActive])
+  @@map("admin")
 }
 
 //supplier model 

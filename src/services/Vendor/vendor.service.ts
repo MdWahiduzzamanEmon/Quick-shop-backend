@@ -7,13 +7,13 @@ export const getVendors = async ({
   pageNumber,
   rowPerPage,
   pagination,
-  adminUserId,
+  superAdminId,
 }: {
   status?: ShopStatus;
   pageNumber?: number;
   rowPerPage?: number;
   pagination?: boolean;
-  adminUserId?: string;
+  superAdminId?: string;
 }) => {
   //pagination
   const pageNumbers = pageNumber ? parseInt(pageNumber.toString()) : 1;
@@ -23,30 +23,23 @@ export const getVendors = async ({
     db.vendor.findMany({
       where: {
         ...(status && { isActive: status }),
-        ...(adminUserId && {
-          admin: {
-            id: adminUserId,
-          },
+        ...(superAdminId && {
+          superAdminId,
         }),
       },
-      // include: {
-      //   users: {
-      //     include: {
-      //       worker: {
-      //         select: { role: true },
-      //       },
-
-      //       otherUsers: {
-      //         select: { role: true },
-      //       },
-      //     },
-      //     omit: {
-      //       createdAt: true,
-      //       updatedAt: true,
-      //       password: true,
-      //     },
-      //   },
-      // },
+      include: {
+        users: {
+          where: {
+            admin: {
+              role: "ADMIN",
+            },
+          },
+          select: {
+            email: true,
+            username: true,
+          },
+        },
+      },
       ...(pagination
         ? {
             take: resultPerPage,
@@ -98,6 +91,9 @@ export const getSingleVendor = async ({
           otherUsers: {
             select: { role: true },
           },
+          admin: {
+            select: { role: true },
+          },
         },
         omit: {
           createdAt: true,
@@ -115,23 +111,51 @@ export const createVendor = async ({
   name,
   address,
   phone,
-  adminId,
+  superAdminId,
+  vendor_image,
+  vendorAdmin_username,
+  vendorAdmin_mobile,
+  vendorAdmin_password,
+  vendorAdmin_email,
 }: {
   name: string;
   address: string;
   phone: string;
-  adminId: string;
+  superAdminId: string;
+  vendor_image: any;
+  vendorAdmin_username: string;
+  vendorAdmin_mobile: string;
+  vendorAdmin_password: string;
+  vendorAdmin_email: string;
 }) => {
-  return await db.vendor.create({
+  const vendorData = await db.vendor.create({
     data: {
       name,
       address,
       phone,
-      admin: {
-        connect: {
-          id: adminId,
-        },
-      },
+      ...(vendor_image && { vendor_image }),
+      superAdminId,
     },
   });
+
+  new Promise(async (resolve) => {
+    resolve(
+      await db.user.create({
+        data: {
+          username: vendorAdmin_username,
+          mobile: vendorAdmin_mobile,
+          password: vendorAdmin_password,
+          email: vendorAdmin_email,
+          vendorId: vendorData?.id,
+          admin: {
+            create: {
+              role: "ADMIN",
+            },
+          },
+        },
+      })
+    );
+  });
+
+  return vendorData;
 };

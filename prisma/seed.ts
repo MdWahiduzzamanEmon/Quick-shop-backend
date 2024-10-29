@@ -8,20 +8,33 @@ import upazilas from "../src/bd-geo-code/upazilas.json";
 async function seed() {
   const convertHashedPassword = await hashPassword("1516");
 
-  await db.admin.create({
+  await db.superAdmin.create({
     data: {
-      firstName: "Admin",
+      firstName: "Super",
       lastName: "Admin",
       mobile: "1234567890",
-      role: "ADMIN",
-      username: "admin",
-      email: "admin@admin.com",
+      role: "SUPER_ADMIN",
+      username: "superAdmin",
+      email: "superadmin@admin.com",
       password: convertHashedPassword,
       vendor: {
         create: {
           name: "Logic Nexus It Solutions",
           address: "Jhikargaccha, Jashore",
           phone: "01703459656",
+          users: {
+            create: {
+              email: "admin@admin.com",
+              mobile: "1234567890",
+              username: "admin",
+              password: convertHashedPassword,
+              admin: {
+                create: {
+                  role: "ADMIN",
+                },
+              },
+            },
+          },
         },
       },
     },

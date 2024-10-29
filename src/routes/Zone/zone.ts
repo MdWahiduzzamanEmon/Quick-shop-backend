@@ -31,17 +31,10 @@ async function getAllZoneHandler(
   res: Response,
   next: NextFunction
 ) {
+  const reqData = req as any;
   try {
+    const { vendorId } = reqData?.user;
     //query
-    // const {
-    //   id: zoneId,
-    //   status,
-    //   district_id: districtId,
-    //   upazila_id: upazilaId,
-    //   union_id: unionId,
-    //   operatorId: operatorID,
-    //   vendorId: vendorID,
-    // } = reqData.query as any;
     const {
       status,
       id: zoneId,
@@ -49,7 +42,6 @@ async function getAllZoneHandler(
       upazila_id,
       union_id,
       operatorId,
-      vendorId,
     } = req.query as {
       status: Zone_status;
       id: string;
@@ -57,7 +49,6 @@ async function getAllZoneHandler(
       upazila_id: string;
       union_id: string;
       operatorId: string;
-      vendorId: string;
     };
 
     if (status && !(status in Zone_status)) {
@@ -94,9 +85,11 @@ async function getSingleZoneHandler(
   res: Response,
   next: NextFunction
 ) {
+  const reqData = req as any;
   try {
     const { id } = req.params as { id: string };
-    const zone = await getZoneById(id);
+    const { vendorId } = reqData?.user;
+    const zone = await getZoneById(id,vendorId);
     showResponse(res, {
       message: "Zone fetched successfully",
       data: zone,

@@ -9,6 +9,11 @@ import {
 import { showResponse } from "../../constant/showResponse";
 import errorMessage from "../../Others/ErrorMessage/errorMessage";
 import { ShopStatus } from "@prisma/client";
+import {
+  unlinkFile,
+  uploadMiddleware,
+} from "../../Others/File/fileUploadController";
+import { hashPassword } from "../../Others/SecurePassword";
 
 export const vendorRoute = express.Router();
 
@@ -22,7 +27,7 @@ const getVendorsHandler: express.RequestHandler = async (
   const reqData = _req as any;
   const { user } = reqData;
   try {
-    if (user?.role !== "ADMIN") {
+    if (user?.role !== "SUPER_ADMIN") {
       showResponse(res, {
         status: 403,
         success: false,
@@ -30,7 +35,7 @@ const getVendorsHandler: express.RequestHandler = async (
       });
       return;
     }
-    const { status, pageNumber, rowPerPage, pagination, adminUserId } =
+    const { status, pageNumber, rowPerPage, pagination, superAdminId } =
       reqData?.query;
 
     if (status && !(status in ShopStatus)) {
@@ -42,7 +47,7 @@ const getVendorsHandler: express.RequestHandler = async (
       return;
     }
 
-    if (user?.id !== adminUserId) {
+    if (user?.id !== superAdminId) {
       showResponse(res, {
         status: 400,
         success: false,
@@ -56,7 +61,7 @@ const getVendorsHandler: express.RequestHandler = async (
       pageNumber,
       rowPerPage,
       pagination,
-      adminUserId,
+      superAdminId,
     });
     res.setHeader("Cache-Control", "public, max-age=3600 must-revalidate"); // 1 hour
 
@@ -78,16 +83,16 @@ const getSingleVendorHandler: express.RequestHandler = async (
   next: NextFunction
 ) => {
   const { id } = req.params as { id: string };
-  const { user } = req as any;
+  // const { user } = req as any;
   try {
-    if (user?.role !== "ADMIN") {
-      showResponse(res, {
-        status: 403, // Forbidden
-        success: false,
-        message: "Unauthorized access.Only Admin can perform this action",
-      });
-      return;
-    }
+    // if (user?.role !== "SUPER_ADMIN") {
+    //   showResponse(res, {
+    //     status: 403, // Forbidden
+    //     success: false,
+    //     message: "Unauthorized access.Only Admin can perform this action",
+    //   });
+    //   return;
+    // }
     if (typeof id !== "string") {
       throw new Error("id must be a string");
     }
@@ -116,7 +121,7 @@ const createVendorHandler: express.RequestHandler = async (
   const reqData = req as any;
   const { user } = reqData;
   try {
-    if (user?.role !== "ADMIN") {
+    if (user?.role !== "SUPER_ADMIN") {
       showResponse(res, {
         status: 403,
         success: false,
@@ -133,14 +138,40 @@ const createVendorHandler: express.RequestHandler = async (
       });
     }
 
-    const { name, address, phone, adminId } = reqData?.body;
+    const {
+      name,
+      address,
+      phone,
+      superAdminId,
+      vendorAdmin_username,
+      vendorAdmin_mobile,
+      vendorAdmin_password,
+      vendorAdmin_email,
+    } = reqData?.body;
+    const vendor_image = reqData?.fileUrl?.[0] || {};
+    // console.log(vendor_image, "vendor_image");
 
-    if (user?.id !== adminId) {
+    if (user?.id !== superAdminId) {
       showResponse(res, {
         status: 400,
         success: false,
         message: "Not a valid admin user",
       });
+      return;
+    }
+
+    if (
+      !vendorAdmin_username ||
+      !vendorAdmin_password ||
+      !vendorAdmin_email ||
+      !vendorAdmin_mobile
+    ) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide vendor admin data",
+      });
+      await unlinkFile(vendor_image?.publicId);
       return;
     }
 
@@ -153,8 +184,9 @@ const createVendorHandler: express.RequestHandler = async (
       showResponse(res, {
         status: 400,
         success: false,
-        message: "Vendor already exists",
+        message: "Vendor already exists with this name",
       });
+      await unlinkFile(vendor_image?.publicId);
       return;
     }
 
@@ -163,7 +195,12 @@ const createVendorHandler: express.RequestHandler = async (
       name,
       address,
       phone,
-      adminId,
+      vendor_image,
+      superAdminId,
+      vendorAdmin_username,
+      vendorAdmin_mobile,
+      vendorAdmin_password: await hashPassword(vendorAdmin_password),
+      vendorAdmin_email,
     };
     const newVendor = await createVendor(body);
 
@@ -173,17 +210,24 @@ const createVendorHandler: express.RequestHandler = async (
         success: false,
         message: "Failed to create vendor",
       });
+
+      await unlinkFile(vendor_image?.publicId);
       return;
     }
 
     showResponse(res, {
       status: 201,
       message: "Vendor created successfully",
-      data: newVendor,
     });
   } catch (error: any) {
+    await unlinkFile(reqData?.fileUrl?.[0]?.publicId);
     errorMessage(res, error, next);
   }
 };
 
-vendorRoute.post("/vendors", verifyTokenMiddleware, createVendorHandler);
+vendorRoute.post(
+  "/vendors",
+  verifyTokenMiddleware,
+  uploadMiddleware,
+  createVendorHandler
+);

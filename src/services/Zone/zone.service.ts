@@ -101,10 +101,11 @@ export const getZones = async ({
   });
 };
 
-export const getZoneById = async (id: string) => {
+export const getZoneById = async (id: string, vendorId: string) => {
   return await db.zone.findUnique({
     where: {
       id: String(id),
+      vendorId,
     },
     omit: {
       createdAt: true,

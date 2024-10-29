@@ -25,6 +25,7 @@ export type EmployeeQuery = {
   rowPerPage?: number;
   pagination?: boolean;
   employeeUniqueID?: string;
+  vendorId: string;
 };
 
 const getOthersUsersHandler: express.RequestHandler = async (
@@ -34,6 +35,7 @@ const getOthersUsersHandler: express.RequestHandler = async (
 ) => {
   const reqData = _req as any;
   try {
+    const { vendorId } = reqData?.user;
     const { status, pageNumber, rowPerPage, pagination, employeeUniqueID } =
       reqData?.query as EmployeeQuery;
     const users = await getEmployees({
@@ -42,6 +44,7 @@ const getOthersUsersHandler: express.RequestHandler = async (
       rowPerPage,
       pagination,
       employeeUniqueID,
+      vendorId,
     });
     showResponse(res, {
       message: "Employees fetched successfully",
@@ -60,10 +63,12 @@ const getSingleEmployeeByIDHandler: express.RequestHandler = async (
   res: Response,
   next: NextFunction
 ) => {
+  const reqData = req as any;
   try {
-    const { employeeID } = req.params;
+    const { employeeID } = reqData.params;
+    const { vendorId } = reqData?.user;
 
-    const user = await getSingleEmployeeByID(employeeID);
+    const user = await getSingleEmployeeByID(employeeID, vendorId);
 
     if (!user) {
       showResponse(res, {
@@ -113,6 +118,7 @@ const editEmployeeHandler: express.RequestHandler = async (
   const reqData = req as any;
   try {
     const { employeeID } = req.params;
+    const { vendorId } = reqData?.user;
     const {
       fullName,
       fatherName,
@@ -132,7 +138,7 @@ const editEmployeeHandler: express.RequestHandler = async (
     // }
     const profile_picture = reqData?.fileUrl?.[0] as string;
 
-    const user = (await getSingleEmployeeByID(employeeID)) as any;
+    const user = (await getSingleEmployeeByID(employeeID, vendorId)) as any;
     if (!user) {
       showResponse(res, {
         status: 400,

@@ -9,6 +9,7 @@ export const getEmployees = async ({
   rowPerPage,
   pagination,
   employeeUniqueID,
+  vendorId,
 }: EmployeeQuery) => {
   //pagination
   const pageNumbers = pageNumber ? parseInt(pageNumber.toString()) : 1;
@@ -19,6 +20,11 @@ export const getEmployees = async ({
       where: {
         ...(status && { isActive: status }),
         ...(employeeUniqueID && { employeeID: employeeUniqueID }),
+        ...(vendorId && {
+          user: {
+            vendorId,
+          },
+        }),
       },
       include: {
         user: {
@@ -44,6 +50,11 @@ export const getEmployees = async ({
       ? db.worker.count({
           where: {
             ...(status && { isActive: status }),
+            ...(vendorId && {
+              user: {
+                vendorId,
+              },
+            }),
           },
         })
       : Promise.resolve(0),
@@ -62,10 +73,16 @@ export const getEmployees = async ({
 };
 
 //get single employee
-export const getSingleEmployeeByID = async (employeeID: string) => {
+export const getSingleEmployeeByID = async (
+  employeeID: string,
+  vendorId: string
+) => {
   return await db.worker.findFirst({
     where: {
       id: employeeID,
+      user: {
+        vendorId,
+      },
     },
     omit: {
       createdAt: true,
