@@ -25,6 +25,15 @@ const errorMessage = (res: Response, error: any, next: NextFunction) => {
         : error.meta.field_name,
     });
   }
+  if (error.code === "08P01") {
+    return res.status(400).json({
+      message: "No record found",
+      // "projectExpenses_projectId_fkey (index)"
+      error: error.meta.field_name?.includes("fkey")
+        ? error.meta.field_name?.split("_")?.[1] + " does not exist"
+        : error.meta.field_name,
+    });
+  }
 
   return next(error);
 };

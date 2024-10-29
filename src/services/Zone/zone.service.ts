@@ -22,7 +22,7 @@ export const getZones = async ({
   return await db.zone.findMany({
     where: {
       ...(zoneId && {
-        id: typeof zoneId === "string" ? parseInt(zoneId, 10) : zoneId,
+        id: String(zoneId),
       }),
       ...(status && { isActive: status }),
       ...(district_id && { district_id: Number(district_id) }),
@@ -101,10 +101,10 @@ export const getZones = async ({
   });
 };
 
-export const getZoneById = async (id: string | number) => {
+export const getZoneById = async (id: string) => {
   return await db.zone.findUnique({
     where: {
-      id: typeof id === "string" ? parseInt(id, 10) : id,
+      id: String(id),
     },
     omit: {
       createdAt: true,
@@ -219,7 +219,7 @@ export const createZone = async ({
 
 //update zone
 export const updateZone = async (
-  id: string | number,
+  id: string,
   {
     village_name,
     ward_no,
@@ -250,7 +250,7 @@ export const updateZone = async (
 ) => {
   return await db.zone.update({
     where: {
-      id: typeof id === "string" ? parseInt(id, 10) : id,
+      id: String(id),
     },
     data: {
       village_name,
@@ -278,10 +278,10 @@ export const updateZone = async (
 };
 
 //deleteZone
-export const deleteZone = async (id: string | number) => {
+export const deleteZone = async (id: string) => {
   return await db.zone.delete({
     where: {
-      id: typeof id === "string" ? parseInt(id, 10) : id,
+      id: String(id),
     },
   });
 };

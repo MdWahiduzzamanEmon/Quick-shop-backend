@@ -1032,3 +1032,41 @@
 
 ::1 - - [29/Oct/2024:05:36:21 +0000] "GET /api/v1/zones/1 HTTP/1.1" 500 5000 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [29/Oct/2024:13:01:36 +0000] "GET /api/v1/zones HTTP/1.1" 401 26 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:13:01:38 +0000] "GET /api/v1/zones HTTP/1.1" 401 26 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:13:01:46 +0000] "POST /api/v1/login HTTP/1.1" 200 766 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:10:19 +0000] "GET /api/v1/unions HTTP/1.1" 200 632493 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:41:58 +0000] "POST /api/v1/login HTTP/1.1" 200 766 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:42:05 +0000] "GET /api/v1/zones HTTP/1.1" 500 1893 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:42:18 +0000] "GET /api/v1/zones?district_id=20 HTTP/1.1" 500 1893 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:42:21 +0000] "GET /api/v1/zones?district_id=20 HTTP/1.1" 500 1893 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:43:22 +0000] "GET /api/v1/zones?district_id=20 HTTP/1.1" 500 1893 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:45:10 +0000] "GET /api/v1/zones?district_id=20 HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:45:12 +0000] "GET /api/v1/zones HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:45:16 +0000] "GET /api/v1/zones/1 HTTP/1.1" 500 5000 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:45:18 +0000] "GET /api/v1/zones/1 HTTP/1.1" 500 5000 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:45:19 +0000] "GET /api/v1/zones/1 HTTP/1.1" 500 5000 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:45:20 +0000] "GET /api/v1/zones/1 HTTP/1.1" 500 5000 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:47:11 +0000] "GET /api/v1/zones/1 HTTP/1.1" 500 1944 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:48:07 +0000] "GET /api/v1/zones/1 HTTP/1.1" 500 1926 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:49:05 +0000] "GET /api/v1/zones/1 HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:49:08 +0000] "GET /api/v1/zones/1 HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
+

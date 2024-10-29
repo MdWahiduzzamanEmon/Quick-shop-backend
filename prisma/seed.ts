@@ -68,29 +68,30 @@ async function seed() {
   // }
 
   //   // Seed Unions
-  for (const union of unions.data) {
-    await db.union.upsert({
-      where: { id: parseInt(union.id) },
-      create: {
-        name: union.name,
-        bn_name: union.bn_name,
-        url: union.url,
-        upazila: { connect: { id: parseInt(union.upazilla_id) } },
-      },
-      update: {
-        name: union.name,
-        bn_name: union.bn_name,
-        url: union.url,
-        upazila: { connect: { id: parseInt(union.upazilla_id) } },
-      },
-    });
-  }
+  // for (const union of unions.data) {
+  //   await db.union.upsert({
+  //     where: { id: parseInt(union.id) },
+  //     create: {
+  //       name: union.name,
+  //       bn_name: union.bn_name,
+  //       url: union.url,
+  //       upazila: { connect: { id: parseInt(union.upazilla_id) } },
+  //     },
+  //     update: {
+  //       name: union.name,
+  //       bn_name: union.bn_name,
+  //       url: union.url,
+  //       upazila: { connect: { id: parseInt(union.upazilla_id) } },
+  //     },
+  //   });
+  // }
 
   //delete all data
   // await db.division.deleteMany();
   // await db.district.deleteMany();
   // await db.upazila.deleteMany();
   // await db.union.deleteMany();
+  // await db.zone.deleteMany();
 }
 
 seed()
