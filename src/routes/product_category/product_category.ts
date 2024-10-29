@@ -110,11 +110,12 @@ const createProductCategoryHandler: RequestHandler = async (
     // console.log(reqData?.body);
 
     //if role customer,retailer,or supplier then show 403
-    if (role === "CUSTOMER" || role === "RETAILER" || role === "SUPPLIER") {
+    if (role !== "ADMIN" || role !== "OPERATOR") {
       showResponse(res, {
         status: 403,
         success: false,
-        message: "You are not authorized to create product categories",
+        message:
+          "Forbidden access.You are not authorized to perform this action",
       });
       return;
     }
@@ -187,11 +188,12 @@ const updateProductCategoryHandler: RequestHandler = async (
   const { vendorId: TOKEN_VENDOR_ID, role } = reqData?.user || {};
   try {
     //if role customer,retailer,or supplier then show 403
-    if (role === "CUSTOMER" || role === "RETAILER" || role === "SUPPLIER") {
+    if (role !== "ADMIN" || role !== "OPERATOR") {
       showResponse(res, {
         status: 403,
         success: false,
-        message: "You are not authorized to create product categories",
+        message:
+          "Forbidden access.You are not authorized to perform this action",
       });
       return;
     }
@@ -368,11 +370,11 @@ const activeInactiveProductCategoryHandler: RequestHandler = async (
 ) => {
   const reqData = req as any;
   try {
-    if (reqData?.user?.role !== "ADMIN") {
+    if (reqData?.user?.role !== "ADMIN" || reqData?.user?.role !== "OPERATOR") {
       showResponse(res, {
         status: 403,
         success: false,
-        message: "Unauthorized access.Only Admin can perform this action",
+        message: "Forbidden access.you are not authorized to perform this action",
       });
       return;
     }

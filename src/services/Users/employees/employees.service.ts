@@ -8,6 +8,7 @@ export const getEmployees = async ({
   pageNumber,
   rowPerPage,
   pagination,
+  employeeUniqueID,
 }: EmployeeQuery) => {
   //pagination
   const pageNumbers = pageNumber ? parseInt(pageNumber.toString()) : 1;
@@ -17,6 +18,7 @@ export const getEmployees = async ({
     db.worker.findMany({
       where: {
         ...(status && { isActive: status }),
+        ...(employeeUniqueID && { employeeID: employeeUniqueID }),
       },
       omit: {
         createdAt: true,
@@ -70,6 +72,47 @@ export const getSingleEmployeeByID = async (employeeID: string) => {
           mobile: true,
         },
       },
+    },
+  });
+};
+
+//edit employee
+export const updateEmployee = async (
+  employeeID: string,
+  data: {
+    fatherName: string;
+    fullName: string;
+    whatsapp: string;
+    NID: string;
+    education: string;
+    bankName: string;
+    branchName: string;
+    accountNumber: string;
+    mobileBanking: string;
+    mobileBankingNumber: string;
+    address: string;
+    zipCode: string;
+    profile_picture?: any;
+  }
+) => {
+  return await db.worker.update({
+    where: {
+      id: employeeID,
+    },
+    data: {
+      fatherName: data.fatherName,
+      fullName: data.fullName,
+      whatsapp: data.whatsapp,
+      NID: data.NID,
+      education: data.education,
+      bankName: data.bankName,
+      branchName: data.branchName,
+      accountNumber: data.accountNumber,
+      mobileBanking: data.mobileBanking,
+      mobileBankingNumber: data.mobileBankingNumber,
+      address: data.address,
+      zipCode: data.zipCode,
+      ...(data.profile_picture && { profile_picture: data.profile_picture }),
     },
   });
 };

@@ -220,8 +220,6 @@ const loginHandler: express.RequestHandler = async (
   }
 };
 
-authRoute.post("/login", loginHandler);
-
 //customerRegister
 
 const customerRegisterHandler: express.RequestHandler = async (
@@ -370,8 +368,6 @@ const customerRegisterHandler: express.RequestHandler = async (
     next(error);
   }
 };
-
-authRoute.post("/customer-register", uploadMiddleware, customerRegisterHandler);
 
 //employee-register
 
@@ -587,13 +583,6 @@ const employeeRegisterHandler: express.RequestHandler = async (
   }
 };
 
-authRoute.post(
-  "/employee-register",
-  verifyTokenMiddleware,
-  uploadMiddleware,
-  employeeRegisterHandler
-);
-
 //logout
 
 //forgot password
@@ -625,4 +614,14 @@ const deleteUserHandler: express.RequestHandler = async (
   }
 };
 
+authRoute.post("/login", loginHandler);
+
+authRoute.post("/customer-register", uploadMiddleware, customerRegisterHandler);
+
+authRoute.post(
+  "/employee-register",
+  verifyTokenMiddleware,
+  uploadMiddleware,
+  employeeRegisterHandler
+);
 authRoute.delete("/delete-user/:id", verifyTokenMiddleware, deleteUserHandler);
