@@ -1490,3 +1490,41 @@
 
 ::1 - - [29/Oct/2024:20:56:19 +0000] "GET /api/v1/zones HTTP/1.1" 200 78 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [29/Oct/2024:20:59:32 +0000] "GET /api/v1/admin HTTP/1.1" 200 770 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:21:00:30 +0000] "GET /api/v1/admin HTTP/1.1" 403 62 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:21:00:33 +0000] "GET /api/v1/admin HTTP/1.1" 403 62 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:21:00:33 +0000] "GET /api/v1/admin HTTP/1.1" 403 62 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:21:00:34 +0000] "GET /api/v1/admin HTTP/1.1" 403 62 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:21:00:35 +0000] "GET /api/v1/admin HTTP/1.1" 403 62 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:21:00:48 +0000] "GET /api/v1/admin HTTP/1.1" 403 62 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:21:01:11 +0000] "GET /api/v1/admin HTTP/1.1" 200 770 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:21:02:19 +0000] "POST /api/v1/login HTTP/1.1" 200 679 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:21:02:23 +0000] "GET /api/v1/admin HTTP/1.1" 200 770 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:21:02:29 +0000] "GET /api/v1/all-users HTTP/1.1" 403 97 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:21:02:30 +0000] "GET /api/v1/all-users HTTP/1.1" 403 97 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:21:02:49 +0000] "GET /api/v1/all-users HTTP/1.1" 200 525 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:21:03:13 +0000] "GET /api/v1/employees HTTP/1.1" 200 977 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:21:03:15 +0000] "GET /api/v1/employees HTTP/1.1" 200 977 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:21:04:26 +0000] "GET /api/v1/employees/?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 163 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [29/Oct/2024:21:05:17 +0000] "POST /api/v1/login/ HTTP/1.1" 200 794 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [29/Oct/2024:21:05:17 +0000] "GET /api/v1/user-login-history/?last_login=true HTTP/1.1" 200 88 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [29/Oct/2024:21:05:21 +0000] "GET /api/v1/user-login-history/?last_login=true HTTP/1.1" 200 253 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+

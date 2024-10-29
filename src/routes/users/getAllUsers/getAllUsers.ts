@@ -22,7 +22,7 @@ const getAllUsersHandler: express.RequestHandler = async (
   const reqData = _req as any;
   const { user } = reqData;
   try {
-    if (user?.role !== "ADMIN") {
+    if (user?.role !== "ADMIN" && user?.role !== "SUPER_ADMIN") {
       showResponse(res, {
         status: 403,
         success: false,

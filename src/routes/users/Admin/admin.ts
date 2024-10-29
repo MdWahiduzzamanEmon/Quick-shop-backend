@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import { showResponse } from "../../../constant/showResponse";
 import { verifyTokenMiddleware } from "../../../Others/JWT";
 import { getAdminUser } from "../../../services/Users/Admin/admin.service";
+import errorMessage from "../../../Others/ErrorMessage/errorMessage";
 
 export const adminRoute = express.Router();
 
@@ -13,8 +14,10 @@ const getAdminHandler: express.RequestHandler = async (
   next: NextFunction
 ) => {
   const { user } = req as any;
+  console.log(user);
   try {
-    if (user?.role !== "ADMIN") {
+    if (user?.role !== "ADMIN" && user?.role !== "SUPER_ADMIN") {
+      // check if user is ADMIN or SUPER_ADMIN👈
       showResponse(res, {
         status: 403,
         success: false,
@@ -29,7 +32,7 @@ const getAdminHandler: express.RequestHandler = async (
     });
     return;
   } catch (error: any) {
-    next(error);
+    errorMessage(res, error, next);
   }
 };
 
