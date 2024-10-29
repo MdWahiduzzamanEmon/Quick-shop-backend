@@ -17,6 +17,15 @@ export const getOthersUsers = async ({
         skip: (pageNumbers - 1) * resultPerPage,
         take: resultPerPage,
       }),
+      include: {
+        User: {
+          select: {
+            username: true,
+            mobile: true,
+            email: true,
+          },
+        },
+      },
 
       omit: {
         createdAt: true,

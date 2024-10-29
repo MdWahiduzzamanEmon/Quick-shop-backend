@@ -20,6 +20,15 @@ export const getEmployees = async ({
         ...(status && { isActive: status }),
         ...(employeeUniqueID && { employeeID: employeeUniqueID }),
       },
+      include: {
+        user: {
+          select: {
+            username: true,
+            mobile: true,
+            email: true,
+          },
+        },
+      },
       omit: {
         createdAt: true,
         updatedAt: true,
