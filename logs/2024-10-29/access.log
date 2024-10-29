@@ -1076,3 +1076,7 @@
 
 ::1 - - [29/Oct/2024:14:58:47 +0000] "GET /api/v1/employees?employeeUniqueID=EM-20249237-0 HTTP/1.1" 200 896 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [29/Oct/2024:15:24:44 +0000] "GET /api/v1/employees HTTP/1.1" 200 2780 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:15:29:23 +0000] "GET /api/v1/employees HTTP/1.1" 200 4725 "-" "PostmanRuntime/7.42.0"
+

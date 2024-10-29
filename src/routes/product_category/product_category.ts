@@ -157,6 +157,7 @@ const createProductCategoryHandler: RequestHandler = async (
     }
 
     showResponse(res, {
+      status: 201,
       message: `${result?.count} product categories created successfully`,
     });
   } catch (error: any) {
@@ -374,7 +375,8 @@ const activeInactiveProductCategoryHandler: RequestHandler = async (
       showResponse(res, {
         status: 403,
         success: false,
-        message: "Forbidden access.you are not authorized to perform this action",
+        message:
+          "Forbidden access.you are not authorized to perform this action",
       });
       return;
     }

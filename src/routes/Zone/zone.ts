@@ -231,6 +231,7 @@ async function createZoneHandler(
       return;
     }
     showResponse(res, {
+      status: 201,
       message: "Zone created successfully",
       data: zone,
     });
