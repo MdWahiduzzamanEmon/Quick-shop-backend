@@ -358,6 +358,7 @@ const customerRegisterHandler: express.RequestHandler = async (
     }
 
     showResponse(res, {
+      status: 201,
       message: "User created successfully",
     });
     return;
@@ -571,6 +572,7 @@ const employeeRegisterHandler: express.RequestHandler = async (
     }
 
     showResponse(res, {
+      status: 201,
       message: `A new ${role} has been created successfully`,
     });
     return;

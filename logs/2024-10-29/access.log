@@ -1070,3 +1070,9 @@
 
 ::1 - - [29/Oct/2024:14:49:08 +0000] "GET /api/v1/zones/1 HTTP/1.1" 200 79 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [29/Oct/2024:14:52:54 +0000] "GET /api/v1/customers/ HTTP/1.1" 200 568 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:58:27 +0000] "GET /api/v1/employees?status=ACTIVE&pagination=true&pageNumber&rowPerPage&employeeUniqueID HTTP/1.1" 200 1795 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [29/Oct/2024:14:58:47 +0000] "GET /api/v1/employees?employeeUniqueID=EM-20249237-0 HTTP/1.1" 200 896 "-" "PostmanRuntime/7.42.0"
+
