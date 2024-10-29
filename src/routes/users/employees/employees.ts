@@ -190,7 +190,7 @@ const editEmployeeHandler: express.RequestHandler = async (
 };
 
 employeesRoute.put(
-  "/employees/:employeeID",
+  "/employee-update/:employeeID",
   uploadMiddleware,
   verifyTokenMiddleware,
   editEmployeeHandler
