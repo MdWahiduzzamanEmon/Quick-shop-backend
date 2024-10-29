@@ -10,8 +10,8 @@ function initializeSocket() {
 
   ioInstance.on("connection", async (socket: any) => {
     count++;
-    console.log(`Client connected: ${socket.id} (${count} total)`);
-    console.log(`Client connected: ${socket.IP}`);
+    // console.log(`Client connected: ${socket.id} (${count} total)`);
+    // console.log(`Client connected: ${socket.IP}`);
 
     // Safely access user data from the socket
     const user = socket?.user;
@@ -25,7 +25,7 @@ function initializeSocket() {
 
     // Fetch connected users from Redis
     try {
-      const cachedUsers = await client?.get("connectedUsers");
+      const cachedUsers = (await client?.get("connectedUsers")) as any;
       connectedUsers = cachedUsers ? JSON.parse(cachedUsers) : [];
 
       // Check if the user already exists in the connected users list
@@ -42,14 +42,14 @@ function initializeSocket() {
           userUniqueId: user?.id,
           vendorId: user?.vendorId,
           IP:
-            socket.handshake.headers["x-forwarded-for"].split(",")[0] ||
+            socket.handshake.headers["x-forwarded-for"]?.split(",")?.[0] ||
             socket?.remoteAddress ||
             socket?.handshake?.address ||
             "",
         });
       } else {
         // User already exists, update the socket ID
-        connectedUsers[existingUserIndex].socketId = socket.id;
+        connectedUsers[existingUserIndex].socketId = socket?.id;
       }
 
       // Update connected users in Redis

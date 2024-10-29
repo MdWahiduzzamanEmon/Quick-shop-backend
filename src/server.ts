@@ -104,7 +104,8 @@ export const ioInstance = new SocketIOServer(serverInstance, {
 ioInstance.use((socket, next) => {
   const SOCKET = socket as any;
   const req = SOCKET.request as any; // Cast to any to access cookies
-  const getExtraHeadersAuth = req?.headers?.authorization;
+  // const getExtraHeadersAuth = req?.headers?.authorization; // Get token from headers for when using http
+  const getExtraHeadersAuth = socket.handshake.query.token; // Get token from query fro when using socket.io transport websocket
   // console.log(getExtraHeadersAuth, "getExtraHeaders");
 
   const res = {} as any; // Mock response object for cookieParser
