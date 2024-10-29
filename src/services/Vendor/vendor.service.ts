@@ -7,11 +7,13 @@ export const getVendors = async ({
   pageNumber,
   rowPerPage,
   pagination,
+  adminUserId,
 }: {
   status?: ShopStatus;
   pageNumber?: number;
   rowPerPage?: number;
   pagination?: boolean;
+  adminUserId?: string;
 }) => {
   //pagination
   const pageNumbers = pageNumber ? parseInt(pageNumber.toString()) : 1;
@@ -21,27 +23,30 @@ export const getVendors = async ({
     db.vendor.findMany({
       where: {
         ...(status && { isActive: status }),
-      },
-      include: {
-        users: {
-          include: {
-            worker: {
-              select: { role: true },
-            },
-            admin: {
-              select: { role: true },
-            },
-            otherUsers: {
-              select: { role: true },
-            },
+        ...(adminUserId && {
+          admin: {
+            id: adminUserId,
           },
-          omit: {
-            createdAt: true,
-            updatedAt: true,
-            password: true,
-          },
-        },
+        }),
       },
+      // include: {
+      //   users: {
+      //     include: {
+      //       worker: {
+      //         select: { role: true },
+      //       },
+
+      //       otherUsers: {
+      //         select: { role: true },
+      //       },
+      //     },
+      //     omit: {
+      //       createdAt: true,
+      //       updatedAt: true,
+      //       password: true,
+      //     },
+      //   },
+      // },
       ...(pagination
         ? {
             take: resultPerPage,
@@ -71,10 +76,17 @@ export const getVendors = async ({
 };
 
 //getSingleVendor
-export const getSingleVendor = async (id: string) => {
+export const getSingleVendor = async ({
+  id,
+  name,
+}: {
+  id?: string;
+  name?: string;
+}) => {
   return await db.vendor.findFirst({
     where: {
-      id,
+      ...(id && { id }),
+      ...(name && { name }),
     },
     include: {
       users: {
@@ -82,9 +94,7 @@ export const getSingleVendor = async (id: string) => {
           worker: {
             select: { role: true },
           },
-          admin: {
-            select: { role: true },
-          },
+
           otherUsers: {
             select: { role: true },
           },
@@ -93,6 +103,33 @@ export const getSingleVendor = async (id: string) => {
           createdAt: true,
           updatedAt: true,
           password: true,
+        },
+      },
+    },
+  });
+};
+
+//create vendor
+
+export const createVendor = async ({
+  name,
+  address,
+  phone,
+  adminId,
+}: {
+  name: string;
+  address: string;
+  phone: string;
+  adminId: string;
+}) => {
+  return await db.vendor.create({
+    data: {
+      name,
+      address,
+      phone,
+      admin: {
+        connect: {
+          id: adminId,
         },
       },
     },

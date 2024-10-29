@@ -8,27 +8,24 @@ import upazilas from "../src/bd-geo-code/upazilas.json";
 async function seed() {
   const convertHashedPassword = await hashPassword("1516");
 
-  // await db.vendor.create({
-  //   data: {
-  //     name: "Logic-Nexus It Solutions",
-  //     address: "Jhikargaccha, Jashore",
-  //     phone: "01703459656",
-  //     users: {
-  //       create: {
-  //         username: "admin",
-  //         password: convertHashedPassword,
-  //         mobile: "123456789",
-  //         email: "admin@admin.com",
-  //         admin: {
-  //           create: {
-  //             fullName: "admin",
-  //             role: "ADMIN",
-  //           },
-  //         },
-  //       },
-  //     },
-  //   },
-  // });
+  await db.admin.create({
+    data: {
+      firstName: "Admin",
+      lastName: "Admin",
+      mobile: "1234567890",
+      role: "ADMIN",
+      username: "admin",
+      email: "admin@admin.com",
+      password: convertHashedPassword,
+      vendor: {
+        create: {
+          name: "Logic Nexus It Solutions",
+          address: "Jhikargaccha, Jashore",
+          phone: "01703459656",
+        },
+      },
+    },
+  });
 
   // // Seed Divisions
   // for (const division of divisions.data) {

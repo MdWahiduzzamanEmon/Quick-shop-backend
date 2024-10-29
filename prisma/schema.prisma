@@ -37,12 +37,32 @@ enum ShopStatus {
   INACTIVE
 }
 
+// Model for admin
+
+model admin {
+  id        String      @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String      @unique
+  password  String
+  mobile    String      @unique
+  username  String      @unique
+  role      String      @default("ADMIN")
+  isActive  User_status @default(ACTIVE)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  vendor    Vendor[] // An admin can have multiple vendors
+
+  @@index([id, role, isActive])
+  @@map("admin")
+}
+
 // Vendor Model: Represents a shop owner or person responsible for a shop
 model Vendor {
   id         String             @id @default(cuid())
   name       String             @unique
   address    String
-  phone      String?            @unique
+  phone      String?
   createdAt  DateTime           @default(now())
   updatedAt  DateTime           @updatedAt
   isActive   ShopStatus         @default(ACTIVE)
@@ -50,6 +70,8 @@ model Vendor {
   products   product[] // A vendor can have multiple products
   categories product_category[] // A vendor can have multiple product categories
   Zone       Zone[]
+  admin      admin              @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  adminId    String
 
   @@index([id, isActive, name])
   @@map("vendor")
@@ -63,7 +85,6 @@ model User {
   password         String
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
-  admin            admin? // User can be an admin
   otherUsers       otherUsers? // Only for general user and retailer
   worker           worker? // Only for operator, raider, representative
   Supplier         Supplier? // Only for supplier
@@ -77,21 +98,6 @@ model User {
   @@unique([email, mobile, username]) // Unique constraint: the combination of email, mobile, and username must be unique
   @@index([id, email, mobile, username])
   @@map("user")
-}
-
-// Model for admin
-model admin {
-  id        String      @id @default(cuid())
-  User      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String      @unique
-  fullName  String?
-  role      String      @default("ADMIN")
-  isActive  User_status @default(ACTIVE)
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-
-  @@index([id, userId, role, isActive])
-  @@map("admin")
 }
 
 //supplier model 

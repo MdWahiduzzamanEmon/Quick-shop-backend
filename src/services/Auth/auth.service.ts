@@ -1,6 +1,25 @@
 import { Role } from "@prisma/client";
 import { db } from "../../utils/db.server";
 
+export const checkAdminExist = async (
+  email?: string,
+  mobile?: number,
+  username?: string
+) => {
+  const admin = await db.admin.findFirst({
+    where: {
+      OR: [{ email }, { mobile: mobile?.toString() }, { username }],
+    },
+
+    omit: {
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  return admin;
+};
+
 export const checkUserExist = async (
   email?: string,
   mobile?: number,
@@ -27,12 +46,6 @@ export const checkUserExist = async (
           role: true,
         },
       },
-      admin: {
-        select: {
-          id: true,
-          role: true,
-        },
-      },
     },
   });
 
@@ -40,19 +53,19 @@ export const checkUserExist = async (
     ? user?.otherUsers?.role
     : user?.worker
     ? user?.worker?.role
-    : user?.admin?.role;
+    : null;
 
   const customerId = user?.otherUsers?.id || null;
   const employeeId = user?.worker?.id || null;
-  const adminId = user?.admin?.id || null;
+  // const adminId = user?.admin?.id || null;
 
-  const { otherUsers, worker, admin, ...userWithoutOtherUsers } = user ?? {};
+  const { otherUsers, worker, ...userWithoutOtherUsers } = user ?? {};
 
   return role
     ? {
         ...userWithoutOtherUsers,
         customerId,
-        adminId,
+        // adminId,
         employeeId,
         role,
       }

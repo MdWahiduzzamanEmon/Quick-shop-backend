@@ -6,6 +6,7 @@ import {
   deleteUser,
   customerRegister,
   workerRegister,
+  checkAdminExist,
 } from "../../services/Auth/auth.service";
 import { comparePassword, hashPassword } from "../../Others/SecurePassword";
 import exclude from "../../Others/DataExcludeFunction/exclude";
@@ -53,7 +54,6 @@ function parseOSFromUserAgent(userAgent: any) {
 }
 
 //get location from ip
-
 export const trackIpLocation = async (
   ip: string
   // query: any = 61439
@@ -67,6 +67,191 @@ export const trackIpLocation = async (
   } catch (error) {
     return error;
   }
+};
+
+const loginAllUserInVendor = async (
+  res: Response,
+  next: NextFunction,
+  {
+    email,
+    password,
+    mobile,
+    username,
+    ipAddress,
+    browser,
+    device,
+    os,
+  }: {
+    email: string;
+    password: string;
+    mobile: any;
+    username: string;
+    ipAddress: string;
+    browser: string;
+    device: string;
+    os: string;
+    loggin_status?: "SUCCESS" | "FAILED";
+  }
+) => {
+  //check if user exists
+  const existUser = (await checkUserExist(email, mobile, username)) as any;
+  //   console.log(existUser);
+  if (!existUser) {
+    showResponse(res, {
+      status: 404,
+      success: false,
+      message: "User not found",
+    });
+
+    return Promise.resolve();
+  }
+
+  // check if the password is correct
+  const isPasswordCorrect = await comparePassword(
+    password?.toString(),
+    existUser?.password
+  );
+
+  // if the password is incorrect, return an error message
+  if (!isPasswordCorrect) {
+    res.status(400).json({
+      status: 400,
+      message: `Incorrect password`,
+    });
+
+    //create login history
+    const IP = await trackIpLocation(ipAddress);
+    const dataRes = await createLoginHistory({
+      userId: existUser?.id,
+      ipAddress,
+      device,
+      browser,
+      os,
+      location: `${IP?.country},${IP?.region},${IP?.city}`,
+      status: "FAILED",
+      note: "Incorrect password",
+    });
+    await leftPushToList("login-history", dataRes);
+    return;
+  }
+
+  const excludePassword = exclude(existUser, ["password"]);
+  // if the password is correct, then generate a token
+  const token = await generateToken({
+    ...excludePassword,
+  });
+
+  //step 1:create a object to store the user data
+  const resData = {
+    isLogin: true,
+    accessToken: token,
+    user: {
+      ...excludePassword,
+    },
+  };
+  //step 2: set the token in the cookie
+
+  await cookieResponse(res, token);
+
+  showResponse(res, {
+    status: 200,
+    success: true,
+    message: "Login successful",
+    data: resData,
+  });
+
+  // await userActivityLiveResponse();
+
+  try {
+    const IP = await trackIpLocation(ipAddress);
+    // console.log(IP, "IP");
+    const result = await createLoginHistory({
+      userId: existUser?.id,
+      ipAddress,
+      device,
+      browser,
+      os,
+      location: `${IP?.country},${IP?.region},${IP?.city}`,
+      status: "SUCCESS",
+      note: "Login successful",
+    });
+
+    //contact new result in redis store previous result
+
+    if (result) {
+      //store in redis
+      await leftPushToList("login-history", result);
+    }
+  } catch (error) {
+    console.log(error);
+    errorMessage(res, error, next);
+  }
+};
+
+const loginAdmin = async (
+  res: Response,
+  next: NextFunction,
+  {
+    existUserAdmin,
+    email,
+    password,
+    mobile,
+    username,
+    ipAddress,
+    browser,
+    device,
+    os,
+  }: {
+    existUserAdmin: any;
+    email: string;
+    password: string;
+    mobile: any;
+    username: string;
+    ipAddress: string;
+    browser: string;
+    device: string;
+    os: string;
+  }
+) => {
+  // check if the password is correct
+  const isPasswordCorrect = await comparePassword(
+    password?.toString(),
+    existUserAdmin?.password
+  );
+
+  // if the password is incorrect, return an error message
+  if (!isPasswordCorrect) {
+    res.status(400).json({
+      status: 400,
+      message: `Incorrect password`,
+    });
+    return;
+  }
+
+  const excludePassword = exclude(existUserAdmin, ["password"]);
+  // if the password is correct, then generate a token
+  const token = await generateToken({
+    ...excludePassword,
+  });
+
+  //step 1:create a object to store the user data
+  const resData = {
+    isLogin: true,
+    accessToken: token,
+    user: {
+      ...excludePassword,
+    },
+  };
+  //step 2: set the token in the cookie
+
+  await cookieResponse(res, token);
+
+  showResponse(res, {
+    status: 200,
+    success: true,
+    message: "Login successful",
+    data: resData,
+  });
 };
 
 const loginHandler: express.RequestHandler = async (
@@ -121,100 +306,41 @@ const loginHandler: express.RequestHandler = async (
       });
     }
 
-    //check if user exists
-    const existUser = (await checkUserExist(email, mobile, username)) as any;
-    //   console.log(existUser);
-    if (!existUser) {
-      showResponse(res, {
-        status: 404,
-        success: false,
-        message: "User not found",
-      });
+    //admin login ====================================
 
-      return Promise.resolve();
-    }
+    const isExistAdmin = await checkAdminExist(email, mobile, username);
 
-    // check if the password is correct
-    const isPasswordCorrect = await comparePassword(
-      password?.toString(),
-      existUser?.password
-    );
-
-    // if the password is incorrect, return an error message
-    if (!isPasswordCorrect) {
-      res.status(400).json({
-        status: 400,
-        message: `Incorrect password`,
-      });
-
-      //create login history
-      const IP = await trackIpLocation(ipAddress);
-      const dataRes = await createLoginHistory({
-        userId: existUser?.id,
+    if (isExistAdmin) {
+      const data = {
+        existUserAdmin: isExistAdmin,
+        email,
+        password,
+        mobile,
+        username,
         ipAddress,
-        device,
         browser,
+        device,
         os,
-        location: `${IP?.country},${IP?.region},${IP?.city}`,
-        status: loggin_status.FAILED,
-        note: "Incorrect password",
-      });
-      await leftPushToList("login-history", dataRes);
+      };
+      await loginAdmin(res, next, data);
       return;
     }
 
-    const excludePassword = exclude(existUser, ["password"]);
-    // if the password is correct, then generate a token
-    const token = await generateToken({
-      ...excludePassword,
-    });
-
-    //step 1:create a object to store the user data
-    const resData = {
-      isLogin: true,
-      accessToken: token,
-      user: {
-        ...excludePassword,
-      },
-    };
-    //step 2: set the token in the cookie
-
-    await cookieResponse(res, token);
-
-    showResponse(res, {
-      status: 200,
-      success: true,
-      message: "Login successful",
-      data: resData,
-    });
-
-    // await userActivityLiveResponse();
-
-    try {
-      const IP = await trackIpLocation(ipAddress);
-      // console.log(IP, "IP");
-      const result = await createLoginHistory({
-        userId: existUser?.id,
+    if (!isExistAdmin) {
+      //other all users login ==============================
+      const data = {
+        email,
+        password,
+        mobile,
+        username,
         ipAddress,
-        device,
         browser,
+        device,
         os,
-        location: `${IP?.country},${IP?.region},${IP?.city}`,
-        status: loggin_status.SUCCESS,
-        note: "Login successful",
-      });
-
-      //contact new result in redis store previous result
-
-      if (result) {
-        //store in redis
-        await leftPushToList("login-history", result);
-      }
-    } catch (error: any) {
-      next(error);
+      };
+      await loginAllUserInVendor(res, next, data);
+      //
     }
-
-    //
   } catch (error: any) {
     errorMessage(res, error, next);
   }
