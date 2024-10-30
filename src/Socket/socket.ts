@@ -54,7 +54,8 @@ function initializeSocket() {
 
       // Update connected users in Redis
       await client?.set("connectedUsers", JSON.stringify(connectedUsers));
-      // console.log("Updated connected users:", connectedUsers);
+      console.log("Updated connected users:", connectedUsers);
+      //send user activity to a specific vendor admin
       await userActivityLiveResponse(user?.vendorId);
     } catch (err) {
       console.error("Error fetching or updating connected users:", err);
@@ -71,6 +72,7 @@ function initializeSocket() {
 
       // Update connected users in Redis after disconnect
       await client?.set("connectedUsers", JSON.stringify(connectedUsers));
+      //send user activity to a specific vendor admin
       await userActivityLiveResponse(user?.vendorId);
     });
   });
