@@ -28,8 +28,19 @@ const getCategoryHandler: RequestHandler = async (
   res: Response,
   next: NextFunction
 ) => {
+  const reqData = _req as any;
+
   try {
-    const { pageNumber, rowPerPage, pagination, status } = _req.query as any;
+    const { user, vendorId } = reqData;
+    if (user?.role !== "ADMIN") {
+      showResponse(res, {
+        status: 403,
+        message: "Forbidden. Only Admin can access this route",
+      });
+      return;
+    }
+
+    const { pageNumber, rowPerPage, pagination, status } = reqData.query as any;
 
     if (status && !(status in product_status)) {
       showResponse(res, {
@@ -44,7 +55,8 @@ const getCategoryHandler: RequestHandler = async (
       pageNumber,
       rowPerPage,
       pagination,
-      status
+      status,
+      vendorId
     );
 
     showResponse(res, {
@@ -69,9 +81,11 @@ const getSingleProductCategoryHandler: RequestHandler = async (
   res: Response,
   next: NextFunction
 ) => {
+  const reqData = req as any;
   const { categoryID } = req.params;
   try {
-    const category = await getSingleProductCategory(categoryID);
+    const { vendorId } = reqData?.user;
+    const category = await getSingleProductCategory(categoryID, vendorId);
     showResponse(res, {
       message: "Category fetched successfully",
       data: category,
@@ -96,6 +110,7 @@ export type setCategoryType = {
   order: number;
   isActive: product_status;
   vendorId: string;
+  createdById: string;
 };
 
 const createProductCategoryHandler: RequestHandler = async (
@@ -110,12 +125,16 @@ const createProductCategoryHandler: RequestHandler = async (
     // console.log(reqData?.body);
 
     //if role customer,retailer,or supplier then show 403
-    if (role !== "ADMIN" || role !== "OPERATOR") {
+    if (role !== "ADMIN" && role !== "OPERATOR") {
       showResponse(res, {
         status: 403,
         success: false,
         message:
           "Forbidden access.You are not authorized to perform this action",
+      });
+
+      await reqData?.fileUrl.forEach(async (file: any) => {
+        await unlinkFile(file?.publicId);
       });
       return;
     }
@@ -126,6 +145,10 @@ const createProductCategoryHandler: RequestHandler = async (
         success: false,
         message: "Please provide product_categories data",
       });
+      await reqData?.fileUrl.forEach(async (file: any) => {
+        await unlinkFile(file?.publicId);
+      });
+      return;
     }
 
     const bodyData =
@@ -163,7 +186,7 @@ const createProductCategoryHandler: RequestHandler = async (
   } catch (error: any) {
     // await unlinkFile(reqData?.fileUrl?.[0]?.filename);
     reqData?.fileUrl.forEach(async (file: any) => {
-      await unlinkFile(file?.filename);
+      await unlinkFile(file?.publicId);
     });
 
     errorMessage(res, error, next);
@@ -189,7 +212,7 @@ const updateProductCategoryHandler: RequestHandler = async (
   const { vendorId: TOKEN_VENDOR_ID, role } = reqData?.user || {};
   try {
     //if role customer,retailer,or supplier then show 403
-    if (role !== "ADMIN" || role !== "OPERATOR") {
+    if (role !== "ADMIN" && role !== "OPERATOR") {
       showResponse(res, {
         status: 403,
         success: false,
@@ -214,7 +237,10 @@ const updateProductCategoryHandler: RequestHandler = async (
     }
 
     // first check if category exists
-    const existCategory = (await getSingleProductCategory(categoryID)) as any;
+    const existCategory = (await getSingleProductCategory(
+      categoryID,
+      TOKEN_VENDOR_ID
+    )) as any;
     if (!existCategory) {
       showResponse(res, {
         status: 400,
@@ -231,7 +257,11 @@ const updateProductCategoryHandler: RequestHandler = async (
       ...(files && { image: files[0] }),
     };
 
-    const result = await updateProductCategory(categoryID, newData);
+    const result = await updateProductCategory(
+      categoryID,
+      newData,
+      TOKEN_VENDOR_ID
+    );
 
     if (!result) {
       throw new Error("Error updating product category");
@@ -242,7 +272,7 @@ const updateProductCategoryHandler: RequestHandler = async (
     });
 
     // Delete old image file if it exists
-    if (existCategory?.image?.publicId) {
+    if (files?.length > 0 && existCategory?.image?.publicId) {
       await unlinkFile(existCategory.image.publicId);
     }
   } catch (error: any) {
@@ -272,6 +302,7 @@ const deleteProductCategoryHandler: RequestHandler = async (
 
   const { categoryID } = req.params;
   try {
+    const { vendorId } = reqData?.user;
     if (reqData?.user?.role !== "ADMIN") {
       showResponse(res, {
         status: 403,
@@ -282,12 +313,15 @@ const deleteProductCategoryHandler: RequestHandler = async (
     }
 
     //first check if category exists
-    const category = (await getSingleProductCategory(categoryID)) as any;
+    const category = (await getSingleProductCategory(
+      categoryID,
+      vendorId
+    )) as any;
     if (!category) {
       throw new Error("Category does not exist");
     }
 
-    const result = await deleteProductCategory(categoryID);
+    const result = await deleteProductCategory(categoryID, vendorId);
 
     if (!result) {
       throw new Error("Error deleting product category");
@@ -318,6 +352,7 @@ const deleteMultipleProductCategoryHandler: RequestHandler = async (
 ) => {
   const reqData = req as any;
   try {
+    const { vendorId } = reqData?.user;
     if (reqData?.user?.role !== "ADMIN") {
       showResponse(res, {
         status: 403,
@@ -333,12 +368,12 @@ const deleteMultipleProductCategoryHandler: RequestHandler = async (
     }
 
     //first check if category exists
-    const categories = (await getMultipleProductCategory(ids)) as any;
+    const categories = (await getMultipleProductCategory(ids, vendorId)) as any;
     if (categories?.length !== ids?.length) {
       throw new Error("Some categories do not exist");
     }
 
-    const result = await deleteMultipleProductCategory(ids);
+    const result = await deleteMultipleProductCategory(ids, vendorId);
 
     if (!result) {
       throw new Error("Error deleting product category");
@@ -371,7 +406,8 @@ const activeInactiveProductCategoryHandler: RequestHandler = async (
 ) => {
   const reqData = req as any;
   try {
-    if (reqData?.user?.role !== "ADMIN" || reqData?.user?.role !== "OPERATOR") {
+    const { vendorId } = reqData?.user;
+    if (reqData?.user?.role !== "ADMIN" && reqData?.user?.role !== "OPERATOR") {
       showResponse(res, {
         status: 403,
         success: false,
@@ -404,14 +440,18 @@ const activeInactiveProductCategoryHandler: RequestHandler = async (
       return;
     }
 
-    const result = await activeInactiveProductCategory(status, categoryID);
+    const result = await activeInactiveProductCategory(
+      status,
+      categoryID,
+      vendorId
+    );
 
     if (!result) {
-      throw new Error("Error updating product category");
+      throw new Error("Error updating product category status");
     }
 
     showResponse(res, {
-      message: "Category updated successfully",
+      message: "Category updated successfully to " + status,
     });
   } catch (error: any) {
     errorMessage(res, error, next);

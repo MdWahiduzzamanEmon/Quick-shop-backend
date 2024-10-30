@@ -7,7 +7,8 @@ export const getAllProductCategory = async (
   pageNumber?: number,
   rowPerPage?: number,
   pagination?: boolean,
-  status?: product_status
+  status?: product_status,
+  vendorId?: string
 ) => {
   //pagination
   const pageNumbers = pageNumber ? parseInt(pageNumber.toString()) : 1;
@@ -16,6 +17,7 @@ export const getAllProductCategory = async (
     db.product_category.findMany({
       where: {
         ...(status && { isActive: status }),
+        ...(vendorId && { vendorId }),
       },
       ...(pagination && {
         skip: (pageNumbers - 1) * resultPerPage,
@@ -33,6 +35,7 @@ export const getAllProductCategory = async (
       ? db.product_category.count({
           where: {
             ...(status && { isActive: status }),
+            ...(vendorId && { vendorId }),
           },
         })
       : Promise.resolve(0),
@@ -57,17 +60,20 @@ export const createMultipleProductCategory = async (
 ) => {
   return await db.product_category.createMany({
     data: categories,
-
     skipDuplicates: true,
   });
 };
 
 //get single product category
 
-export const getSingleProductCategory = async (categoryID: string) => {
+export const getSingleProductCategory = async (
+  categoryID: string,
+  vendorId: string
+) => {
   return await db.product_category.findFirst({
     where: {
       id: categoryID,
+      vendorId: vendorId,
     },
   });
 };
@@ -76,11 +82,13 @@ export const getSingleProductCategory = async (categoryID: string) => {
 
 export const updateProductCategory = async (
   categoryID: string,
-  categoryData: setCategoryType
+  categoryData: setCategoryType,
+  vendorId: string
 ) => {
   return await db.product_category.update({
     where: {
       id: categoryID,
+      vendorId: vendorId,
     },
     data: categoryData,
   });
@@ -88,19 +96,27 @@ export const updateProductCategory = async (
 
 //delete product category
 
-export const deleteProductCategory = async (categoryID: string) => {
+export const deleteProductCategory = async (
+  categoryID: string,
+  vendorId: string
+) => {
   return await db.product_category.delete({
     where: {
       id: categoryID,
+      vendorId: vendorId,
     },
   });
 };
 
 //delete multiple product category
 
-export const deleteMultipleProductCategory = async (categoryIDs: string[]) => {
+export const deleteMultipleProductCategory = async (
+  categoryIDs: string[],
+  vendorId: string
+) => {
   return await db.product_category.deleteMany({
     where: {
+      vendorId: vendorId,
       id: {
         in: categoryIDs,
       },
@@ -112,11 +128,13 @@ export const deleteMultipleProductCategory = async (categoryIDs: string[]) => {
 
 export const activeInactiveProductCategory = async (
   status: product_status,
-  categoryID: string
+  categoryID: string,
+  vendorId: string
 ) => {
   return await db.product_category.update({
     where: {
       id: categoryID,
+      vendorId: vendorId,
     },
     data: {
       isActive: status,
@@ -124,12 +142,16 @@ export const activeInactiveProductCategory = async (
   });
 };
 
-export const getMultipleProductCategory = async (categoryIDs: string[]) => {
+export const getMultipleProductCategory = async (
+  categoryIDs: string[],
+  vendorId: string
+) => {
   return await db.product_category.findMany({
     where: {
       id: {
         in: categoryIDs,
       },
+      vendorId: vendorId,
     },
   });
 };
