@@ -9,6 +9,7 @@ import {
   deleteMultipleProductCategory,
   deleteProductCategory,
   getAllProductCategory,
+  getCategoryNameList,
   getMultipleProductCategory,
   getSingleProductCategory,
   updateProductCategory,
@@ -417,7 +418,7 @@ const activeInactiveProductCategoryHandler: RequestHandler = async (
       return;
     }
 
-    const { categoryID } = req.params ;
+    const { categoryID } = req.params;
 
     const { status } = reqData?.body as {
       status: product_status;
@@ -462,4 +463,38 @@ product_categoryRoute.put(
   "/product-category/active-inactive/:categoryID",
   verifyTokenMiddleware,
   activeInactiveProductCategoryHandler
+);
+
+//get product category only name list for dropdown
+const getCategoryNameListHandler: RequestHandler = async (
+  _req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const reqData = _req as any;
+
+  try {
+    const { user, vendorId } = reqData;
+    if (user?.role !== "ADMIN" && user?.role !== "OPERATOR") {
+      showResponse(res, {
+        status: 403,
+        message: "Forbidden. You are not authorized to perform this action",
+      });
+      return;
+    }
+
+    const result = await getCategoryNameList(vendorId);
+    showResponse(res, {
+      message: "Category name list fetched successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    errorMessage(res, error, next);
+  }
+};
+
+product_categoryRoute.get(
+  "/product-category/name-list",
+  verifyTokenMiddleware,
+  getCategoryNameListHandler
 );

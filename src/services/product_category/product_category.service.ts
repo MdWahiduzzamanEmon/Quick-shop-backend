@@ -155,3 +155,16 @@ export const getMultipleProductCategory = async (
     },
   });
 };
+
+// get all product category name and id list for dropdown
+export const getCategoryNameList = async (vendorId: string) => {
+  return await db.product_category.findMany({
+    where: {
+      vendorId: vendorId,
+    },
+    select: {
+      id: true,
+      product_category_name: true,
+    },
+  });
+};
