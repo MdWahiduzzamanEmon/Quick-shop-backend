@@ -504,6 +504,8 @@ const deleteMultipleProductHandler: RequestHandler = async (
   const reqData = req as any;
   try {
     const { vendorId } = reqData?.user;
+
+    // Authorization check
     if (reqData?.user?.role !== "ADMIN" && reqData?.user?.role !== "OPERATOR") {
       showResponse(res, {
         status: 403,
@@ -514,6 +516,7 @@ const deleteMultipleProductHandler: RequestHandler = async (
       return;
     }
 
+    // Validate input
     const { ids: productIDs } = reqData?.body as {
       ids: string[];
     };
@@ -537,6 +540,7 @@ const deleteMultipleProductHandler: RequestHandler = async (
       return;
     }
 
+    // Delete products
     const result = await deleteMultipleProduct(productIDs, vendorId);
     if (!result) {
       showResponse(res, {
@@ -545,21 +549,26 @@ const deleteMultipleProductHandler: RequestHandler = async (
       });
       return;
     }
+
+    // Response
     showResponse(res, {
       message: "Products deleted successfully",
     });
 
-    if (products?.length > 0) {
-      await products?.forEach(async (product: any) => {
+    // Remove associated images
+    await Promise.all(
+      products.map(async (product: any) => {
         if (product?.product_images?.length > 0) {
-          await product?.product_images.forEach(async (image: any) => {
-            if (image?.image?.publicId) {
-              await unlinkFile(image?.image?.publicId);
-            }
-          });
+          await Promise.all(
+            product.product_images.map(async (image: any) => {
+              if (image?.image?.publicId) {
+                await unlinkFile(image.image.publicId);
+              }
+            })
+          );
         }
-      });
-    }
+      })
+    );
   } catch (error: any) {
     errorMessage(res, error, next);
   }
@@ -699,11 +708,13 @@ const deleteMultipleProductImagesHandler: RequestHandler = async (
     });
 
     //delete image from cloudinary
-    await isExist.forEach(async (image: any) => {
-      if (image?.image?.publicId) {
-        await unlinkFile(image?.image?.publicId);
-      }
-    });
+    if (isExist?.length > 0) {
+      await isExist.forEach(async (image: any) => {
+        if (image?.image?.publicId) {
+          await unlinkFile(image?.image?.publicId);
+        }
+      });
+    }
     return;
   } catch (error: any) {
     errorMessage(res, error, next);
