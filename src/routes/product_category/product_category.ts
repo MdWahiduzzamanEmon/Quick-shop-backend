@@ -475,6 +475,7 @@ const getCategoryNameListHandler: RequestHandler = async (
 
   try {
     const { user, vendorId } = reqData;
+    const { status } = reqData.query as any;
     if (user?.role !== "ADMIN" && user?.role !== "OPERATOR") {
       showResponse(res, {
         status: 403,
@@ -483,7 +484,16 @@ const getCategoryNameListHandler: RequestHandler = async (
       return;
     }
 
-    const result = await getCategoryNameList(vendorId);
+    if (status && !(status in product_status)) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide valid status",
+      });
+      return;
+    }
+
+    const result = await getCategoryNameList(vendorId, status);
     showResponse(res, {
       message: "Category name list fetched successfully",
       data: result,
@@ -494,7 +504,7 @@ const getCategoryNameListHandler: RequestHandler = async (
 };
 
 product_categoryRoute.get(
-  "/product-category/name-list",
+  "/product-category/name-list/dropdown",
   verifyTokenMiddleware,
   getCategoryNameListHandler
 );

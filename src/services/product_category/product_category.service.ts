@@ -157,10 +157,14 @@ export const getMultipleProductCategory = async (
 };
 
 // get all product category name and id list for dropdown
-export const getCategoryNameList = async (vendorId: string) => {
+export const getCategoryNameList = async (
+  vendorId: string,
+  status?: product_status
+) => {
   return await db.product_category.findMany({
     where: {
       vendorId: vendorId,
+      ...(status && { isActive: status }),
     },
     select: {
       id: true,
