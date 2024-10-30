@@ -268,6 +268,7 @@ model product {
   id                    String                @id @default(cuid())
   product_name          String
   description           String?
+  product_code          String                @unique
   product_quantity_type product_quantity_type
   delivery_charge_type  delivery_charge_type
   isActive              product_status        @default(ACTIVE)

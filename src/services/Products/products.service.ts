@@ -8,7 +8,8 @@ export const getAllProducts = async (
   rowPerPage?: number,
   pagination?: boolean,
   status?: product_status,
-  vendorId?: string
+  vendorId?: string,
+  product_code?: string
 ) => {
   //pagination
   const pageNumbers = pageNumber ? parseInt(pageNumber.toString()) : 1;
@@ -18,6 +19,7 @@ export const getAllProducts = async (
       where: {
         ...(status && { isActive: status }),
         ...(vendorId && { vendorId }),
+        ...(product_code && { product_code }),
       },
       ...(pagination && {
         skip: (pageNumbers - 1) * resultPerPage,
@@ -61,6 +63,7 @@ export const getAllProducts = async (
           where: {
             ...(status && { isActive: status }),
             ...(vendorId && { vendorId }),
+            ...(product_code && { product_code }),
           },
         })
       : Promise.resolve(0),
@@ -81,12 +84,14 @@ export const getAllProducts = async (
 //getSingleProduct
 export const getSingleProduct = async (
   productId: string,
-  vendorId?: string
+  vendorId?: string,
+  product_code?: string
 ) => {
   const product = await db.product.findUnique({
     where: {
       id: productId,
       vendorId,
+      ...(product_code && { product_code }),
     },
     omit: {
       categoryId: true,
@@ -134,6 +139,8 @@ export const createProduct = async ({
   createdById,
   product_images,
 }: CREATE_PRODUCT_TYPE) => {
+  // PD-6digit random
+  const product_code = `PD-${Math.floor(100000 + Math.random() * 900000)}`;
   const product = await db.product.create({
     data: {
       product_name,
@@ -142,6 +149,7 @@ export const createProduct = async ({
       delivery_charge_type: delivery_charge,
       vendorId,
       categoryId: product_category_id,
+      product_code, // PD-6digit random "SKU"
       createdById,
       ...(product_images && {
         product_images: {

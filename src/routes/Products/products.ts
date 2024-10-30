@@ -47,7 +47,8 @@ const getAllProductsHandler: RequestHandler = async (
       });
       return;
     }
-    const { pageNumber, rowPerPage, pagination, status } = reqData.query as any;
+    const { pageNumber, rowPerPage, pagination, status, product_code } =
+      reqData.query as any;
 
     if (status && !(status in product_status)) {
       showResponse(res, {
@@ -63,7 +64,8 @@ const getAllProductsHandler: RequestHandler = async (
       rowPerPage,
       pagination,
       status,
-      vendorId
+      vendorId,
+      product_code
     );
 
     showResponse(res, {
@@ -88,7 +90,8 @@ const getSingleProductHandler: RequestHandler = async (
   try {
     const { id } = req.params as { id: string };
     const { vendorId } = reqData?.user;
-    const product = await getSingleProduct(id, vendorId);
+    const { product_code } = reqData.query as any;
+    const product = await getSingleProduct(id, vendorId, product_code);
     showResponse(res, {
       message: "Single Product fetched successfully",
       data: product,
