@@ -417,7 +417,7 @@ const activeInactiveProductCategoryHandler: RequestHandler = async (
       return;
     }
 
-    const { categoryID } = req.params;
+    const { categoryID } = req.params ;
 
     const { status } = reqData?.body as {
       status: product_status;

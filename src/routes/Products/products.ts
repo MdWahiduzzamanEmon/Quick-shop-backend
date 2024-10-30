@@ -489,7 +489,7 @@ const deleteProductHandler: RequestHandler = async (
 };
 
 productsRouter.delete(
-  "/products/:productID",
+  "/products/single/:productID",
   verifyTokenMiddleware,
   deleteProductHandler
 );
@@ -575,7 +575,7 @@ const deleteMultipleProductHandler: RequestHandler = async (
 };
 
 productsRouter.delete(
-  "/products/multiple-delete",
+  "/products/multiple-delete/",
   verifyTokenMiddleware,
   deleteMultipleProductHandler
 );

@@ -3536,3 +3536,23 @@
 
 ::1 - - [30/Oct/2024:15:01:01 +0000] "GET /api/v1/products/images/cm2vu2a5h0001lpdbbnrg63gi HTTP/1.1" 200 87 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [30/Oct/2024:15:15:03 +0000] "POST /api/v1/products HTTP/1.1" 201 70 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [30/Oct/2024:15:15:20 +0000] "POST /api/v1/products HTTP/1.1" 201 70 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [30/Oct/2024:15:15:25 +0000] "GET /api/v1/products?status=INACTIVE HTTP/1.1" 200 81 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [30/Oct/2024:15:15:29 +0000] "GET /api/v1/products?status=INACTIVE HTTP/1.1" 200 81 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [30/Oct/2024:15:15:30 +0000] "GET /api/v1/products?status=INACTIVE HTTP/1.1" 200 81 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [30/Oct/2024:15:15:35 +0000] "GET /api/v1/products HTTP/1.1" 200 939 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [30/Oct/2024:15:16:27 +0000] "DELETE /api/v1/products HTTP/1.1" 404 157 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [30/Oct/2024:15:16:42 +0000] "DELETE /api/v1/products/multiple-delete HTTP/1.1" 400 60 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [30/Oct/2024:15:17:55 +0000] "DELETE /api/v1/products/multiple-delete HTTP/1.1" 200 71 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [30/Oct/2024:15:18:01 +0000] "GET /api/v1/products HTTP/1.1" 200 81 "-" "PostmanRuntime/7.42.0"
+
