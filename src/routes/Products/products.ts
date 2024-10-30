@@ -10,7 +10,9 @@ import {
 } from "@prisma/client";
 import {
   activeInactiveProduct,
+  activeInactiveProductImage,
   createProduct,
+  createProductImage,
   deleteMultipleProduct,
   deleteMultipleProductImages,
   deleteProductImages,
@@ -621,7 +623,17 @@ const deleteProductImagesByProductIdHandler: RequestHandler = async (
   const reqData = req as any;
   try {
     const { id: product_image_id } = req.params as { id: string };
-    const { vendorId } = reqData?.user;
+    const { vendorId, role } = reqData?.user;
+
+    if (role !== "ADMIN" && role !== "OPERATOR") {
+      showResponse(res, {
+        status: 403,
+        success: false,
+        message:
+          "Forbidden access.You are not authorized to perform this action",
+      });
+      return;
+    }
 
     const isExist = (await getSingleProductImage(
       product_image_id,
@@ -665,7 +677,17 @@ const deleteMultipleProductImagesHandler: RequestHandler = async (
   const reqData = req as any;
   try {
     const { ids: product_image_ids } = req.body;
-    const { vendorId } = reqData?.user;
+    const { vendorId, role } = reqData?.user;
+
+    if (role !== "ADMIN" && role !== "OPERATOR") {
+      showResponse(res, {
+        status: 403,
+        success: false,
+        message:
+          "Forbidden access.You are not authorized to perform this action",
+      });
+      return;
+    }
 
     if (!product_image_ids) {
       showResponse(res, {
@@ -728,4 +750,147 @@ productsRouter.delete(
   "/products/multiple-images",
   verifyTokenMiddleware,
   deleteMultipleProductImagesHandler
+);
+
+//product image active inactive
+
+const activeInactiveProductImageHandler: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const reqData = req as any;
+  try {
+    const { role, vendorId } = reqData?.user;
+
+    if (role !== "ADMIN" && role !== "OPERATOR") {
+      showResponse(res, {
+        status: 403,
+        success: false,
+        message:
+          "Forbidden access.You are not authorized to perform this action",
+      });
+      return;
+    }
+    const { product_image_id } = req.params as { product_image_id: string };
+    const { status } = reqData?.body as {
+      status: product_status;
+    };
+    if (!status && !(status in product_status)) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide valid status ",
+      });
+      return;
+    }
+    const isExist = (await getSingleProductImage(
+      product_image_id,
+      vendorId
+    )) as any;
+    if (!isExist) {
+      showResponse(res, {
+        status: 404,
+        success: false,
+        message: "Product image not found",
+      });
+      return;
+    }
+    await activeInactiveProductImage(status, product_image_id, vendorId);
+    showResponse(res, {
+      success: true,
+      message: "Product image status updated successfully",
+    });
+  } catch (error: any) {
+    errorMessage(res, error, next);
+  }
+};
+
+productsRouter.put(
+  "/products/image-status/:product_image_id",
+  verifyTokenMiddleware,
+  activeInactiveProductImageHandler
+);
+
+//create product image by product id
+
+const createProductImageHandler: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const reqData = req as any;
+  try {
+    const { role, vendorId } = reqData?.user;
+    if (role !== "ADMIN" && role !== "OPERATOR") {
+      showResponse(res, {
+        status: 403,
+        success: false,
+        message:
+          "Forbidden access.You are not authorized to perform this action",
+      });
+      return;
+    }
+    const { product_id } = req.params as { product_id: string };
+    if (!product_id) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide product id",
+      });
+      return;
+    }
+    const isExist = (await getSingleProduct(product_id, vendorId)) as any;
+    if (!isExist) {
+      showResponse(res, {
+        status: 404,
+        success: false,
+        message: "Product not found",
+      });
+      return;
+    }
+
+    const { fileUrl } = reqData || {};
+    const body = {
+      images: fileUrl,
+    };
+
+    console.log("body", body);
+    const image = await createProductImage(product_id, body);
+
+    if (image?.length === 0) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Product image not created",
+      });
+
+      await reqData?.fileUrl.forEach(async (file: any) => {
+        await unlinkFile(file?.publicId);
+      });
+      return;
+    }
+
+    showResponse(res, {
+      success: true,
+      status: 201,
+      message: "Product image created successfully",
+      data: image,
+    });
+
+    return;
+  } catch (error: any) {
+    await reqData?.fileUrl.forEach(async (file: any) => {
+      await unlinkFile(file?.publicId);
+    });
+
+    errorMessage(res, error, next);
+  }
+};
+
+productsRouter.post(
+  "/products/create-image/:product_id",
+  verifyTokenMiddleware,
+  uploadMiddleware,
+  createProductImageHandler
 );

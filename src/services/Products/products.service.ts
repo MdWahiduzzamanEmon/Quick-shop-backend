@@ -46,13 +46,13 @@ export const getAllProducts = async (
             username: true,
           },
         },
-        product_images: {
-          select: {
-            id: true,
-            image: true,
-            isActive: true,
-          },
-        },
+        // product_images: {
+        //   select: {
+        //     id: true,
+        //     image: true,
+        //     isActive: true,
+        //   },
+        // },
       },
       orderBy: {
         createdAt: "desc",
@@ -362,4 +362,44 @@ export const deleteMultipleProductImages = async (
   });
 
   return product;
+};
+
+// activeInactiveProductImage
+export const activeInactiveProductImage = async (
+  status: product_status,
+  product_image_id: string,
+  vendorId: string
+) => {
+  const product = await db.product_image.update({
+    where: {
+      id: product_image_id,
+      product: {
+        vendorId,
+      },
+    },
+    data: {
+      isActive: status,
+    },
+  });
+
+  return product;
+};
+
+//create multiple ProductImage
+export const createProductImage = async (
+  productId: string,
+  { images }: { images: any[] }
+) => {
+  let result = [];
+  for (let i = 0; i < images.length; i++) {
+    const image = await db.product_image.create({
+      data: {
+        image: images[i],
+        productId,
+      },
+    });
+    result.push(image);
+  }
+
+  return result;
 };
