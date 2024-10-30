@@ -1,6 +1,6 @@
 import { client, ioInstance } from "../server";
 
-async function userActivityLiveResponse() {
+async function userActivityLiveResponse(vendorId: string) {
   try {
     // Fetch connected users from Redis
     const cachedUsers = (await client?.get("connectedUsers")) as any;
@@ -8,29 +8,25 @@ async function userActivityLiveResponse() {
     // console.log("Connected users:", connectedUsers);
 
     // Filter connected users to find admins
-    const adminUser = connectedUsers.filter(
-      (user: any) => user.role?.toLowerCase() === "admin"
+    const vendorAdmins = connectedUsers.filter(
+      (user: any) =>
+        user.role?.toLowerCase() === "admin" && user.vendorId === vendorId
     );
 
-    if (adminUser?.length > 0) {
-      // const socket = ioInstance.sockets.sockets?.get(adminUser?.socketId);
-      // if (socket) {
-      //   //send to admin all the client who are online
-      //   socket.emit("users-activity", connectedUsers);
-      // }
-
-      for (const user of adminUser) {
-        const socket = ioInstance.sockets.sockets?.get(user.socketId);
+    if (vendorAdmins.length > 0) {
+      for (const admin of vendorAdmins) {
+        const socket = ioInstance.sockets.sockets?.get(admin.socketId);
         if (socket) {
-          //send to admin all the client who are online
-          socket.emit("users-activity", connectedUsers);
+          // Send the list of connected users within the same vendor to the admin
+          const vendorConnectedUsers = connectedUsers.filter(
+            (user: any) => user.vendorId === vendorId
+          );
+          socket.emit("users-activity", vendorConnectedUsers);
         }
       }
     }
-
-    // console.log("Notifications sent to admins:", adminUser);
   } catch (err) {
-    console.error("Error sending notifications to admins:", err);
+    console.error("Error sending notifications to vendor admins:", err);
   }
 }
 
