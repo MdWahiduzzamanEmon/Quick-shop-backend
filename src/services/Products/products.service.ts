@@ -2,6 +2,7 @@ import { product_status } from "@prisma/client";
 import { db } from "../../utils/db.server";
 import { paginationCustomResult } from "../../Others/paginationCustomResult";
 import { CREATE_PRODUCT_TYPE } from "../../routes/Products/products";
+import { generateUniqueID } from "../../Others/OTP/otp";
 
 export const getAllProducts = async (
   pageNumber?: number,
@@ -139,8 +140,8 @@ export const createProduct = async ({
   createdById,
   product_images,
 }: CREATE_PRODUCT_TYPE) => {
-  // PD-6digit random
-  const product_code = `PD-${Math.floor(100000 + Math.random() * 900000)}`;
+  
+  const product_code = generateUniqueID("PD");
   const product = await db.product.create({
     data: {
       product_name,

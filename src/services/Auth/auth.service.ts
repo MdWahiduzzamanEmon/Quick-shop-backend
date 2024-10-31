@@ -1,5 +1,6 @@
 import { Role } from "@prisma/client";
 import { db } from "../../utils/db.server";
+import { generateUniqueID } from "../../Others/OTP/otp";
 
 export const checkSuperAdminExist = async (
   email?: string,
@@ -98,10 +99,12 @@ export const customerRegister = async (
       username,
       password,
       vendorId,
+
       otherUsers: {
         create: {
           firstName,
           lastName,
+          userUniqueId: generateUniqueID("CS"),
           ...(profile_picture && { profile_picture }),
           ...(role && { role }),
         },
@@ -116,31 +119,6 @@ export const customerRegister = async (
       },
     },
   });
-
-  const userUniqueId = `CS-${new Date().getFullYear()}${new Date().getMonth()}${Math.floor(
-    Math.random() * 1000 // 0-999
-  )}-${user.otherUsers?.order}`;
-
-  // Use Promise.all to handle concurrent operations
-  await Promise.all([
-    // Update the userUniqueId in parallel (no need to wait)
-    db.otherUsers
-      .update({
-        where: {
-          id: user.otherUsers?.id,
-        },
-        data: {
-          userUniqueId,
-          order: {
-            increment: 1,
-          },
-        },
-      })
-      .catch((error) => {
-        // Handle any errors during the update process
-        console.error("Error updating userUniqueId:", error);
-      }),
-  ]);
 
   return user;
 };
@@ -191,7 +169,7 @@ export const workerRegister = async ({
           mobileBankingNumber,
           address,
           zipCode,
-
+          employeeID: generateUniqueID("EM"),
           ...(profile_picture && { profile_picture }),
           ...(NIDImage && { NIDImage }),
         },
@@ -206,30 +184,6 @@ export const workerRegister = async ({
       },
     },
   });
-
-  //syncronasly update worker employeeId : EM-{current_year}{current_month}{current_date}
-  const employeeID = `EM-${new Date().getFullYear()}${new Date().getMonth()}${Math.floor(
-    Math.random() * 1000 // 0-999
-  )}-${workerRes.worker?.order}`;
-
-  await Promise.all([
-    db.worker
-      .update({
-        where: {
-          id: workerRes.worker?.id,
-        },
-        data: {
-          employeeID,
-          order: {
-            increment: 1,
-          },
-        },
-      })
-      .catch((error) => {
-        // Handle any errors during the update process
-        console.error("Error updating employeeID:", error);
-      }),
-  ]);
 
   return workerRes;
 };

@@ -42,6 +42,9 @@ async function getAllZoneHandler(
       upazila_id,
       union_id,
       operatorId,
+      pageNumber,
+      rowPerPage,
+      pagination,
     } = req.query as {
       status: Zone_status;
       id: string;
@@ -49,6 +52,9 @@ async function getAllZoneHandler(
       upazila_id: string;
       union_id: string;
       operatorId: string;
+      pageNumber: string;
+      rowPerPage: string;
+      pagination: string;
     };
 
     if (status && !(status in Zone_status)) {
@@ -60,6 +66,9 @@ async function getAllZoneHandler(
       return;
     }
 
+    //set header cache cash for 30 sec
+    res.set("Cache-Control", "public, max-age=30,must-revalidate");
+
     const zones = await getZones({
       zoneId,
       status,
@@ -68,6 +77,9 @@ async function getAllZoneHandler(
       union_id,
       operatorId,
       vendorId,
+      pageNumber: Number(pageNumber),
+      rowPerPage: Number(rowPerPage),
+      pagination: Boolean(pagination),
     });
 
     showResponse(res, {
@@ -89,7 +101,7 @@ async function getSingleZoneHandler(
   try {
     const { id } = req.params as { id: string };
     const { vendorId } = reqData?.user;
-    const zone = await getZoneById(id,vendorId);
+    const zone = await getZoneById(id, vendorId);
     showResponse(res, {
       message: "Zone fetched successfully",
       data: zone,

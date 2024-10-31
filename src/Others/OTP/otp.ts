@@ -11,3 +11,12 @@ const generateOTP = () => {
 };
 
 export default generateOTP;
+
+export const generateUniqueID = (type: string, length: number = 8) => {
+  return `${type}-${otpGenerator.generate(length, {
+    digits: true,
+    upperCaseAlphabets: true,
+    specialChars: false,
+    lowerCaseAlphabets: false,
+  })}`;
+};

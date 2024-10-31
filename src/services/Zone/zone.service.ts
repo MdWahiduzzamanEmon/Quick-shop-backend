@@ -1,6 +1,7 @@
 import { Zone_status } from "@prisma/client";
 import { db } from "../../utils/db.server";
 import { CreateZoneData } from "../../routes/Zone/zone";
+import { paginationCustomResult } from "../../Others/paginationCustomResult";
 
 export const getZones = async ({
   zoneId,
@@ -10,6 +11,9 @@ export const getZones = async ({
   union_id,
   operatorId,
   vendorId,
+  pageNumber,
+  rowPerPage,
+  pagination,
 }: {
   zoneId?: string;
   status?: Zone_status;
@@ -18,87 +22,121 @@ export const getZones = async ({
   union_id?: string;
   operatorId?: string;
   vendorId: string;
+  pageNumber?: number;
+  rowPerPage?: number;
+  pagination?: boolean;
 }) => {
-  return await db.zone.findMany({
-    where: {
-      ...(zoneId && {
-        id: String(zoneId),
-      }),
-      ...(status && { isActive: status }),
-      ...(district_id && { district_id: Number(district_id) }),
-      ...(upazila_id && { upazila_id: Number(upazila_id) }),
-      ...(union_id && { union_id: Number(union_id) }),
-      ...(operatorId && { operatorId }),
-      ...(vendorId && { vendorId }),
-    },
+  //pagination
+  const pageNumbers = pageNumber ? parseInt(pageNumber.toString()) : 1;
+  const resultPerPage = rowPerPage ? parseInt(rowPerPage.toString()) : 10;
+  const [result, total] = await Promise.all([
+    db.zone.findMany({
+      where: {
+        ...(zoneId && {
+          id: String(zoneId),
+        }),
+        ...(status && { isActive: status }),
+        ...(district_id && { district_id: Number(district_id) }),
+        ...(upazila_id && { upazila_id: Number(upazila_id) }),
+        ...(union_id && { union_id: Number(union_id) }),
+        ...(operatorId && { operatorId }),
+        ...(vendorId && { vendorId }),
+      },
 
-    orderBy: {
-      createdAt: "desc",
-    },
-    include: {
-      division: {
-        select: {
-          id: true,
-          name: true,
-          bn_name: true,
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        division: {
+          select: {
+            id: true,
+            name: true,
+            bn_name: true,
+          },
+        },
+        district: {
+          select: {
+            id: true,
+            name: true,
+            bn_name: true,
+          },
+        },
+        upazila: {
+          select: {
+            id: true,
+            name: true,
+            bn_name: true,
+          },
+        },
+        union: {
+          select: {
+            id: true,
+            name: true,
+            bn_name: true,
+          },
+        },
+        operator: {
+          select: {
+            id: true,
+            fullName: true,
+            whatsapp: true,
+            employeeID: true,
+          },
+        },
+        representatives: {
+          select: {
+            id: true,
+            fullName: true,
+            whatsapp: true,
+            employeeID: true,
+          },
+        },
+        riders: {
+          select: {
+            id: true,
+            fullName: true,
+            whatsapp: true,
+            employeeID: true,
+          },
         },
       },
-      district: {
-        select: {
-          id: true,
-          name: true,
-          bn_name: true,
-        },
+      omit: {
+        createdAt: true,
+        updatedAt: true,
+        division_id: true,
+        district_id: true,
+        upazila_id: true,
+        union_id: true,
+        operatorId: true,
       },
-      upazila: {
-        select: {
-          id: true,
-          name: true,
-          bn_name: true,
-        },
-      },
-      union: {
-        select: {
-          id: true,
-          name: true,
-          bn_name: true,
-        },
-      },
-      operator: {
-        select: {
-          id: true,
-          fullName: true,
-          whatsapp: true,
-          employeeID: true,
-        },
-      },
-      representatives: {
-        select: {
-          id: true,
-          fullName: true,
-          whatsapp: true,
-          employeeID: true,
-        },
-      },
-      riders: {
-        select: {
-          id: true,
-          fullName: true,
-          whatsapp: true,
-          employeeID: true,
-        },
-      },
-    },
-    omit: {
-      createdAt: true,
-      updatedAt: true,
-      division_id: true,
-      district_id: true,
-      upazila_id: true,
-      union_id: true,
-      operatorId: true,
-    },
+    }),
+    pagination
+      ? db.zone.count({
+          where: {
+            ...(zoneId && {
+              id: String(zoneId),
+            }),
+            ...(status && { isActive: status }),
+            ...(district_id && { district_id: Number(district_id) }),
+            ...(upazila_id && { upazila_id: Number(upazila_id) }),
+            ...(union_id && { union_id: Number(union_id) }),
+            ...(operatorId && { operatorId }),
+            ...(vendorId && { vendorId }),
+          },
+        })
+      : Promise.resolve(0),
+  ]);
+
+  if (!pagination) return result;
+
+  const res = paginationCustomResult({
+    pageNumbers,
+    resultPerPage,
+    result,
+    totalResultCount: total,
   });
+
+  return res;
 };
 
 export const getZoneById = async (id: string, vendorId: string) => {

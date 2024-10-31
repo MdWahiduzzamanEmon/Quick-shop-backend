@@ -68,7 +68,7 @@ const getSingleCustomerByIDHandler: express.RequestHandler = async (
     }
 
     //http cache
-    // res.setHeader("Cache-Control", "public, max-age=86400 must-revalidate"); // 1 day
+    // res.set("Cache-Control", "public, max-age=86400 must-revalidate"); // 1 day
 
     showResponse(res, {
       message: "User fetched successfully",
