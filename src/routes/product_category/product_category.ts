@@ -492,7 +492,8 @@ const getCategoryNameListHandler: RequestHandler = async (
       });
       return;
     }
-
+    //set cookie cash for 30 sec
+    res.header("Cache-Control", "public, max-age=30,must-revalidate");
     const result = await getCategoryNameList(vendorId, status);
     showResponse(res, {
       message: "Category name list fetched successfully",

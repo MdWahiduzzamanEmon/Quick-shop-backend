@@ -135,6 +135,7 @@ const createProductHandler: RequestHandler = async (
     if (role !== "ADMIN" && role !== "OPERATOR") {
       showResponse(res, {
         status: 403,
+        success: false,
         message:
           "Forbidden access.You are not authorized to perform this action",
       });
@@ -147,6 +148,7 @@ const createProductHandler: RequestHandler = async (
     if (Object.keys(reqData?.body).length === 0) {
       showResponse(res, {
         status: 400,
+        success: false,
         message: "Please provide product details",
       });
       await reqData?.fileUrl.forEach(async (file: any) => {
@@ -166,6 +168,7 @@ const createProductHandler: RequestHandler = async (
     if (!product_category_id) {
       showResponse(res, {
         status: 400,
+        success: false,
         message: "Please provide product category id",
       });
       await reqData?.fileUrl.forEach(async (file: any) => {
@@ -177,6 +180,7 @@ const createProductHandler: RequestHandler = async (
     if (!(product_quantity in product_quantity_type)) {
       showResponse(res, {
         status: 400,
+        success: false,
         message: "Please provide valid product quantity type",
       });
       await reqData?.fileUrl.forEach(async (file: any) => {
@@ -188,6 +192,7 @@ const createProductHandler: RequestHandler = async (
     if (!(delivery_charge in delivery_charge_type)) {
       showResponse(res, {
         status: 400,
+        success: false,
         message: "Please provide valid delivery charge type",
       });
       await reqData?.fileUrl.forEach(async (file: any) => {

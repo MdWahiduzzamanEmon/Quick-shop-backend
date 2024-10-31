@@ -8,37 +8,37 @@ import upazilas from "../src/bd-geo-code/upazilas.json";
 async function seed() {
   const convertHashedPassword = await hashPassword("1516");
 
-  await db.superAdmin.create({
-    data: {
-      firstName: "Super",
-      lastName: "Admin",
-      mobile: "1234567890",
-      role: "SUPER_ADMIN",
-      username: "superAdmin",
-      email: "superadmin@admin.com",
-      password: convertHashedPassword,
-      vendor: {
-        create: {
-          name: "Logic Nexus It Solutions",
-          address: "Jhikargaccha, Jashore",
-          phone: "01703459656",
-          users: {
-            create: {
-              email: "admin@admin.com",
-              mobile: "1234567890",
-              username: "admin",
-              password: convertHashedPassword,
-              admin: {
-                create: {
-                  role: "ADMIN",
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  });
+  // await db.superAdmin.create({
+  //   data: {
+  //     firstName: "Super",
+  //     lastName: "Admin",
+  //     mobile: "1234567890",
+  //     role: "SUPER_ADMIN",
+  //     username: "superAdmin",
+  //     email: "superadmin@admin.com",
+  //     password: convertHashedPassword,
+  //     vendor: {
+  //       create: {
+  //         name: "Logic Nexus It Solutions",
+  //         address: "Jhikargaccha, Jashore",
+  //         phone: "01703459656",
+  //         users: {
+  //           create: {
+  //             email: "admin@admin.com",
+  //             mobile: "1234567890",
+  //             username: "admin",
+  //             password: convertHashedPassword,
+  //             admin: {
+  //               create: {
+  //                 role: "ADMIN",
+  //               },
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  // });
 
   // // Seed Divisions
   // for (const division of divisions.data) {
@@ -77,24 +77,24 @@ async function seed() {
   //   });
   // }
 
-  //   // Seed Unions
-  // for (const union of unions.data) {
-  //   await db.union.upsert({
-  //     where: { id: parseInt(union.id) },
-  //     create: {
-  //       name: union.name,
-  //       bn_name: union.bn_name,
-  //       url: union.url,
-  //       upazila: { connect: { id: parseInt(union.upazilla_id) } },
-  //     },
-  //     update: {
-  //       name: union.name,
-  //       bn_name: union.bn_name,
-  //       url: union.url,
-  //       upazila: { connect: { id: parseInt(union.upazilla_id) } },
-  //     },
-  //   });
-  // }
+    // Seed Unions
+  for (const union of unions.data) {
+    await db.union.upsert({
+      where: { id: parseInt(union.id) },
+      create: {
+        name: union.name,
+        bn_name: union.bn_name,
+        url: union.url,
+        upazila: { connect: { id: parseInt(union.upazilla_id) } },
+      },
+      update: {
+        name: union.name,
+        bn_name: union.bn_name,
+        url: union.url,
+        upazila: { connect: { id: parseInt(union.upazilla_id) } },
+      },
+    });
+  }
 
   //delete all data
   // await db.division.deleteMany();
