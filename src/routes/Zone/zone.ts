@@ -187,6 +187,37 @@ async function createZoneHandler(
       return;
     }
 
+    //need one more check fro. operator id is present thrn that id can be used in rep and rider array. also if rep array is present then that req users can not set as rider array also and vice versa
+    if (
+      operatorId &&
+      (representatives?.includes(operatorId) || riders?.includes(operatorId))
+    ) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Operator can not be in rep or rider array",
+      });
+      return;
+    }
+
+    if (representatives?.length > 0 && !operatorId) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Operator id is required for rep array",
+      });
+      return;
+    }
+
+    if (riders?.length > 0 && !operatorId) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Operator id is required for rider array",
+      });
+      return;
+    }
+
     //if rep but not array
     if (representatives && !Array.isArray(representatives)) {
       showResponse(res, {
@@ -202,6 +233,32 @@ async function createZoneHandler(
         status: 400,
         success: false,
         message: "Riders must be an array",
+      });
+      return;
+    }
+
+    const checkRepresntativesInRiders = representatives?.filter((rep: string) =>
+      riders?.includes(rep)
+    );
+
+    if (riders && checkRepresntativesInRiders?.length > 0) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Rep and rider can not be same",
+      });
+      return;
+    }
+
+    const checkRidersInRep = riders?.filter((rider: string) =>
+      representatives?.includes(rider)
+    );
+
+    if (representatives && checkRidersInRep?.length > 0) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Rep and rider can not be same",
       });
       return;
     }
