@@ -4,13 +4,14 @@ import { showResponse } from "../../constant/showResponse";
 import errorMessage from "../../Others/ErrorMessage/errorMessage";
 import { verifyTokenMiddleware } from "../../Others/JWT";
 import {
+  checkOperatorAssigned,
   createZone,
   deleteZone,
   getZoneById,
   getZones,
   updateZone,
 } from "../../services/Zone/zone.service";
-import { Zone_status } from "@prisma/client";
+import { WorkerRole, Zone_status } from "@prisma/client";
 
 export const zoneRoute = express.Router();
 
@@ -24,6 +25,13 @@ zoneRoute.get("/zones/:id", verifyTokenMiddleware, getSingleZoneHandler);
 zoneRoute.put("/zones/:id", verifyTokenMiddleware, updateZoneHandler);
 // //delete zone
 zoneRoute.delete("/zones/:id", verifyTokenMiddleware, deleteZoneHandler);
+
+//check if a operator has already assigned to a zone
+zoneRoute.get(
+  "/checkEmployeeAssignedInZone",
+  verifyTokenMiddleware,
+  checkOperatorAssignedHandler
+);
 
 //get all zone
 async function getAllZoneHandler(
@@ -143,7 +151,7 @@ async function createZoneHandler(
       showResponse(res, {
         status: 403,
         success: false,
-        message: "Forbidden access",
+        message: "Forbidden access! Only admin can create zone",
       });
       return;
     }
@@ -316,7 +324,7 @@ async function updateZoneHandler(
       showResponse(res, {
         status: 403,
         success: false,
-        message: "Forbidden access",
+        message: "Forbidden access! Only admin can update zone",
       });
       return;
     }
@@ -421,6 +429,95 @@ async function deleteZoneHandler(
     showResponse(res, {
       message: "Zone deleted successfully",
       data: zone,
+    });
+  } catch (error: any) {
+    errorMessage(res, error, next);
+  }
+}
+
+//check if a operator has already assigned to a zone
+
+async function checkOperatorAssignedHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  // console.log("checkOperatorAssignedHandler");
+
+  const reqData = req as any;
+  try {
+    const { vendorId, role } = reqData?.user;
+    const { operatorId, representativeId, riderId, queryFor } =
+      reqData?.query as {
+        operatorId: string;
+        representativeId: string;
+        riderId: string;
+        queryFor: WorkerRole;
+      };
+
+    if (role !== "ADMIN") {
+      showResponse(res, {
+        status: 403,
+        success: false,
+        message: "Forbidden access! Only admin can check operator assigned",
+      });
+      return;
+    }
+
+    if (!queryFor && !(queryFor in WorkerRole)) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Invalid query for",
+      });
+      return;
+    }
+
+    if (queryFor === WorkerRole.OPERATOR && !operatorId) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Operator id is required",
+      });
+      return;
+    }
+
+    if (queryFor === WorkerRole.REPRESENTATIVE && !representativeId) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Representative id is required",
+      });
+      return;
+    }
+
+    if (queryFor === WorkerRole.RAIDER && !riderId) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Rider id is required",
+      });
+      return;
+    }
+
+    const isAssigned = await checkOperatorAssigned({
+      operatorId,
+      representativeId,
+      riderId,
+      vendorId,
+    });
+    if (isAssigned) {
+      showResponse(res, {
+        status: 409,
+        success: false,
+        message: `This ${queryFor} is already assigned to a zone`,
+      });
+      return;
+    }
+    showResponse(res, {
+      status: 200,
+      success: true,
+      message:  `This ${queryFor} is not assigned to any zone`,
     });
   } catch (error: any) {
     errorMessage(res, error, next);

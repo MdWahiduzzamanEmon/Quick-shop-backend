@@ -5,10 +5,11 @@ import { showResponse } from "../../../constant/showResponse";
 import { verifyTokenMiddleware } from "../../../Others/JWT";
 import {
   getEmployees,
+  getEmployeesByRole,
   getSingleEmployeeByID,
   updateEmployee,
 } from "../../../services/Users/employees/employees.service";
-import { User_status } from "@prisma/client";
+import { User_status, WorkerRole } from "@prisma/client";
 import errorMessage from "../../../Others/ErrorMessage/errorMessage";
 import {
   unlinkFile,
@@ -26,6 +27,7 @@ export type EmployeeQuery = {
   pagination?: boolean;
   employeeUniqueID?: string;
   vendorId: string;
+  role?: WorkerRole;
 };
 
 const getOthersUsersHandler: express.RequestHandler = async (
@@ -36,8 +38,24 @@ const getOthersUsersHandler: express.RequestHandler = async (
   const reqData = _req as any;
   try {
     const { vendorId } = reqData?.user;
-    const { status, pageNumber, rowPerPage, pagination, employeeUniqueID } =
-      reqData?.query as EmployeeQuery;
+    const {
+      status,
+      pageNumber,
+      rowPerPage,
+      pagination,
+      employeeUniqueID,
+      role,
+    } = reqData?.query as EmployeeQuery;
+
+    if (role && !(role in WorkerRole)) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Invalid User Role",
+      });
+      return;
+    }
+
     const users = await getEmployees({
       status,
       pageNumber,
@@ -45,6 +63,7 @@ const getOthersUsersHandler: express.RequestHandler = async (
       pagination,
       employeeUniqueID,
       vendorId,
+      role,
     });
     showResponse(res, {
       message: "Employees fetched successfully",
@@ -95,6 +114,56 @@ employeesRoute.get(
   "/employees/:employeeID",
   verifyTokenMiddleware,
   getSingleEmployeeByIDHandler
+);
+
+//employess short list by role
+
+const getEmployeesByRoleHandler: express.RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const reqData = req as any;
+  try {
+    const { vendorId } = reqData?.user;
+    const { role } = reqData?.query;
+
+    if (!role) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Role is required",
+      });
+      return;
+    }
+
+    if (role && !(role in WorkerRole)) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Invalid User Role",
+      });
+      return;
+    }
+
+    const users = await getEmployeesByRole({
+      vendorId,
+      role: role as WorkerRole,
+    });
+
+    showResponse(res, {
+      message: "Employees short list fetched successfully",
+      data: users,
+    });
+  } catch (error: any) {
+    errorMessage(res, error, next);
+  }
+};
+
+employeesRoute.get(
+  "/employees-role/short-list",
+  verifyTokenMiddleware,
+  getEmployeesByRoleHandler
 );
 
 //editEmployee

@@ -10,6 +10,7 @@ export const getEmployees = async ({
   pagination,
   employeeUniqueID,
   vendorId,
+  role,
 }: EmployeeQuery) => {
   //pagination
   const pageNumbers = pageNumber ? parseInt(pageNumber.toString()) : 1;
@@ -25,6 +26,7 @@ export const getEmployees = async ({
             vendorId,
           },
         }),
+        ...(role && { role }),
       },
       orderBy: {
         userJoinDate: "desc",
@@ -99,6 +101,32 @@ export const getSingleEmployeeByID = async (
           email: true,
           username: true,
           mobile: true,
+        },
+      },
+    },
+  });
+};
+
+//getEmployeesByRole
+
+export const getEmployeesByRole = async ({ vendorId, role }: any) => {
+  return await db.worker.findMany({
+    where: {
+      user: {
+        vendorId,
+      },
+      role,
+    },
+    select: {
+      id: true,
+      fullName: true,
+      address: true,
+      employeeID: true,
+      user: {
+        select: {
+          username: true,
+          mobile: true,
+          email: true,
         },
       },
     },

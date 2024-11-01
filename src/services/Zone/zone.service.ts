@@ -324,3 +324,31 @@ export const deleteZone = async (id: string) => {
     },
   });
 };
+
+//checkOperatorAssigned
+export const checkOperatorAssigned = async ({
+  operatorId,
+  vendorId,
+  representativeId,
+  riderId,
+}: {
+  operatorId: string;
+  vendorId: string;
+  representativeId?: string;
+  riderId?: string;
+}) => {
+  return await db.zone.findFirst({
+    where: {
+      vendorId,
+      ...(operatorId && { operatorId }),
+      ...(representativeId && {
+        representatives: {
+          some: {
+            id: representativeId,
+          },
+        },
+      }),
+      ...(riderId && { riders: { some: { id: riderId } } }),
+    },
+  });
+};
