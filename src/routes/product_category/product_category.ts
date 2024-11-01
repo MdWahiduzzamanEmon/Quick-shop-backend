@@ -19,6 +19,7 @@ import {
   uploadMiddleware,
 } from "../../Others/File/fileUploadController";
 import { product_status } from "@prisma/client";
+import { generateETag } from "../../Others/OTP/otp";
 
 export const product_categoryRoute = express.Router();
 
@@ -59,6 +60,19 @@ const getCategoryHandler: RequestHandler = async (
       status,
       vendorId
     );
+
+    // Generate ETag based on new data and set it in the response
+    const etag = generateETag(categories);
+    res.setHeader("ETag", `"${etag}"`);
+
+    const ifNoneMatchValue = _req.headers["if-none-match"];
+
+    // Check if the client has the latest data
+    if (ifNoneMatchValue === `"${etag}"`) {
+      // 304 Not Modified
+      res.status(304).end();
+      return;
+    }
 
     showResponse(res, {
       message: "Categories fetched successfully",

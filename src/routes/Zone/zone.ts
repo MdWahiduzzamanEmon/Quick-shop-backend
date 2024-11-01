@@ -10,8 +10,10 @@ import {
   getZoneById,
   getZones,
   updateZone,
+  updateZoneStatus,
 } from "../../services/Zone/zone.service";
 import { WorkerRole, Zone_status } from "@prisma/client";
+import { generateETag } from "../../Others/OTP/otp";
 
 export const zoneRoute = express.Router();
 
@@ -23,6 +25,12 @@ zoneRoute.get("/zones", verifyTokenMiddleware, getAllZoneHandler);
 zoneRoute.get("/zones/:id", verifyTokenMiddleware, getSingleZoneHandler);
 // //update zone
 zoneRoute.put("/zones/:id", verifyTokenMiddleware, updateZoneHandler);
+// //update zone status
+zoneRoute.put(
+  "/zones/active-inactive/:id",
+  verifyTokenMiddleware,
+  updateZoneStatusHandler
+);
 // //delete zone
 zoneRoute.delete("/zones/:id", verifyTokenMiddleware, deleteZoneHandler);
 
@@ -74,9 +82,6 @@ async function getAllZoneHandler(
       return;
     }
 
-    //set header cache cash for 30 sec
-    res.set("Cache-Control", "public, max-age=30,must-revalidate");
-
     const zones = await getZones({
       zoneId,
       status,
@@ -89,6 +94,22 @@ async function getAllZoneHandler(
       rowPerPage: Number(rowPerPage),
       pagination: Boolean(pagination),
     });
+
+    // Cache for 24 hr, but verify every on each request with no-cache
+    res.setHeader("Cache-Control", `max-age=${60 * 60 * 24}, no-cache`);
+
+    // Generate ETag based on new data and set it in the response
+    const etag = generateETag(zones);
+    res.setHeader("ETag", `"${etag}"`);
+
+    const ifNoneMatchValue = req.headers["if-none-match"];
+
+    // Check if the client has the latest data
+    if (ifNoneMatchValue === `"${etag}"`) {
+      // 304 Not Modified
+      res.status(304).end();
+      return;
+    }
 
     showResponse(res, {
       message: "Zones fetched successfully",
@@ -517,8 +538,59 @@ async function checkOperatorAssignedHandler(
     showResponse(res, {
       status: 200,
       success: true,
-      message:  `This ${queryFor} is not assigned to any zone`,
+      message: `This ${queryFor} is not assigned to any zone`,
     });
+  } catch (error: any) {
+    errorMessage(res, error, next);
+  }
+}
+
+// updateZoneStatusHandler
+
+async function updateZoneStatusHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const reqData = req as any;
+  try {
+    const { vendorId, role } = reqData?.user;
+    if (role !== "ADMIN") {
+      showResponse(res, {
+        status: 403,
+        success: false,
+        message: "Forbidden access",
+      });
+      return;
+    }
+    const { id } = req.params as { id: string };
+    const { status } = reqData?.body as {
+      status: Zone_status;
+    };
+    if (!status && !(status in Zone_status)) {
+      showResponse(res, {
+        status: 404,
+        success: false,
+        message: "Please provide a valid status",
+      });
+      return;
+    }
+
+    const zone = await updateZoneStatus(vendorId, id, status);
+
+    if (!zone) {
+      showResponse(res, {
+        status: 404,
+        success: false,
+        message: "Status not updated",
+      });
+      return;
+    }
+
+    showResponse(res, {
+      message: `Zone status updated to ${status}`,
+    });
+    return;
   } catch (error: any) {
     errorMessage(res, error, next);
   }

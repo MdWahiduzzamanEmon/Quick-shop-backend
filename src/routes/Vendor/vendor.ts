@@ -63,7 +63,7 @@ const getVendorsHandler: express.RequestHandler = async (
       pagination,
       superAdminId,
     });
-    res.set("Cache-Control", "public, max-age=3600 must-revalidate"); // 1 hour
+    res.setHeader("Cache-Control", "public, max-age=3600 must-revalidate"); // 1 hour
 
     showResponse(res, {
       message: "Vendors fetched successfully",
@@ -100,6 +100,9 @@ const getSingleVendorHandler: express.RequestHandler = async (
     const vendor = await getSingleVendor({
       id,
     });
+
+    // 30 min
+    res.setHeader("Cache-Control", "private, max-age=1800"); // 30 min
     showResponse(res, {
       message: "Vendor fetched successfully",
       data: vendor,

@@ -72,13 +72,20 @@ const getAllProductsHandler: RequestHandler = async (
       product_code
     );
 
+    // Cache for 24 hr, but verify every on each request with no-cache
+    res.setHeader("Cache-Control", `max-age=${60 * 60 * 24}, no-cache`);
+
+    // Generate ETag based on new data and set it in the response
     // Generate ETag based on new data and set it in the response
     const etag = generateETag(products);
-    res.set("ETag", etag);
+    res.setHeader("ETag", `"${etag}"`);
+
+    const ifNoneMatchValue = req.headers["if-none-match"];
 
     // Check if the client has the latest data
-    if (req.headers["if-none-match"] === etag) {
-      res.status(304).send();
+    if (ifNoneMatchValue === `"${etag}"`) {
+      // 304 Not Modified
+      res.status(304).end();
       return;
     }
 

@@ -73,6 +73,7 @@ model Vendor {
   Zone         Zone[]
   superAdmin   superAdmin         @relation(fields: [superAdminId], references: [id], onDelete: Cascade)
   superAdminId String
+  Supplier     Supplier[]
 
   @@index([id, isActive, name])
   @@map("vendor")
@@ -88,7 +89,6 @@ model User {
   updatedAt        DateTime           @updatedAt
   otherUsers       otherUsers? // Only for general user and retailer
   worker           worker? // Only for operator, raider, representative
-  Supplier         Supplier? // Only for supplier
   loggin_history   loggin_history[] // User's login history
   vendor           Vendor             @relation(fields: [vendorId], references: [id], onDelete: Cascade)
   vendorId         String // Foreign key to `Vendor`
@@ -126,7 +126,8 @@ model Supplier {
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
   isActive        User_status @default(ACTIVE)
-  User            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vendor          Vendor     @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId        String
   userId          String      @unique
   role            String      @default("SUPPLIER")
 

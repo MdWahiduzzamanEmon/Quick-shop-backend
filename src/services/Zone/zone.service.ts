@@ -352,3 +352,19 @@ export const checkOperatorAssigned = async ({
     },
   });
 };
+
+export const updateZoneStatus = async (
+  vendorId: string,
+  id: string,
+  status: Zone_status
+) => {
+  return await db.zone.update({
+    where: {
+      id: String(id),
+      vendorId,
+    },
+    data: {
+      isActive: status,
+    },
+  });
+};
