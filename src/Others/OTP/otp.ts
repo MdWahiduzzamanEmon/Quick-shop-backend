@@ -1,4 +1,5 @@
 import otpGenerator from "otp-generator";
+import { createHash } from "crypto";
 
 const generateOTP = () => {
   const otp = otpGenerator.generate(4, {
@@ -20,3 +21,10 @@ export const generateUniqueID = (type: string, length: number = 8) => {
     lowerCaseAlphabets: false,
   })}`;
 };
+
+// Helper function to generate ETag
+function generateETag(data: any): string {
+  return createHash("sha1").update(JSON.stringify(data)).digest("hex");
+}
+
+export { generateETag };

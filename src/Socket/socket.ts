@@ -1,5 +1,5 @@
 import { client, ioInstance } from "../server"; // Assuming serverInstance is the HTTP server from server.ts
-import userActivityLiveResponse from "../UserLiveActivity/userLiveActivity";
+import userActivityLiveResponse from "./UserLiveActivity/userLiveActivity";
 
 // Initialize socket connections and events
 function initializeSocket() {

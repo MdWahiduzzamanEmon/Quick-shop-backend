@@ -1,4 +1,4 @@
-import { client, ioInstance } from "../server";
+import { client, ioInstance } from "../../server";
 
 async function userActivityLiveResponse(vendorId: string) {
   try {

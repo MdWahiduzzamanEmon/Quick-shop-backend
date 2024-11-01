@@ -140,7 +140,6 @@ export const createProduct = async ({
   createdById,
   product_images,
 }: CREATE_PRODUCT_TYPE) => {
-  
   const product_code = generateUniqueID("PD");
   const product = await db.product.create({
     data: {

@@ -26,6 +26,9 @@ export const getEmployees = async ({
           },
         }),
       },
+      orderBy: {
+        userJoinDate: "desc",
+      },
       include: {
         user: {
           select: {
