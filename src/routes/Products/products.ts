@@ -51,52 +51,14 @@ const getAllProductsHandler: RequestHandler = async (
       });
       return;
     }
-    const {
-      pageNumber = 1,
-      rowPerPage = 10,
-      pagination,
-      status,
-      product_code,
-    } = reqData.query as any;
+    const { pageNumber, rowPerPage, pagination, status, product_code } =
+      reqData.query as any;
 
     if (status && !(status in product_status)) {
       showResponse(res, {
         status: 400,
         success: false,
         message: "Please provide valid status",
-      });
-      return;
-    }
-
-    // Construct Redis cache key dynamically based on parameters in use
-    const cacheKeyComponents = [
-      `products:${vendorId}`,
-      `page:${pageNumber}`,
-      `rows:${rowPerPage}`,
-    ];
-    if (status) cacheKeyComponents.push(`status:${status}`);
-    if (product_code) cacheKeyComponents.push(`product_code:${product_code}`);
-    const cacheKey = cacheKeyComponents.join(":");
-
-    // Check Redis cache
-    const cachedProducts = await client.get(cacheKey);
-    if (cachedProducts) {
-      const parsedProducts = JSON.parse(cachedProducts);
-
-      // Generate ETag based on cached data
-      const etag = generateETag(parsedProducts);
-
-      // Check if client's ETag matches the current ETag
-      if (req.headers["if-none-match"] === etag) {
-        res.status(304).end(); // Not Modified
-        return;
-      }
-
-      // Set ETag header and respond with cached data
-      res.set("ETag", etag);
-      showResponse(res, {
-        message: "Products fetched successfully from cache",
-        data: parsedProducts,
       });
       return;
     }
@@ -110,11 +72,15 @@ const getAllProductsHandler: RequestHandler = async (
       product_code
     );
 
-    // Set cache
-    await client.set(cacheKey, JSON.stringify(products), "EX", 60); // Cache for 60 seconds
     // Generate ETag based on new data and set it in the response
     const etag = generateETag(products);
     res.set("ETag", etag);
+
+    // Check if the client has the latest data
+    if (req.headers["if-none-match"] === etag) {
+      res.status(304).send();
+      return;
+    }
 
     showResponse(res, {
       message: "Products fetched successfully",
