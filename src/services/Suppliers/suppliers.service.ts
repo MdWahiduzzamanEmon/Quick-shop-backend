@@ -47,6 +47,7 @@ export const getAllSuppliers = async ({
       orderBy: {
         createdAt: "desc",
       },
+
       omit: {
         updatedAt: true,
       },
