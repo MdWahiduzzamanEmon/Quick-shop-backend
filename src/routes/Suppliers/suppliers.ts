@@ -6,12 +6,14 @@ import { showResponse } from "../../constant/showResponse";
 import {
   checkSupplier,
   createSupplier,
+  getAllSuppliers,
 } from "../../services/Suppliers/suppliers.service";
 import {
   unlinkFile,
   uploadMiddleware,
 } from "../../Others/File/fileUploadController";
 import { emailRegex } from "../../constant";
+import { User_status } from "@prisma/client";
 
 export const suppliersRouter = express.Router();
 
@@ -42,11 +44,55 @@ suppliersRouter.delete(
   deleteSupplierHandler
 );
 
-function getAllSuppliersHandler(
+export type supplierQuery = {
+  status?: User_status;
+  pageNumber?: number;
+  rowPerPage?: number;
+  pagination?: boolean;
+  supplierUniqueId?: string;
+  vendorId: string;
+};
+
+async function getAllSuppliersHandler(
   req: Request,
   res: Response,
   next: NextFunction
-) {}
+) {
+  const reqData = req as any;
+  try {
+    const { vendorId, role: TOKEN_ROLE } = reqData?.user;
+
+    if (
+      TOKEN_ROLE !== "ADMIN" &&
+      TOKEN_ROLE !== "OPERATOR" &&
+      TOKEN_ROLE !== "REPRESENTATIVE"
+    ) {
+      showResponse(res, {
+        status: 403,
+        message: "Forbidden! You are not authorized to perform this action",
+      });
+      return;
+    }
+
+    const { status, pageNumber, rowPerPage, pagination, supplierUniqueId } =
+      reqData?.query as supplierQuery;
+
+    const users = await getAllSuppliers({
+      status,
+      pageNumber,
+      rowPerPage,
+      pagination,
+      supplierUniqueId,
+      vendorId,
+    });
+    showResponse(res, {
+      message: "Suppliers fetched successfully",
+      data: users,
+    });
+  } catch (error: any) {
+    errorMessage(res, error, next);
+  }
+}
 
 //get single supplier
 async function getSupplierByIdHandler(

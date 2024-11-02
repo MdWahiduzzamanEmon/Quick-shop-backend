@@ -1,5 +1,6 @@
 import { generateUniqueID } from "../../Others/OTP/otp";
-import { SupplierBody } from "../../routes/Suppliers/suppliers";
+import { paginationCustomResult } from "../../Others/paginationCustomResult";
+import { SupplierBody, supplierQuery } from "../../routes/Suppliers/suppliers";
 import { db } from "../../utils/db.server";
 
 //check exist supplier
@@ -18,6 +19,68 @@ export const checkSupplier = async (supplierName: string) => {
   });
 
   return existingSupplier;
+};
+
+//get all suppliers
+export const getAllSuppliers = async ({
+  status,
+  pageNumber,
+  rowPerPage,
+  pagination,
+  supplierUniqueId,
+  vendorId,
+}: supplierQuery) => {
+  //pagination
+  const pageNumbers = pageNumber ? parseInt(pageNumber.toString()) : 1;
+  const resultPerPage = rowPerPage ? parseInt(rowPerPage.toString()) : 10;
+  const [result, total] = await Promise.all([
+    db.supplier.findMany({
+      where: {
+        ...(status && { isActive: status }),
+        ...(supplierUniqueId && { employeeID: supplierUniqueId }),
+        ...(vendorId && {
+          user: {
+            vendorId,
+          },
+        }),
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      omit: {
+        updatedAt: true,
+      },
+      ...(pagination
+        ? {
+            take: resultPerPage,
+            skip: (pageNumbers - 1) * resultPerPage,
+          }
+        : {}),
+    }),
+    pagination
+      ? db.worker.count({
+          where: {
+            ...(status && { isActive: status }),
+            ...(vendorId && {
+              user: {
+                vendorId,
+              },
+            }),
+          },
+        })
+      : Promise.resolve(0),
+  ]);
+
+  if (!pagination) return result;
+
+  const res = paginationCustomResult({
+    pageNumbers,
+    resultPerPage,
+    result,
+    totalResultCount: total,
+  });
+
+  return res;
 };
 
 export const createSupplier = async ({
