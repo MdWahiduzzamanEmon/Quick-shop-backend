@@ -58,7 +58,7 @@ export const getAllSuppliers = async ({
         : {}),
     }),
     pagination
-      ? db.worker.count({
+      ? db.supplier.count({
           where: {
             ...(status && { isActive: status }),
             ...(vendorId && {
