@@ -14,17 +14,21 @@ fileRouter.post("/", upload.single("attachment"), async (req, res) => {
   const { buffer, mimetype, originalname } = req.file as any;
   const fileName = `${originalname}-${Date.now()}.${mimetype?.split("/")[1]}`;
   try {
-    fs.writeFile(`uploadFile/${fileName}`, buffer, (err) => {
-      if (err) {
-        return res.status(400).json({ message: err.message });
-      }
+    await new Promise<void>((resolve, reject) => {
+      fs.writeFile(`uploadFile/${fileName}`, buffer, (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
     });
-    return res.status(200).json({
+    res.status(200).json({
       message: "Upload file success",
       fileName,
       path: `${process.env.LIVE_URL}/media/${fileName}`,
     });
   } catch (error: any) {
-    return res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 });

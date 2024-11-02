@@ -14,5 +14,5 @@
     "forceConsistentCasingInFileNames": true
   },
   "exclude": ["index.js"],
-  "include": ["src/**/*", "src/Redis"]
+  "include": ["src/**/*.ts", "src/**/*.json", "src/**/*.service.ts"]
 }
