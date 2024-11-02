@@ -119,7 +119,7 @@ model admin {
 
 model Supplier {
   id               String      @id @default(cuid())
-  supplierName     String?
+  supplierName     String      @unique // Supplier Name
   srName           String? // Sales Representative Name
   dealerName       String // Dealer Name
   srContactNo      String      @unique // SR Contact Number
@@ -136,8 +136,8 @@ model Supplier {
   createdAt        DateTime    @default(now())
   updatedAt        DateTime    @updatedAt
 
-  @@unique([srContactNo, dealerContactNo, dealerEmail, supplierUniqueId]) // Unique constraint: the combination of srContactNo, dealerContactNo, and dealerEmail must be unique
-  @@index([id, role, isActive, supplierUniqueId, srContactNo, dealerContactNo, dealerEmail])
+  @@unique([srContactNo, dealerContactNo, dealerEmail, supplierUniqueId, supplierName]) // Unique constraint: the combination of srContactNo, dealerContactNo, and dealerEmail must be unique
+  @@index([id, role, isActive, supplierUniqueId, srContactNo, dealerContactNo, dealerEmail, supplierName])
   @@map("supplier")
 }
 
