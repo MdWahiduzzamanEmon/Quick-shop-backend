@@ -124,8 +124,8 @@ model Supplier {
   dealerName       String // Dealer Name
   srContactNo      String      @unique // SR Contact Number
   srWhatsappNo     String // SR WhatsApp Number
-  dealerContactNo  String      @unique // Dealer Contact Number
-  dealerEmail      String      @unique // Dealer Email
+  dealerContactNo  String     
+  dealerEmail      String      
   dealerAddress    String // Dealer Address
   supplierUniqueId String      @unique
   companyLogo      Json        @default("{}") // Company Logo Image
@@ -136,7 +136,7 @@ model Supplier {
   createdAt        DateTime    @default(now())
   updatedAt        DateTime    @updatedAt
 
-  @@unique([srContactNo, dealerContactNo, dealerEmail, supplierUniqueId, supplierName]) // Unique constraint: the combination of srContactNo, dealerContactNo, and dealerEmail must be unique
+  @@unique([srContactNo, supplierUniqueId, supplierName]) // Unique constraint: the combination of srContactNo, dealerContactNo, and dealerEmail must be unique
   @@index([id, role, isActive, supplierUniqueId, srContactNo, dealerContactNo, dealerEmail, supplierName])
   @@map("supplier")
 }
