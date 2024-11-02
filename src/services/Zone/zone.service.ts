@@ -271,7 +271,7 @@ export const updateZone = async (
     union_id,
     operatorId,
     representatives,
-    removedRepresentatives
+    removedRepresentatives,
     riders,
     removedRiders
   }: {
