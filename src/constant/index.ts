@@ -1,5 +1,5 @@
 const corsOptions = {
-  origin: ["http://localhost:5173"], // or use environment variable for production
+  origin: ["https://hellohaat.netlify.app/", "http://localhost:5173"], // or use environment variable for production
   optionsSuccessStatus: 200,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
