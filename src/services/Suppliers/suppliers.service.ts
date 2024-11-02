@@ -38,11 +38,11 @@ export const getAllSuppliers = async ({
       where: {
         ...(status && { isActive: status }),
         ...(supplierUniqueId && { employeeID: supplierUniqueId }),
-        ...(vendorId && {
-          user: {
-            vendorId,
+        vendor: {
+          some: {
+            id: vendorId,
           },
-        }),
+        },
       },
       orderBy: {
         createdAt: "desc",
@@ -62,8 +62,10 @@ export const getAllSuppliers = async ({
           where: {
             ...(status && { isActive: status }),
             ...(vendorId && {
-              user: {
-                vendorId,
+              vendor: {
+                some: {
+                  id: vendorId,
+                },
               },
             }),
           },
