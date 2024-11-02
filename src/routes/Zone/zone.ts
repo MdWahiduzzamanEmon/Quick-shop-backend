@@ -317,7 +317,7 @@ async function createZoneHandler(
       showResponse(res, {
         status: 400,
         success: false,
-        message: "Zone already exists",
+        message: "Zone creation failed",
       });
       return;
     }
@@ -363,7 +363,9 @@ async function updateZoneHandler(
       union_id,
       operatorId,
       representatives,
+      removedRepresentatives,
       riders,
+      removedRiders,
     } = req.body as any;
 
     //if rep but not array
@@ -397,14 +399,16 @@ async function updateZoneHandler(
       union_id,
       operatorId,
       representatives,
+      removedRepresentatives,
       riders,
+      removedRiders,
     });
 
     if (!zone) {
       showResponse(res, {
-        status: 404,
+        status: 400,
         success: false,
-        message: "Zone not found",
+        message: "Zone update failed",
       });
       return;
     }
@@ -441,9 +445,9 @@ async function deleteZoneHandler(
     const zone = await deleteZone(id);
     if (!zone) {
       showResponse(res, {
-        status: 404,
+        status: 400,
         success: false,
-        message: "Zone not found",
+        message: "Zone delete failed",
       });
       return;
     }

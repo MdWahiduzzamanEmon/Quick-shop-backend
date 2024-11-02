@@ -271,7 +271,9 @@ export const updateZone = async (
     union_id,
     operatorId,
     representatives,
+    removedRepresentatives
     riders,
+    removedRiders
   }: {
     village_name?: string;
     ward_no?: string;
@@ -284,7 +286,9 @@ export const updateZone = async (
     union_id?: number;
     operatorId?: string;
     representatives?: string[];
+    removedRepresentatives?: string[];
     riders?: string[];
+    removedRiders?: string[];
   }
 ) => {
   return await db.zone.update({
@@ -310,6 +314,16 @@ export const updateZone = async (
       ...(riders && {
         riders: {
           connect: riders.map((id) => ({ id })),
+        },
+      }),
+      ...(removedRepresentatives && {
+        representatives: {
+          disconnect: removedRepresentatives.map((id) => ({ id })),
+        },
+      }),
+      ...(removedRiders && {
+        riders: {
+          disconnect: removedRiders.map((id) => ({ id })),
         },
       }),
     },
