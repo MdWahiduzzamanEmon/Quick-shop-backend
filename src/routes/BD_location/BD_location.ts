@@ -22,32 +22,6 @@ const divisionsDataHandler = async (
   try {
     const { name: divisionName, bn_name: bnDivisionName } = req.query as any;
     // console.log(typeof divisionName, bnDivisionName);
-
-    const cachedData = await getFromCache("divisions", "divisions");
-    if (cachedData) {
-      //if cache is available and filtered data is available then filter the data and return
-      if (divisionName || bnDivisionName) {
-        const filteredData = cachedData.filter((item: any) => {
-          return (
-            item.name.includes(divisionName) ||
-            item.bn_name.includes(bnDivisionName)
-          );
-        });
-
-        showResponse(res, {
-          message: "Divisions fetched successfully and filtered from cache",
-          data: filteredData,
-        });
-        return;
-      }
-
-      showResponse(res, {
-        message: "Divisions fetched successfully from cache",
-        data: cachedData,
-      });
-      return;
-    }
-
     const divisions = await getDivisionsData({
       divisionName,
       bnDivisionName,
