@@ -118,20 +118,26 @@ model admin {
 //supplier model 
 
 model Supplier {
-  id              String      @id @default(cuid())
-  fullName        String
-  address         String
-  whatsapp        String
-  profile_picture Json        @default("{}")
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-  isActive        User_status @default(ACTIVE)
-  vendor          Vendor     @relation(fields: [vendorId], references: [id], onDelete: Cascade)
-  vendorId        String
-  userId          String      @unique
-  role            String      @default("SUPPLIER")
+  id               String      @id @default(cuid())
+  supplierName     String?
+  srName           String? // Sales Representative Name
+  dealerName       String // Dealer Name
+  srContactNo      String      @unique // SR Contact Number
+  srWhatsappNo     String // SR WhatsApp Number
+  dealerContactNo  String      @unique // Dealer Contact Number
+  dealerEmail      String      @unique // Dealer Email
+  dealerAddress    String // Dealer Address
+  supplierUniqueId String      @unique
+  companyLogo      Json        @default("{}") // Company Logo Image
+  srPhoto          Json        @default("{}") // SR Photo Image
+  isActive         User_status @default(ACTIVE)
+  vendor           Vendor[] // A supplier can have multiple vendors
+  role             String      @default("SUPPLIER")
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
 
-  @@index([id, userId, isActive])
+  @@unique([srContactNo, dealerContactNo, dealerEmail, supplierUniqueId]) // Unique constraint: the combination of srContactNo, dealerContactNo, and dealerEmail must be unique
+  @@index([id, role, isActive, supplierUniqueId, srContactNo, dealerContactNo, dealerEmail])
   @@map("supplier")
 }
 

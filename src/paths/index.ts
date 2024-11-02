@@ -10,6 +10,7 @@ import { getConnectedUsersRoute } from "../routes/getConnectedUsers/getConnected
 import { zoneRoute } from "../routes/Zone/zone";
 import { bd_locationsRoute } from "../routes/BD_location/BD_location";
 import { productsRouter } from "../routes/Products/products";
+import { suppliersRouter } from "../routes/Suppliers/suppliers";
 
 export const routes = [
   vendorRoute,
@@ -24,4 +25,5 @@ export const routes = [
   zoneRoute,
   bd_locationsRoute,
   productsRouter,
+  suppliersRouter,
 ];
