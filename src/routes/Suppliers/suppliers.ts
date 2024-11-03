@@ -6,7 +6,10 @@ import { showResponse } from "../../constant/showResponse";
 import {
   checkSupplier,
   createSupplier,
+  deleteSupplierById,
   getAllSuppliers,
+  updateSupplierById,
+  updateSupplierStatus,
 } from "../../services/Suppliers/suppliers.service";
 import {
   unlinkFile,
@@ -34,9 +37,15 @@ suppliersRouter.post(
   createSupplierHandler
 );
 suppliersRouter.put(
-  "/suppliers/:id",
+  "/update-supplier/:id",
   verifyTokenMiddleware,
+  uploadMiddleware,
   updateSupplierHandler
+);
+suppliersRouter.put(
+  "/suppliers/active-inactive/:id",
+  verifyTokenMiddleware,
+  updateSupplierStatusHandler
 );
 suppliersRouter.delete(
   "/suppliers/:id",
@@ -99,7 +108,23 @@ async function getSupplierByIdHandler(
   req: Request,
   res: Response,
   next: NextFunction
-) {}
+) {
+  const reqData = req as any;
+  try {
+    const { id } = req.params as { id: string };
+    const { vendorId } = reqData?.user;
+    const supplier = await checkSupplier({
+      supplierId: id,
+      vendorId,
+    });
+    showResponse(res, {
+      message: "Supplier fetched successfully",
+      data: supplier,
+    });
+  } catch (error: any) {
+    errorMessage(res, error, next);
+  }
+}
 
 export type SupplierBody = {
   supplierName: string;
@@ -110,7 +135,7 @@ export type SupplierBody = {
   dealerContactNo: string;
   dealerEmail: string;
   dealerAddress: string;
-  vendorId: string;
+  vendorId?: string;
   companyLogo?: any;
   srPhoto?: any;
 };
@@ -217,7 +242,10 @@ async function createSupplierHandler(
       vendorId,
     };
 
-    const supplierExist = (await checkSupplier(supplierName)) as any;
+    const supplierExist = (await checkSupplier({
+      supplierName,
+      vendorId,
+    })) as any;
 
     if (supplierExist) {
       showResponse(res, {
@@ -252,6 +280,7 @@ async function createSupplierHandler(
         filename: reqData?.fileUrl[i]?.filename,
         extension: reqData?.fileUrl[i]?.extension,
         size: reqData?.fileUrl[i]?.size,
+        publicId: reqData?.fileUrl[i]?.publicId,
       };
     }
 
@@ -286,11 +315,235 @@ async function updateSupplierHandler(
   req: Request,
   res: Response,
   next: NextFunction
-) {}
+) {
+  const reqData = req as any;
+  try {
+    const { id } = req.params as { id: string };
+    const { vendorId, role: TOKEN_ROLE } = reqData?.user;
+
+    //check if user is an admin
+    if (TOKEN_ROLE !== "ADMIN") {
+      showResponse(res, {
+        status: 403,
+        message: "Forbidden! You are not authorized to perform this action",
+      });
+      return;
+    }
+
+    const {
+      supplierName,
+      srName,
+      dealerName,
+      srContactNo,
+      srWhatsappNo,
+      dealerContactNo,
+      dealerEmail,
+      dealerAddress,
+    } = reqData.body;
+
+    const body: SupplierBody = {
+      supplierName,
+      srName,
+      srContactNo,
+      srWhatsappNo,
+      dealerName,
+      dealerContactNo,
+      dealerEmail,
+      dealerAddress,
+    };
+
+    //email
+    if (dealerEmail && !emailRegex.test(dealerEmail)) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide a valid email",
+      });
+      return;
+    }
+
+    //file upload
+    if (reqData?.fileUrl?.length) {
+      for (let i = 0; i < reqData?.fileUrl?.length; i++) {
+        if (
+          reqData?.fileUrl[i]?.fieldName !== "companyLogo" &&
+          reqData?.fileUrl[i]?.fieldName !== "srPhoto"
+        ) {
+          showResponse(res, {
+            status: 400,
+            success: false,
+            message: "Please provide valid file field name",
+          });
+          return;
+        }
+        body[reqData?.fileUrl[i]?.fieldName as keyof typeof body] = {
+          url: reqData?.fileUrl[i]?.url,
+          filename: reqData?.fileUrl[i]?.filename,
+          extension: reqData?.fileUrl[i]?.extension,
+          size: reqData?.fileUrl[i]?.size,
+          publicId: reqData?.fileUrl[i]?.publicId,
+        };
+      }
+    }
+
+    let data = {};
+    //only true values are added to the data object
+    for (const key in body) {
+      if (body[key as keyof SupplierBody]) {
+        data = { ...data, [key]: body[key as keyof SupplierBody] };
+      }
+    }
+
+    const supplier = await updateSupplierById({
+      supplierId: id,
+      data: data as SupplierBody,
+      vendorId,
+    });
+
+    if (!supplier) {
+      for (let i = 0; i < reqData?.fileUrl?.length; i++) {
+        await unlinkFile(reqData?.fileUrl[i]?.publicId as unknown as any);
+      }
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Failed to update supplier",
+      });
+      return;
+    }
+
+    showResponse(res, {
+      status: 200,
+      message: "Supplier updated successfully",
+    });
+  } catch (error: any) {
+    await reqData?.fileUrl.forEach(async (file: any) => {
+      await unlinkFile(file?.publicId as unknown as any);
+    });
+    errorMessage(res, error, next);
+  }
+}
 
 //delete supplier
 async function deleteSupplierHandler(
   req: Request,
   res: Response,
   next: NextFunction
-) {}
+) {
+  const reqData = req as any;
+  try {
+    const { id } = req.params as { id: string };
+    const { vendorId, role: TOKEN_ROLE } = reqData?.user;
+
+    //check if user is an admin
+    if (TOKEN_ROLE !== "ADMIN") {
+      showResponse(res, {
+        status: 403,
+        message: "Forbidden! You are not authorized to perform this action",
+      });
+      return;
+    }
+
+    const existSupplier = (await checkSupplier({
+      supplierId: id,
+      vendorId,
+    })) as any;
+
+    if (!existSupplier) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Supplier does not exist",
+      });
+      return;
+    }
+
+    const supplier = await deleteSupplierById({
+      supplierId: id,
+      vendorId,
+    });
+
+    if (!supplier) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Failed to delete supplier",
+      });
+      return;
+    }
+
+    showResponse(res, {
+      status: 200,
+      message: "Supplier deleted successfully",
+    });
+
+    await unlinkFile(existSupplier?.companyLogo?.publicId as unknown as any);
+    await unlinkFile(existSupplier?.srPhoto?.publicId as unknown as any);
+  } catch (error: any) {
+    errorMessage(res, error, next);
+  }
+}
+
+//update supplier status
+async function updateSupplierStatusHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const reqData = req as any;
+  try {
+    const { id } = req.params as { id: string };
+    const { status } = reqData.body as { status: User_status };
+    const { vendorId, role: TOKEN_ROLE } = reqData?.user;
+
+    // console.log("vendorId", reqData.body);
+    //check if user is an admin
+    if (TOKEN_ROLE !== "ADMIN") {
+      showResponse(res, {
+        status: 403,
+        message: "Forbidden! You are not authorized to perform this action",
+      });
+      return;
+    }
+
+    if (!status) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide status",
+      });
+      return;
+    }
+
+    if (!(status in User_status)) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide a valid status",
+      });
+      return;
+    }
+
+    const supplier = await updateSupplierStatus({
+      supplierId: id,
+      status,
+      vendorId,
+    });
+
+    if (!supplier) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Failed to update supplier status",
+      });
+      return;
+    }
+
+    showResponse(res, {
+      status: 200,
+      message: `Supplier ${status} successfully`,
+    });
+  } catch (error: any) {
+    errorMessage(res, error, next);
+  }
+}

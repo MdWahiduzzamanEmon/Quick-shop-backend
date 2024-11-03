@@ -1,19 +1,36 @@
+import { User_status } from "@prisma/client";
 import { generateUniqueID } from "../../Others/OTP/otp";
 import { paginationCustomResult } from "../../Others/paginationCustomResult";
 import { SupplierBody, supplierQuery } from "../../routes/Suppliers/suppliers";
 import { db } from "../../utils/db.server";
 
 //check exist supplier
-export const checkSupplier = async (supplierName: string) => {
+export const checkSupplier = async ({
+  supplierId,
+  vendorId,
+  supplierName,
+}: {
+  supplierName?: string;
+  vendorId: string;
+  supplierId?: string;
+}) => {
   // Normalize the supplier name by converting it to lowercase
-  const normalizedSupplierName = supplierName.toLowerCase();
+  const normalizedSupplierName = supplierName && supplierName.toLowerCase();
 
   // Search for any supplier that has a similar name
   const existingSupplier = await db.supplier.findFirst({
     where: {
-      supplierName: {
-        equals: normalizedSupplierName,
-        mode: "insensitive", // Case-insensitive search
+      ...(normalizedSupplierName && {
+        supplierName: {
+          equals: normalizedSupplierName,
+          mode: "insensitive", // Case-insensitive search
+        },
+      }),
+      ...(supplierId && { id: supplierId }),
+      vendor: {
+        some: {
+          id: vendorId,
+        },
       },
     },
   });
@@ -117,6 +134,76 @@ export const createSupplier = async ({
       },
       companyLogo,
       srPhoto,
+    },
+  });
+};
+
+//updateSupplierById
+export const updateSupplierById = async ({
+  supplierId,
+  data,
+  vendorId,
+}: {
+  supplierId: string;
+  data: SupplierBody;
+  vendorId: string;
+}) => {
+  return await db.supplier.update({
+    where: {
+      id: supplierId,
+      vendor: {
+        some: {
+          id: vendorId,
+        },
+      },
+    },
+    data: {
+      ...data,
+    },
+  });
+};
+
+//updateSupplierStatus
+export const updateSupplierStatus = async ({
+  supplierId,
+  status,
+  vendorId,
+}: {
+  supplierId: string;
+  status: User_status;
+  vendorId: string;
+}) => {
+  return await db.supplier.update({
+    where: {
+      id: supplierId,
+      vendor: {
+        some: {
+          id: vendorId,
+        },
+      },
+    },
+    data: {
+      isActive: status,
+    },
+  });
+};
+
+//deleteSupplierById
+export const deleteSupplierById = async ({
+  supplierId,
+  vendorId,
+}: {
+  supplierId: string;
+  vendorId: string;
+}) => {
+  return await db.supplier.delete({
+    where: {
+      id: supplierId,
+      vendor: {
+        some: {
+          id: vendorId,
+        },
+      },
     },
   });
 };
