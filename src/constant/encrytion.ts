@@ -20,11 +20,13 @@ const decryptData = (data: any) => {
 
   // console.log(data);
   const splitData = data.split(" ")?.[1];
-  // console.log(splitData, "splitData");
+  // console.log(data.split(" "), "splitData");
 
   try {
     const bytes = cryptoJS.AES.decrypt(splitData, SECRET_KEY);
     const decryptedData = bytes.toString(cryptoJS.enc.Utf8);
+
+    // console.log(decryptedData, "decryptedData");
 
     if (!decryptedData) {
       console.error("Decryption error:", decryptedData);

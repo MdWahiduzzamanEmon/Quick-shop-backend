@@ -16,6 +16,7 @@ import { routes } from "./paths";
 import { Server as SocketIOServer } from "socket.io";
 import { initializeSocket } from "./Socket/socket";
 import { verifyToken } from "./Others/JWT";
+import { decryptData } from "./constant/encrytion";
 
 config();
 
@@ -106,7 +107,7 @@ ioInstance.use((socket, next) => {
   const req = SOCKET.request as any; // Cast to any to access cookies
   // const getExtraHeadersAuth = req?.headers?.authorization; // Get token from headers for when using http
   const getExtraHeadersAuth = socket.handshake.query.token; // Get token from query fro when using socket.io transport websocket
-  // console.log(getExtraHeadersAuth, "getExtraHeaders");
+  // console.log(decryptedToken, "getExtraHeaders");
 
   const res = {} as any; // Mock response object for cookieParser
 
@@ -117,9 +118,10 @@ ioInstance.use((socket, next) => {
 
   // Parse cookies using cookie-parser
   cookieParser()(req, res, async () => {
-    const token = req?.cookies?.token;
+    const decryptedToken = decryptData(`Bearer ${req?.cookies?.token}`);
+    // console.log(decryptedToken, "token");
+    const token = decryptedToken?.split(" ")?.[1];
 
-    // console.log(token, "token");
     if (!token) {
       return next(new Error("Authentication error: No token provided"));
     }
