@@ -32,9 +32,15 @@ async function getProductPurchaseReportHandler(
       return;
     }
 
-    const stockReport = await getAllProductStockPurchaseReport({
-      vendorId,
-    });
+    const { pageNumber, rowPerPage, pagination, purchaseUniqueId } =
+      reqData.query as any;
+
+    const stockReport = await getAllProductStockPurchaseReport(
+      pageNumber,
+      rowPerPage,
+      pagination,
+      vendorId
+    );
     showResponse(res, {
       status: 200,
       message: "Product Purchase Report",
