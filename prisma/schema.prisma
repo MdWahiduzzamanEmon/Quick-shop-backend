@@ -59,43 +59,45 @@ model superAdmin {
 
 // Vendor Model: Represents a shop owner or person responsible for a shop
 model Vendor {
-  id           String             @id @default(cuid())
-  name         String             @unique
-  address      String
-  phone        String?
-  vendor_image Json?              @default("{}")
-  createdAt    DateTime           @default(now())
-  updatedAt    DateTime           @updatedAt
-  isActive     ShopStatus         @default(ACTIVE)
-  users        User[] // A vendor can have multiple users
-  products     product[] // A vendor can have multiple products
-  categories   product_category[] // A vendor can have multiple product categories
-  Zone         Zone[]
-  superAdmin   superAdmin         @relation(fields: [superAdminId], references: [id], onDelete: Cascade)
-  superAdminId String
-  Supplier     Supplier[]
+  id                     String                   @id @default(cuid())
+  name                   String                   @unique
+  address                String
+  phone                  String?
+  vendor_image           Json?                    @default("{}")
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  isActive               ShopStatus               @default(ACTIVE)
+  users                  User[] // A vendor can have multiple users
+  products               product[] // A vendor can have multiple products
+  categories             product_category[] // A vendor can have multiple product categories
+  Zone                   Zone[]
+  superAdmin             superAdmin               @relation(fields: [superAdminId], references: [id], onDelete: Cascade)
+  superAdminId           String
+  Supplier               Supplier[]
+  product_stock_purchase product_stock_purchase[]
 
   @@index([id, isActive, name])
   @@map("vendor")
 }
 
 model User {
-  id               String             @id @default(cuid())
-  email            String             @unique
-  mobile           String             @unique
-  username         String             @unique
-  password         String
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  otherUsers       otherUsers? // Only for general user and retailer
-  worker           worker? // Only for operator, raider, representative
-  loggin_history   loggin_history[] // User's login history
-  vendor           Vendor             @relation(fields: [vendorId], references: [id], onDelete: Cascade)
-  vendorId         String // Foreign key to `Vendor`
-  product          product[] // A user can have multiple products
-  product_category product_category[]
-  Zone             Zone[]
-  admin            admin?
+  id                     String                   @id @default(cuid())
+  email                  String                   @unique
+  mobile                 String                   @unique
+  username               String                   @unique
+  password               String
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  otherUsers             otherUsers? // Only for general user and retailer
+  worker                 worker? // Only for operator, raider, representative
+  loggin_history         loggin_history[] // User's login history
+  vendor                 Vendor                   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId               String // Foreign key to `Vendor`
+  product                product[] // A user can have multiple products
+  product_category       product_category[]
+  Zone                   Zone[]
+  admin                  admin?
+  product_stock_purchase product_stock_purchase[]
 
   @@unique([email, mobile, username]) // Unique constraint: the combination of email, mobile, and username must be unique
   @@index([id, email, mobile, username])
@@ -118,23 +120,24 @@ model admin {
 //supplier model 
 
 model Supplier {
-  id               String      @id @default(cuid())
-  supplierName     String      @unique // Supplier Name
-  srName           String? // Sales Representative Name
-  dealerName       String // Dealer Name
-  srContactNo      String      @unique // SR Contact Number
-  srWhatsappNo     String // SR WhatsApp Number
-  dealerContactNo  String     
-  dealerEmail      String      
-  dealerAddress    String // Dealer Address
-  supplierUniqueId String      @unique
-  companyLogo      Json        @default("{}") // Company Logo Image
-  srPhoto          Json        @default("{}") // SR Photo Image
-  isActive         User_status @default(ACTIVE)
-  vendor           Vendor[] // A supplier can have multiple vendors
-  role             String      @default("SUPPLIER")
-  createdAt        DateTime    @default(now())
-  updatedAt        DateTime    @updatedAt
+  id                     String                   @id @default(cuid())
+  supplierName           String                   @unique // Supplier Name
+  srName                 String? // Sales Representative Name
+  dealerName             String // Dealer Name
+  srContactNo            String                   @unique // SR Contact Number
+  srWhatsappNo           String // SR WhatsApp Number
+  dealerContactNo        String
+  dealerEmail            String
+  dealerAddress          String // Dealer Address
+  supplierUniqueId       String                   @unique
+  companyLogo            Json                     @default("{}") // Company Logo Image
+  srPhoto                Json                     @default("{}") // SR Photo Image
+  isActive               User_status              @default(ACTIVE)
+  vendor                 Vendor[] // A supplier can have multiple vendors
+  role                   String                   @default("SUPPLIER")
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  product_stock_purchase product_stock_purchase[]
 
   @@unique([srContactNo, supplierUniqueId, supplierName]) // Unique constraint: the combination of srContactNo, dealerContactNo, and dealerEmail must be unique
   @@index([id, role, isActive, supplierUniqueId, srContactNo, dealerContactNo, dealerEmail, supplierName])
@@ -278,6 +281,10 @@ model product {
   product_code          String                @unique
   product_quantity_type product_quantity_type
   delivery_charge_type  delivery_charge_type
+  product_stock_limit   Int                   @default(5) // Default stock limit
+  product_stock         Int                   @default(0) // Default stock
+  product_mrp           Float                 @default(0) // Default selling price
+  product_total_sold    Int                   @default(0) // Total sold product
   isActive              product_status        @default(ACTIVE)
   createdAt             DateTime              @default(now())
   updatedAt             DateTime              @updatedAt
@@ -288,7 +295,9 @@ model product {
   createdBy             User                  @relation(fields: [createdById], references: [id])
   createdById           String
 
-  product_images product_image[] // A product can have multiple images
+  product_images         product_image[] // A product can have multiple images
+  product_stock_purchase product_stock_purchase[]
+  product_stock_report   product_stock_report[]
 
   @@index([id, product_name, isActive])
   @@map("product")
@@ -306,6 +315,54 @@ model product_image {
 
   @@index([id, isActive])
   @@map("product_image")
+}
+
+//purchase product model
+model product_stock_purchase {
+  id                     String                 @id @default(cuid())
+  purchase_date          DateTime               @default(now())
+  supplier               Supplier               @relation(fields: [supplierId], references: [id])
+  supplierId             String
+  product                product                @relation(fields: [productId], references: [id])
+  productId              String
+  purchaseUniqueId       String                 @unique
+  product_quantity       Int
+  product_selling_price  Float
+  product_purchase_price Float
+  product_retail_price   Float
+  product_old_mrp        Float
+  special_offer          String?
+  zone                   Zone                   @relation(fields: [zoneId], references: [id])
+  zoneId                 String
+  vendor                 Vendor                 @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId               String
+  createdBy              User                   @relation(fields: [createdById], references: [id])
+  createdById            String
+  isActive               product_status         @default(ACTIVE)
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
+  product_stock_report   product_stock_report[]
+
+  @@index([id, purchase_date, supplierId, productId, zoneId, vendorId, createdById, isActive, purchaseUniqueId]) // Indexing for faster search
+  @@map("product_stock_purchase")
+}
+
+model product_stock_report {
+  id                       String                 @id @default(cuid())
+  product_stock_purchase   product_stock_purchase @relation(fields: [product_stock_purchaseId], references: [id])
+  product_stock_purchaseId String
+  product                  product                @relation(fields: [productId], references: [id])
+  productId                String
+  product_stock            Int                    @default(0)
+  product_selling_price    Float                  @default(0)
+  product_purchase_price   Float                  @default(0)
+  product_sold_quantity    Int                    @default(0)
+  createdAt                DateTime               @default(now())
+  updatedAt                DateTime               @updatedAt
+  isActive                 product_status         @default(ACTIVE)
+
+  @@index([id, product_stock_purchaseId, productId, product_stock, product_selling_price, product_purchase_price, product_sold_quantity, isActive, updatedAt, createdAt])
+  @@map("product_stock_report")
 }
 
 //location bd info model
@@ -395,10 +452,11 @@ model Zone {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  createdBy   User   @relation(fields: [createdById], references: [id])
-  createdById String
-  vendor      Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade) // Link to vendor
-  vendorId    String
+  createdBy              User                     @relation(fields: [createdById], references: [id])
+  createdById            String
+  vendor                 Vendor                   @relation(fields: [vendorId], references: [id], onDelete: Cascade) // Link to vendor
+  vendorId               String
+  product_stock_purchase product_stock_purchase[]
 
   @@index([id, isActive, division_id, district_id, upazila_id, union_id, operatorId, vendorId])
   @@map("zone")

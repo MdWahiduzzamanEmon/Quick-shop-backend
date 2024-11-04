@@ -11,6 +11,7 @@ import { zoneRoute } from "../routes/Zone/zone";
 import { bd_locationsRoute } from "../routes/BD_location/BD_location";
 import { productsRouter } from "../routes/Products/products";
 import { suppliersRouter } from "../routes/Suppliers/suppliers";
+import { productStockPurchaseRouter } from "../routes/product_stock_purchase/product_stock_purchase";
 
 export const routes = [
   vendorRoute,
@@ -26,4 +27,5 @@ export const routes = [
   bd_locationsRoute,
   productsRouter,
   suppliersRouter,
+  productStockPurchaseRouter,
 ];

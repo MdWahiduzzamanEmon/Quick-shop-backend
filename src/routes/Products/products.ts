@@ -8,6 +8,7 @@ import {
   product_quantity_type,
   product_status,
 } from "@prisma/client";
+
 import {
   activeInactiveProduct,
   activeInactiveProductImage,
@@ -29,7 +30,6 @@ import {
   unlinkFile,
   uploadMiddleware,
 } from "../../Others/File/fileUploadController";
-import { client } from "../../server";
 import { generateETag } from "../../Others/OTP/otp";
 
 export const productsRouter = express.Router();

@@ -26,6 +26,7 @@ export const getAllProducts = async (
         skip: (pageNumbers - 1) * resultPerPage,
         take: resultPerPage,
       }),
+
       omit: {
         categoryId: true,
         createdById: true,
@@ -39,6 +40,7 @@ export const getAllProducts = async (
             product_category_name: true,
           },
         },
+
         createdBy: {
           select: {
             id: true,

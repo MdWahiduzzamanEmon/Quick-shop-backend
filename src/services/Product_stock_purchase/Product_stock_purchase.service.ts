@@ -1,0 +1,129 @@
+import { convertIsoDate } from "../../Others/DateConvertIso";
+import { generateUniqueID } from "../../Others/OTP/otp";
+import { paginationCustomResult } from "../../Others/paginationCustomResult";
+import { CREATE_PRODUCT_STOCK_PURCHASE_TYPE } from "../../routes/product_stock_purchase/product_stock_purchase";
+import { db } from "../../utils/db.server";
+
+export const getAllProductStockPurchase = async (
+  pageNumber: number,
+  rowPerPage: number,
+  pagination: boolean,
+  vendorId: string,
+  purchaseUniqueId: string
+) => {
+  //pagination
+  const pageNumbers = pageNumber ? parseInt(pageNumber.toString()) : 1;
+  const resultPerPage = rowPerPage ? parseInt(rowPerPage.toString()) : 10;
+  const [result, total] = await Promise.all([
+    db.product_stock_purchase.findMany({
+      where: {
+        ...(vendorId && { vendorId }),
+        ...(purchaseUniqueId && { purchaseUniqueId }),
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      ...(pagination && {
+        skip: (pageNumbers - 1) * resultPerPage,
+        take: resultPerPage,
+      }),
+      include: {
+        product: {
+          select: {
+            id: true,
+            product_name: true,
+            product_code: true,
+          },
+        },
+      },
+    }),
+    pagination
+      ? db.product_stock_purchase.count({
+          where: {
+            ...(vendorId && { vendorId }),
+            ...(purchaseUniqueId && { purchaseUniqueId }),
+          },
+        })
+      : Promise.resolve(0),
+  ]);
+  if (!pagination) return result;
+
+  const res = paginationCustomResult({
+    pageNumbers,
+    resultPerPage,
+    result,
+    totalResultCount: total,
+  });
+
+  return res;
+};
+
+//create product stock purchase
+
+export const createProductStockPurchase = async ({
+  purchase_date,
+  supplierId,
+  productId,
+  product_quantity,
+  product_selling_price,
+  product_purchase_price,
+  product_retail_price,
+  product_old_mrp,
+  special_offer,
+  zoneId,
+  vendorId,
+  createdById,
+}: CREATE_PRODUCT_STOCK_PURCHASE_TYPE) => {
+  const productStockPurchase = await db.product_stock_purchase.create({
+    data: {
+      purchase_date: convertIsoDate(purchase_date),
+      supplierId,
+      productId,
+      product_quantity: parseInt(product_quantity.toString()),
+      product_selling_price: parseFloat(product_selling_price.toString()),
+      product_purchase_price: parseFloat(product_purchase_price.toString()),
+      product_retail_price: parseFloat(product_retail_price.toString()),
+      product_old_mrp: parseFloat(product_old_mrp.toString()),
+      special_offer: special_offer || "",
+      zoneId,
+      vendorId,
+      createdById,
+      purchaseUniqueId: generateUniqueID("PSP"),
+    },
+  });
+
+  // Start creating the product stock history without awaiting it
+  (async () => {
+    try {
+      await createProductStockHistory(productStockPurchase);
+      console.log("Product stock history created successfully");
+    } catch (error) {
+      console.error("Failed to create product stock history", error);
+    }
+  })();
+
+  return productStockPurchase;
+};
+
+//create product stock history
+const createProductStockHistory = async (productStockPurchase: any) => {
+  new Promise(async (resolve, reject) => {
+    try {
+      await db.product_stock_report.create({
+        data: {
+          product_stock_purchaseId: productStockPurchase?.id,
+          productId: productStockPurchase?.productId,
+          product_stock: productStockPurchase?.product_quantity,
+          product_selling_price: productStockPurchase?.product_selling_price,
+          product_purchase_price: productStockPurchase?.product_purchase_price,
+          product_sold_quantity: 0,
+        },
+      });
+      resolve("product stock history created");
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+  return productStockPurchase;
+};

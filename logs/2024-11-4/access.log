@@ -494,3 +494,357 @@
 
 ::1 - - [04/Nov/2024:10:34:02 +0000] "GET /api/v1/zones/?status=ACTIVE&pagination=true&pageNumber=1&last_login=true HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
 
+::1 - - [04/Nov/2024:10:34:55 +0000] "GET /api/v1/zones/?status=ACTIVE&pagination=true&pageNumber=1&last_login=true HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:35:07 +0000] "GET /api/v1/employees/?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 9447 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:35:09 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 2240 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:37:04 +0000] "GET /api/v1/customers/?pagination=true&pageNumber=1 HTTP/1.1" 200 159 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:37:05 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:37:10 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:38:04 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:38:12 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:38:15 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:40:01 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:40:21 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:41:05 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:41:35 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:42:29 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:42:32 +0000] "GET /api/v1/user-login-history/?last_login=true HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:42:37 +0000] "GET /api/v1/zones/?status=ACTIVE&pagination=true&pageNumber=1&last_login=true HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:42:52 +0000] "GET /api/v1/zones/?status=ACTIVE&pagination=true&pageNumber=1&last_login=true HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:44:05 +0000] "GET /api/v1/zones/?status=ACTIVE&pagination=true&pageNumber=1&last_login=true HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:44:42 +0000] "GET /api/v1/zones/?status=ACTIVE&pagination=true&pageNumber=1&last_login=true HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:45:53 +0000] "GET /api/v1/zones/?status=ACTIVE&pagination=true&pageNumber=1&last_login=true HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:46:46 +0000] "GET /api/v1/zones/?status=ACTIVE&pagination=true&pageNumber=1&last_login=true HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:47:31 +0000] "GET /api/v1/zones/?status=ACTIVE&pagination=true&pageNumber=1&last_login=true HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:48:49 +0000] "GET /api/v1/zones/?status=ACTIVE&pagination=true&pageNumber=1&last_login=true HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36"
+
+::1 - - [04/Nov/2024:10:49:04 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:51:50 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:51:53 +0000] "GET /api/v1/vendors/cm2uswab2000112ok44tt2s4f HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:52:19 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:52:23 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:52:30 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:52:37 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:52:45 +0000] "DELETE /api/v1/suppliers/cm32lt7xe0006yjnt1zbkimc0 HTTP/1.1" 200 71 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:52:45 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 1782 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:53:06 +0000] "POST /api/v1/login/ HTTP/1.1" 200 962 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:53:06 +0000] "GET /api/v1/user-login-history/?last_login=true HTTP/1.1" 200 253 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:53:21 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:53:23 +0000] "DELETE /api/v1/suppliers/cm31zmmsy0000rj71ius3cvec HTTP/1.1" 403 99 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:10:53:34 +0000] "DELETE /api/v1/suppliers/cm31zmmsy0000rj71ius3cvec HTTP/1.1" 403 99 "http://localhost:5173/" "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36"
+
+::1 - - [04/Nov/2024:10:53:58 +0000] "POST /api/v1/login/ HTTP/1.1" 200 956 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:09:02 +0000] "GET /api/v1/user-login-history/?last_login=true HTTP/1.1" 200 253 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:18:09 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:18:12 +0000] "PUT /api/v1/suppliers/active-inactive/cm31zmmsy0000rj71ius3cvec HTTP/1.1" 400 64 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:18:23 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:18:30 +0000] "PUT /api/v1/suppliers/active-inactive/cm31zmmsy0000rj71ius3cvec HTTP/1.1" 400 64 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:19:06 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:19:10 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:19:14 +0000] "PUT /api/v1/suppliers/active-inactive/cm31zmmsy0000rj71ius3cvec HTTP/1.1" 400 64 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:21:12 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:21:33 +0000] "PUT /api/v1/suppliers/active-inactive/cm31zmmsy0000rj71ius3cvec HTTP/1.1" 400 72 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:21:48 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:21:49 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:21:54 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:21:59 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:22:18 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:22:22 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:22:26 +0000] "PUT /api/v1/suppliers/active-inactive/cm31zmmsy0000rj71ius3cvec HTTP/1.1" 400 64 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:22:31 +0000] "GET /api/v1/vendors/cm2uswab2000112ok44tt2s4f HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:22:31 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:22:35 +0000] "PUT /api/v1/suppliers/active-inactive/cm31zmmsy0000rj71ius3cvec HTTP/1.1" 200 72 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:22:35 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 878 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:23:33 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:23:36 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:23:37 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:23:41 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:23:45 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:23:46 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:23:59 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:24:11 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:26:08 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:26:15 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:26:46 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:26:53 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:26:57 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:26:58 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:27:15 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:27:15 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:27:16 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:27:26 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:27:32 +0000] "GET /api/v1/suppliers?status=ACTIVE&supplierUniqueId=SUP-DURIBFEQ&pagination=true&pageNumber=1 HTTP/1.1" 500 4561 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:32:16 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:32:23 +0000] "GET /api/v1/suppliers?status=ACTIVE&supplierUniqueId=supplierUniqueId&pagination=true&pageNumber=1 HTTP/1.1" 200 163 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:32:31 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:32:38 +0000] "GET /api/v1/suppliers?status=ACTIVE&supplierUniqueId=SUP-DURIBFEQ&pagination=true&pageNumber=1 HTTP/1.1" 200 878 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:32:43 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" - - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:32:47 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 878 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:33:05 +0000] "GET /api/v1/suppliers?status=INACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 1068 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:33:12 +0000] "PUT /api/v1/suppliers/active-inactive/cm31zmmsy0000rj71ius3cvec HTTP/1.1" 200 70 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:33:12 +0000] "GET /api/v1/suppliers?status=INACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 163 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:33:15 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 1782 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:35:09 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:35:14 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:36:10 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:36:35 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:36:53 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:36:55 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:37:04 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:37:16 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:37:38 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:39:38 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:39:52 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:39:54 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:39:57 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:39:59 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:40:02 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:40:04 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:40:06 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:40:15 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:40:21 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:40:34 +0000] "GET /api/v1/employees/?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:40:41 +0000] "GET /api/v1/employees/?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:40:45 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:41:56 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:42:12 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:42:25 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:43:38 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:43:44 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:49:08 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:11:50:44 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:00:53 +0000] "GET /api/v1/vendors/cm2uswab2000112ok44tt2s4f HTTP/1.1" 401 26 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:01:00 +0000] "POST /api/v1/login/ HTTP/1.1" 200 956 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:01:02 +0000] "GET /api/v1/user-login-history/?last_login=true HTTP/1.1" 200 262 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:01:02 +0000] "GET /api/v1/vendors/cm2uswab2000112ok44tt2s4f HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:01:05 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:03:11 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:04:01 +0000] "PUT /api/v1/update-supplier/cm31zmmsy0000rj71ius3cvec HTTP/1.1" 200 71 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:04:02 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 1753 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:05:47 +0000] "PUT /api/v1/update-supplier/cm31zmmsy0000rj71ius3cvec HTTP/1.1" 200 71 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:05:48 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:06:18 +0000] "PUT /api/v1/update-supplier/cm3082ath0000x6c8cg8pkodl HTTP/1.1" 200 71 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:06:19 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:07:12 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:08:59 +0000] "PUT /api/v1/update-supplier/cm31zmmsy0000rj71ius3cvec HTTP/1.1" 200 71 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:08:59 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:10:10 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:10:23 +0000] "PUT /api/v1/update-supplier/cm31zmmsy0000rj71ius3cvec HTTP/1.1" 200 71 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:10:24 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 1744 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:12:06 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:12:14 +0000] "PUT /api/v1/update-supplier/cm31zmmsy0000rj71ius3cvec HTTP/1.1" 200 71 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:12:15 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 1734 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:13:47 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:13:53 +0000] "PUT /api/v1/update-supplier/cm31zmmsy0000rj71ius3cvec HTTP/1.1" 200 71 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:13:53 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 1739 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:14:30 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:14:40 +0000] "PUT /api/v1/update-supplier/cm31zmmsy0000rj71ius3cvec HTTP/1.1" 200 71 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:14:40 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 1723 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:15:38 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:20:57 +0000] "GET /api/v1/suppliers?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:12:34:10 +0000] "GET /api/v1/suppliers HTTP/1.1" 401 26 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:12:34:18 +0000] "POST /api/v1/login HTTP/1.1" 200 956 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:12:34:22 +0000] "GET /api/v1/suppliers HTTP/1.1" 200 1642 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:15:38:24 +0000] "GET /api/v1/purchases HTTP/1.1" 404 155 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:09:17 +0000] "POST /api/v1/login HTTP/1.1" 200 956 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:09:24 +0000] "GET /api/v1/products?pagination=true&pageNumber=1&product_code=PD-555070 HTTP/1.1" 200 606 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:09:28 +0000] "GET /api/v1/products HTTP/1.1" 200 2266 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:10:23 +0000] "DELETE /api/v1/products/multiple-delete HTTP/1.1" 200 71 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:10:26 +0000] "GET /api/v1/products HTTP/1.1" 200 81 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:14:52 +0000] "POST /api/v1/login HTTP/1.1" 200 956 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:14:59 +0000] "GET /api/v1/products HTTP/1.1" 200 2266 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:15:23 +0000] "POST /api/v1/products HTTP/1.1" 201 70 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:15:27 +0000] "GET /api/v1/products HTTP/1.1" 200 2705 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:32:01 +0000] "GET /api/v1/products HTTP/1.1" 200 3928 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:42:16 +0000] "GET /api/v1/products HTTP/1.1" 200 3732 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:42:27 +0000] "GET /api/v1/products?pagination=true HTTP/1.1" 200 3813 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:42:52 +0000] "GET /api/v1/products?pagination=true&status=ACTIVE HTTP/1.1" 200 2776 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:44:57 +0000] "GET /api/v1/vendors/cm2uswab2000112ok44tt2s4f HTTP/1.1" 401 26 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:16:44:57 +0000] "GET /api/v1/user-login-history/?last_login=true HTTP/1.1" 401 26 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:16:45:04 +0000] "POST /api/v1/login/ HTTP/1.1" 200 956 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:16:45:06 +0000] "GET /api/v1/user-login-history/?last_login=true HTTP/1.1" 200 253 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:16:45:07 +0000] "GET /api/v1/vendors/cm2uswab2000112ok44tt2s4f HTTP/1.1" 200 2765 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:16:45:22 +0000] "GET /api/v1/products?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 2776 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:16:46:44 +0000] "GET /api/v1/products?pagination=true&status=ACTIVE HTTP/1.1" 200 2776 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:57:34 +0000] "GET /api/v1/purchases HTTP/1.1" 404 155 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:57:35 +0000] "GET /api/v1/purchases HTTP/1.1" 404 155 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:58:02 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 116 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:58:27 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 95 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:58:41 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 95 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:58:42 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 95 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:16:58:43 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 95 "-" "PostmanRuntime/7.42.0"
+

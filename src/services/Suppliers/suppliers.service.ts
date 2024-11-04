@@ -54,7 +54,7 @@ export const getAllSuppliers = async ({
     db.supplier.findMany({
       where: {
         ...(status && { isActive: status }),
-        ...(supplierUniqueId && { employeeID: supplierUniqueId }),
+        ...(supplierUniqueId && { supplierUniqueId }),
         vendor: {
           some: {
             id: vendorId,
