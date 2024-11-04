@@ -1,0 +1,108 @@
+::1 - - [04/Nov/2024:18:05:16 +0000] "GET /api/v1/product-stock-report HTTP/1.1" 200 75 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:05:26 +0000] "POST /api/v1/login/ HTTP/1.1" 200 956 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:18:05:28 +0000] "GET /api/v1/user-login-history/?last_login=true HTTP/1.1" 200 251 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:18:05:29 +0000] "GET /api/v1/vendors/cm2uswab2000112ok44tt2s4f HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:18:05:34 +0000] "GET /api/v1/products?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 1715 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:18:26:32 +0000] "POST /api/v1/product-purchase HTTP/1.1" 400 60 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:27:12 +0000] "GET /api/v1/products?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:18:27:42 +0000] "POST /api/v1/product-purchase HTTP/1.1" 200 653 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:27:59 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 756 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:28:05 +0000] "GET /api/v1/product-stock-report HTTP/1.1" 401 26 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:28:06 +0000] "GET /api/v1/product-stock-report HTTP/1.1" 401 26 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:28:14 +0000] "GET /api/v1/product-stock-report HTTP/1.1" 401 26 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:28:37 +0000] "GET /api/v1/product-purchase HTTP/1.1" 401 26 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:28:45 +0000] "POST /api/v1/login HTTP/1.1" 200 956 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:28:50 +0000] "GET /api/v1/product-stock-report HTTP/1.1" 200 636 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:29:33 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 756 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:29:44 +0000] "GET /api/v1/products?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 1717 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:18:32:10 +0000] "GET /api/v1/products/images/cm2w8fdh700028l39gb5qracr HTTP/1.1" 200 5745 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:18:33:01 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 825 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:34:05 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 864 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:34:44 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 893 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:35:01 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 926 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:35:14 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 959 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:35:44 +0000] "GET /api/v1/zones/?status=ACTIVE&pagination=true&pageNumber=1&last_login=true HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:18:36:15 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 986 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:36:29 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 986 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:36:32 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 986 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:37:32 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 1048 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:38:07 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 1067 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:39:50 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 1144 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:42:06 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 1246 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:43:04 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 1246 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:43:07 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 1246 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:43:09 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 1246 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:43:12 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 1246 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:44:30 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 1246 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:44:33 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 1246 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:44:36 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 1246 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:44:38 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 1246 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:44:41 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 1246 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:44:44 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 1246 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:47:07 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 1246 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:48:35 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 1246 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:50:06 +0000] "GET /api/v1/vendors/cm2uswab2000112ok44tt2s4f HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:18:50:08 +0000] "GET /api/v1/products?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:18:50:10 +0000] "GET /api/v1/zones/?status=ACTIVE&pagination=true&pageNumber=1&last_login=true HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:18:55:41 +0000] "POST /api/v1/product-purchase HTTP/1.1" 201 85 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:55:48 +0000] "GET /api/v1/products?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 1717 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [04/Nov/2024:18:56:02 +0000] "GET /api/v1/product-stock-report HTTP/1.1" 200 1198 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:18:57:18 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 2398 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:19:00:12 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 2398 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:19:00:15 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 2398 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:19:00:19 +0000] "GET /api/v1/product-purchase HTTP/1.1" 200 2398 "-" "PostmanRuntime/7.42.0"
+
+::1 - - [04/Nov/2024:19:02:54 +0000] "GET /api/v1/product-category/?status=ACTIVE&pagination=true&pageNumber=1 HTTP/1.1" 200 1515 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+

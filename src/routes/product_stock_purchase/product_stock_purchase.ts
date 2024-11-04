@@ -7,6 +7,7 @@ import {
   createProductStockPurchase,
   getAllProductStockPurchase,
 } from "../../services/Product_stock_purchase/Product_stock_purchase.service";
+import { generateETag } from "../../Others/OTP/otp";
 
 export const productStockPurchaseRouter = express.Router();
 
@@ -69,6 +70,23 @@ async function getProductStockPurchaseHandler(
       purchaseUniqueId
     );
 
+    // Cache for 24 hr, but verify every on each request with no-cache
+    res.setHeader("Cache-Control", `max-age=${60 * 60 * 24}, no-cache`);
+
+    // Generate ETag based on new data and set it in the response
+    // Generate ETag based on new data and set it in the response
+    const etag = generateETag(products);
+    res.setHeader("ETag", `"${etag}"`);
+
+    const ifNoneMatchValue = req.headers["if-none-match"];
+
+    // Check if the client has the latest data
+    if (ifNoneMatchValue === `"${etag}"`) {
+      // 304 Not Modified
+      res.status(304).end();
+      return;
+    }
+
     showResponse(res, {
       status: 200,
       message: "Product stock purchase fetched successfully",
@@ -82,7 +100,7 @@ async function getProductStockPurchaseHandler(
 //create product stock purchase
 
 export type CREATE_PRODUCT_STOCK_PURCHASE_TYPE = {
-  purchase_date: string;
+  purchase_date?: string;
   supplierId: string;
   productId: string;
   product_quantity: number;
@@ -126,7 +144,6 @@ async function createProductStockPurchaseHandler(
     } = reqData.body as any;
 
     if (
-      !purchase_date ||
       !supplierId ||
       !productId ||
       !product_quantity ||
@@ -190,7 +207,7 @@ async function createProductStockPurchaseHandler(
     }
 
     const data: CREATE_PRODUCT_STOCK_PURCHASE_TYPE = {
-      purchase_date,
+      ...(purchase_date && { purchase_date }),
       supplierId,
       productId,
       product_quantity,
@@ -206,9 +223,8 @@ async function createProductStockPurchaseHandler(
 
     const product = await createProductStockPurchase(data);
     showResponse(res, {
-      status: 200,
+      status: 201,
       message: "Product stock purchase created successfully",
-      data: product,
     });
   } catch (error: any) {
     errorMessage(res, error, next);

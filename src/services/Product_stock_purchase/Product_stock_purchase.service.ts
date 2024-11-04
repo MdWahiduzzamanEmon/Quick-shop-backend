@@ -35,6 +35,38 @@ export const getAllProductStockPurchase = async (
             product_code: true,
           },
         },
+        createdBy: {
+          select: {
+            username: true,
+            email: true,
+            mobile: true,
+          },
+        },
+        zone: {
+          select: {
+            zone_name: true,
+            contact_no: true,
+            operator: {
+              select: {
+                id: true,
+                fullName: true,
+                employeeID: true,
+                address: true,
+                whatsapp: true,
+              },
+            },
+          },
+        },
+        supplier: {
+          select: {
+            supplierName: true,
+            supplierUniqueId: true,
+            srName: true,
+            srContactNo: true,
+            dealerName: true,
+            dealerContactNo: true,
+          },
+        },
       },
     }),
     pagination
@@ -76,7 +108,7 @@ export const createProductStockPurchase = async ({
 }: CREATE_PRODUCT_STOCK_PURCHASE_TYPE) => {
   const productStockPurchase = await db.product_stock_purchase.create({
     data: {
-      purchase_date: convertIsoDate(purchase_date),
+      ...(purchase_date && { purchase_date: convertIsoDate(purchase_date) }),
       supplierId,
       productId,
       product_quantity: parseInt(product_quantity.toString()),
@@ -111,14 +143,26 @@ const createProductStockHistory = async (productStockPurchase: any) => {
     try {
       await db.product_stock_report.create({
         data: {
-          product_stock_purchaseId: productStockPurchase?.id,
-          productId: productStockPurchase?.productId,
+          product_stock_purchase: { connect: { id: productStockPurchase?.id } },
+          product: { connect: { id: productStockPurchase?.productId } },
+          vendor: { connect: { id: productStockPurchase?.vendorId } },
           product_stock: productStockPurchase?.product_quantity,
           product_selling_price: productStockPurchase?.product_selling_price,
           product_purchase_price: productStockPurchase?.product_purchase_price,
           product_sold_quantity: 0,
         },
       });
+
+      await db.product.update({
+        where: { id: productStockPurchase?.productId },
+        data: {
+          product_stock: {
+            increment: productStockPurchase?.product_quantity,
+          },
+          product_mrp: productStockPurchase?.product_selling_price,
+        },
+      });
+
       resolve("product stock history created");
     } catch (error) {
       reject(error);

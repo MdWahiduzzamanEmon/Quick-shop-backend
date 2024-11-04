@@ -75,6 +75,7 @@ model Vendor {
   superAdminId           String
   Supplier               Supplier[]
   product_stock_purchase product_stock_purchase[]
+  product_stock_report   product_stock_report[]
 
   @@index([id, isActive, name])
   @@map("vendor")
@@ -360,6 +361,8 @@ model product_stock_report {
   createdAt                DateTime               @default(now())
   updatedAt                DateTime               @updatedAt
   isActive                 product_status         @default(ACTIVE)
+  vendor                   Vendor                 @relation(fields: [vendorId], references: [id], onDelete: Cascade) // Link to vendor
+  vendorId                 String
 
   @@index([id, product_stock_purchaseId, productId, product_stock, product_selling_price, product_purchase_price, product_sold_quantity, isActive, updatedAt, createdAt])
   @@map("product_stock_report")
