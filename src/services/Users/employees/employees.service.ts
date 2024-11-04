@@ -11,6 +11,7 @@ export const getEmployees = async ({
   employeeUniqueID,
   vendorId,
   role,
+  employeeId,
 }: EmployeeQuery) => {
   //pagination
   const pageNumbers = pageNumber ? parseInt(pageNumber.toString()) : 1;
@@ -27,6 +28,7 @@ export const getEmployees = async ({
           },
         }),
         ...(role && { role }),
+        ...(employeeId && { id: employeeId }),
       },
       orderBy: {
         userJoinDate: "desc",

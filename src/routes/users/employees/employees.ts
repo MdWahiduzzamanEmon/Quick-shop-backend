@@ -28,6 +28,7 @@ export type EmployeeQuery = {
   employeeUniqueID?: string;
   vendorId: string;
   role?: WorkerRole;
+  employeeId?: string;
 };
 
 const getOthersUsersHandler: express.RequestHandler = async (
@@ -37,7 +38,8 @@ const getOthersUsersHandler: express.RequestHandler = async (
 ) => {
   const reqData = _req as any;
   try {
-    const { vendorId } = reqData?.user;
+    const { vendorId, employeeId, role: TOKEN_ROLE } = reqData?.user;
+    // console.log("vendorId", reqData?.user);
     const {
       status,
       pageNumber,
@@ -56,7 +58,7 @@ const getOthersUsersHandler: express.RequestHandler = async (
       return;
     }
 
-    const users = await getEmployees({
+    const body = {
       status,
       pageNumber,
       rowPerPage,
@@ -64,7 +66,10 @@ const getOthersUsersHandler: express.RequestHandler = async (
       employeeUniqueID,
       vendorId,
       role,
-    });
+      ...(TOKEN_ROLE !== "ADMIN" && employeeId && { employeeId }),
+    };
+
+    const users = await getEmployees(body);
     showResponse(res, {
       message: "Employees fetched successfully",
       data: users,
