@@ -207,3 +207,27 @@ export const deleteSupplierById = async ({
     },
   });
 };
+
+// getAllSuppliersNameList
+export const getAllSuppliersNameList = async ({
+  vendorId,
+  status,
+}: {
+  vendorId: string;
+  status?: User_status;
+}) => {
+  return await db.supplier.findMany({
+    where: {
+      ...(status && { isActive: status }),
+      vendor: {
+        some: {
+          id: vendorId,
+        },
+      },
+    },
+    select: {
+      id: true,
+      supplierName: true,
+    },
+  });
+};

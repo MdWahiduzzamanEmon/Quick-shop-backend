@@ -398,3 +398,23 @@ export const updateZoneStatus = async (
     },
   });
 };
+
+//getZonesNameList
+export const getZonesNameList = async ({
+  vendorId,
+  status,
+}: {
+  vendorId: string;
+  status?: Zone_status;
+}) => {
+  return await db.zone.findMany({
+    where: {
+      ...(status && { isActive: status }),
+      vendorId,
+    },
+    select: {
+      id: true,
+      zone_name: true,
+    },
+  });
+};

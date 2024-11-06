@@ -9,6 +9,7 @@ import {
   deleteZone,
   getZoneById,
   getZones,
+  getZonesNameList,
   updateZone,
   updateZoneStatus,
 } from "../../services/Zone/zone.service";
@@ -19,8 +20,15 @@ export const zoneRoute = express.Router();
 
 //create zone
 zoneRoute.post("/zones", verifyTokenMiddleware, createZoneHandler);
+
 //get all zone
 zoneRoute.get("/zones", verifyTokenMiddleware, getAllZoneHandler);
+//get all zone name list
+zoneRoute.get(
+  "/zones-name-list",
+  verifyTokenMiddleware,
+  getAllZoneNameListHandler
+);
 //get single zone
 zoneRoute.get("/zones/:id", verifyTokenMiddleware, getSingleZoneHandler);
 // //update zone
@@ -113,6 +121,41 @@ async function getAllZoneHandler(
 
     showResponse(res, {
       message: "Zones fetched successfully",
+      data: zones,
+    });
+  } catch (error: any) {
+    errorMessage(res, error, next);
+  }
+}
+
+//get all zone name list
+async function getAllZoneNameListHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const reqData = req as any;
+  try {
+    const { vendorId } = reqData?.user;
+
+    const { status } = req.query as { status: Zone_status };
+
+    if (status && !(status in Zone_status)) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide valid status",
+      });
+      return;
+    }
+
+    const zones = await getZonesNameList({
+      vendorId,
+      status,
+    });
+
+    showResponse(res, {
+      message: "Zones Names fetched successfully",
       data: zones,
     });
   } catch (error: any) {

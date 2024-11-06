@@ -8,6 +8,7 @@ import {
   createSupplier,
   deleteSupplierById,
   getAllSuppliers,
+  getAllSuppliersNameList,
   updateSupplierById,
   updateSupplierStatus,
 } from "../../services/Suppliers/suppliers.service";
@@ -51,6 +52,13 @@ suppliersRouter.delete(
   "/suppliers/:id",
   verifyTokenMiddleware,
   deleteSupplierHandler
+);
+
+//suppliers name list
+suppliersRouter.get(
+  "/suppliers-name-list",
+  verifyTokenMiddleware,
+  getAllSuppliersNameListHandler
 );
 
 export type supplierQuery = {
@@ -542,6 +550,55 @@ async function updateSupplierStatusHandler(
     showResponse(res, {
       status: 200,
       message: `Supplier ${status} successfully`,
+    });
+  } catch (error: any) {
+    errorMessage(res, error, next);
+  }
+}
+
+//getAllSuppliersNameListHandler
+async function getAllSuppliersNameListHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const reqData = req as any;
+  try {
+    const { vendorId, role: TOKEN_ROLE } = reqData?.user;
+    //check if user is an admin
+    if (TOKEN_ROLE !== "ADMIN") {
+      showResponse(res, {
+        status: 403,
+        message: "Forbidden! You are not authorized to perform this action",
+      });
+      return;
+    }
+
+    const { status } = reqData.query as { status: User_status };
+    if (status && !(status in User_status)) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide valid status",
+      });
+      return;
+    }
+
+    const suppliers = await getAllSuppliersNameList({ vendorId, status });
+
+    if (!suppliers) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Failed to get suppliers",
+      });
+      return;
+    }
+
+    showResponse(res, {
+      status: 200,
+      message: "Suppliers Name List fetched successfully",
+      data: suppliers,
     });
   } catch (error: any) {
     errorMessage(res, error, next);

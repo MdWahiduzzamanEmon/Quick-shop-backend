@@ -436,3 +436,22 @@ export const getProductInventory = async (
 
   return inventory;
 };
+
+//getProductsNameList
+export const getProductsNameList = async (
+  vendorId: string,
+  status: product_status
+) => {
+  const products = await db.product.findMany({
+    where: {
+      vendorId,
+      ...(status && { isActive: status }),
+    },
+    select: {
+      id: true,
+      product_name: true,
+    },
+  });
+
+  return products;
+};

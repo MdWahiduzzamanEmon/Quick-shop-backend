@@ -23,6 +23,7 @@ import {
   getMultipleProductImages,
   getMultipleProducts,
   getProductImages,
+  getProductsNameList,
   getSingleProduct,
   getSingleProductImage,
 } from "../../services/Products/products.service";
@@ -133,6 +134,51 @@ productsRouter.get(
   "/products/:id",
   verifyTokenMiddleware,
   getSingleProductHandler
+);
+
+//product name list for dropdown
+const getAllProductsNameListHandler: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const reqData = req as any;
+  try {
+    const { vendorId, role } = reqData?.user;
+
+    if (role !== "ADMIN" && role !== "OPERATOR") {
+      showResponse(res, {
+        status: 403,
+        success: false,
+        message: "Forbidden. Only Admin can access this route",
+      });
+      return;
+    }
+
+    const { status } = reqData.query as any;
+    if (status && !(status in product_status)) {
+      showResponse(res, {
+        status: 400,
+        success: false,
+        message: "Please provide valid status",
+      });
+      return;
+    }
+
+    const products = await getProductsNameList(vendorId, status);
+    showResponse(res, {
+      message: "Products name list fetched successfully",
+      data: products,
+    });
+  } catch (error: any) {
+    errorMessage(res, error, next);
+  }
+};
+
+productsRouter.get(
+  "/products-name-list",
+  verifyTokenMiddleware,
+  getAllProductsNameListHandler
 );
 
 //create product category
