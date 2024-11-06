@@ -125,6 +125,20 @@ export const createProductStockPurchase = async ({
     },
   });
 
+  //update product stock
+  if (productStockPurchase?.productId) {
+    await db.product.update({
+      where: { id: productStockPurchase?.productId },
+      data: {
+        product_stock: {
+          increment: productStockPurchase?.product_quantity,
+        },
+        product_c_mrp: productStockPurchase?.product_selling_price,
+        product_r_mrp: productStockPurchase?.product_retail_price,
+      },
+    });
+  }
+
   // Start creating the product stock history without awaiting it
   (async () => {
     try {

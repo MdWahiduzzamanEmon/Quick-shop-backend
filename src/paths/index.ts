@@ -13,6 +13,7 @@ import { productsRouter } from "../routes/Products/products";
 import { suppliersRouter } from "../routes/Suppliers/suppliers";
 import { productStockPurchaseRouter } from "../routes/product_stock_purchase/product_stock_purchase";
 import { productPurchaseReportRouter } from "../routes/Reports/product_purchase_report/product_purchase_report";
+import { productsOrderRouter } from "../routes/Products_order/products_order";
 
 export const routes = [
   vendorRoute,
@@ -30,4 +31,5 @@ export const routes = [
   suppliersRouter,
   productStockPurchaseRouter,
   productPurchaseReportRouter,
+  productsOrderRouter,
 ];

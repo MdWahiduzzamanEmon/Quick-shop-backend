@@ -76,18 +76,9 @@ export const createProductStockHistory = async (productStockPurchase: any) => {
           vendor: { connect: { id: productStockPurchase?.vendorId } },
           product_stock: productStockPurchase?.product_quantity,
           product_selling_price: productStockPurchase?.product_selling_price,
+          product_retail_price: productStockPurchase?.product_retail_price,
           product_purchase_price: productStockPurchase?.product_purchase_price,
           product_sold_quantity: 0,
-        },
-      });
-
-      await db.product.update({
-        where: { id: productStockPurchase?.productId },
-        data: {
-          product_stock: {
-            increment: productStockPurchase?.product_quantity,
-          },
-          product_mrp: productStockPurchase?.product_selling_price,
         },
       });
 

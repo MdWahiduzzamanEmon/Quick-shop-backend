@@ -74,7 +74,7 @@ export const verifyTokenMiddleware = async (req: any, res: any, next: any) => {
 };
 
 export const cookieResponse = async (res: any, token: any) => {
-  console.log("cookieResponse", token);
+  // console.log("cookieResponse", token);
   // expire in 1 hour
   const oneHour = 60 * 60 * 1000; // 1 hour
   res.cookie("token", token, {
