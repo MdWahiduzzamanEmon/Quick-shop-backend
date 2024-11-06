@@ -51,8 +51,14 @@ const getAllProductsHandler: RequestHandler = async (
       });
       return;
     }
-    const { pageNumber, rowPerPage, pagination, status, product_code } =
-      reqData.query as any;
+    const {
+      pageNumber,
+      rowPerPage,
+      pagination,
+      status,
+      product_code,
+      isProductPurchased,
+    } = reqData.query as any;
 
     if (status && !(status in product_status)) {
       showResponse(res, {
@@ -69,7 +75,8 @@ const getAllProductsHandler: RequestHandler = async (
       pagination,
       status,
       vendorId,
-      product_code
+      product_code,
+      isProductPurchased
     );
 
     // Cache for 24 hr, but verify every on each request with no-cache

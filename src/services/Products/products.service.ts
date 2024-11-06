@@ -10,7 +10,8 @@ export const getAllProducts = async (
   pagination?: boolean,
   status?: product_status,
   vendorId?: string,
-  product_code?: string
+  product_code?: string,
+  isProductPurchased?: boolean
 ) => {
   //pagination
   const pageNumbers = pageNumber ? parseInt(pageNumber.toString()) : 1;
@@ -21,6 +22,9 @@ export const getAllProducts = async (
         ...(status && { isActive: status }),
         ...(vendorId && { vendorId }),
         ...(product_code && { product_code }),
+        ...(isProductPurchased && {
+          isProductPurchased: Boolean(isProductPurchased),
+        }),
       },
       ...(pagination && {
         skip: (pageNumbers - 1) * resultPerPage,
@@ -49,13 +53,16 @@ export const getAllProducts = async (
             username: true,
           },
         },
-        // product_images: {
-        //   select: {
-        //     id: true,
-        //     image: true,
-        //     isActive: true,
-        //   },
-        // },
+        product_inventory: {
+          select: {
+            id: true,
+            lastUpdated: true,
+            quantitySold: true,
+            stockAvailable: true,
+            productCustomerPrice: true,
+            productRetailPrice: true,
+          },
+        },
       },
       orderBy: {
         createdAt: "desc",
@@ -404,4 +411,28 @@ export const createProductImage = async (
   }
 
   return result;
+};
+
+//get product inventory by product id
+export const getProductInventory = async (
+  productId: string,
+  zoneId: string
+) => {
+  const inventory = await db.product_inventory.findFirst({
+    where: {
+      AND: [
+        {
+          product: {
+            id: productId,
+            isProductPurchased: true,
+          },
+        },
+        {
+          zoneId,
+        },
+      ],
+    },
+  });
+
+  return inventory;
 };

@@ -99,6 +99,22 @@ export const getZones = async ({
             employeeID: true,
           },
         },
+        product_inventory: {
+          select: {
+            product: {
+              select: {
+                id: true,
+                product_name: true,
+                product_code: true,
+              },
+            },
+            quantitySold: true,
+            productStockLimit: true,
+            stockAvailable: true,
+            productCustomerPrice: true,
+            productRetailPrice: true,
+          },
+        },
       },
       omit: {
         createdAt: true,
@@ -273,7 +289,7 @@ export const updateZone = async (
     representatives,
     removedRepresentatives,
     riders,
-    removedRiders
+    removedRiders,
   }: {
     village_name?: string;
     ward_no?: string;

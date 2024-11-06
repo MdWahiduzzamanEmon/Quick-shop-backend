@@ -221,7 +221,7 @@ async function createProductStockPurchaseHandler(
       createdById,
     };
 
-    const product = await createProductStockPurchase(data);
+    await createProductStockPurchase(data);
     showResponse(res, {
       status: 201,
       message: "Product stock purchase created successfully",

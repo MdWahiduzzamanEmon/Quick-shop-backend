@@ -284,11 +284,6 @@ model product {
   product_code           String                   @unique
   product_quantity_type  product_quantity_type
   delivery_charge_type   delivery_charge_type
-  product_stock_limit    Int                      @default(5) // Default stock limit
-  product_stock          Int                      @default(0) // Default stock
-  product_c_mrp          Float                    @default(0.0) // Default selling price
-  product_r_mrp          Float                    @default(0.0) // Default retail price
-  product_total_sold     Int                      @default(0) // Total sold product
   isActive               product_status           @default(ACTIVE)
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
@@ -299,13 +294,35 @@ model product {
   createdBy              User                     @relation(fields: [createdById], references: [id])
   createdById            String
   total_order_placed     Int                      @default(0) // Total order placed
+  isProductPurchased     Boolean                  @default(false) // Check if the product is purchased
   product_images         product_image[] // A product can have multiple images
   product_stock_purchase product_stock_purchase[]
   product_stock_report   product_stock_report[]
   product_order          product_order[]
+  product_inventory      product_inventory? // A product can have multiple inventory
 
-  @@index([id, product_name, isActive])
+  @@index([id, product_name, isActive, isProductPurchased])
   @@map("product")
+}
+
+//product inventory model
+model product_inventory {
+  id                   String   @id @default(cuid())
+  product              product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId            String   @unique
+  stockAvailable       Int      @default(0)
+  quantitySold         Int      @default(0)
+  productStockLimit    Int      @default(5)
+  productCustomerPrice Float    @default(0.0)
+  productRetailPrice   Float    @default(0.0)
+  zone                 Zone     @relation(fields: [zoneId], references: [id], onDelete: Cascade)
+  zoneId               String
+  lastUpdated          DateTime @default(now())
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([id, productId, zoneId])
+  @@map("product_inventory")
 }
 
 //product image model 
@@ -362,41 +379,77 @@ enum product_order_status {
   CANCELLED
 }
 
+model product_order {
+  id             String               @id @default(cuid())
+  product        product              @relation(fields: [productId], references: [id])
+  productId      String
+  vendor         Vendor               @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId       String
+  quantity       Int // Quantity ordered by user
+  unitPrice      Float // Unit price at time of order
+  discount       Float?               @default(0.0) // Discount on the order
+  tax            Float?               @default(0.0) // Tax applied
+  deliveryCharge Float?               @default(0.0) // Delivery charge
+  subtotal       Float // Calculated subtotal (unitPrice * productOrderQuantity)
+  totalAmount    Float // Calculated total after discount, tax, and delivery charges
+  orderDate      DateTime             @default(now())
+  orderBy        otherUsers?          @relation(fields: [otherUsersId], references: [id])
+  otherUsersId   String?
+  orderStatus    product_order_status @default(PENDING)
+  shipping_info  shipping_info?
+  payment_info   payment_info?
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+  zone           Zone                 @relation(fields: [zoneId], references: [id])
+  zoneId         String
+
+  @@index([id, productId, createdAt, updatedAt, orderDate, orderStatus, vendorId, otherUsersId])
+  @@map("product_order")
+}
+
+enum shipping_status {
+  PENDING
+  SHIPPED
+  IN_TRANSIT
+  DELIVERED
+  RETURNED
+}
+
+model shipping_info {
+  id                    String          @id @default(cuid())
+  productOrder          product_order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId               String          @unique
+  address               String // Shipping address
+  shippingDate          DateTime? // Date when the item was shipped
+  estimatedDeliveryDate DateTime? // Estimated delivery date
+  trackingNumber        String? // Tracking number for the shipment
+  shippingStatus        shipping_status @default(PENDING) // Shipping status
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  @@index([orderId, shippingStatus])
+}
+
 enum payment_status {
   PENDING
   PAID
   REFUNDED
+  FAILED
 }
 
-model product_order {
-  id                     String               @id @default(cuid())
-  product                product              @relation(fields: [productId], references: [id])
-  productId              String
-  product_order_quantity Int
-  createdAt              DateTime             @default(now())
-  updatedAt              DateTime             @updatedAt
-  vendor                 Vendor               @relation(fields: [vendorId], references: [id], onDelete: Cascade)
-  vendorId               String
-  orderDate              DateTime             @default(now())
-  order_by               otherUsers?          @relation(fields: [otherUsersId], references: [id])
-  otherUsersId           String?
-  order_status           product_order_status @default(PENDING)
-  // Additional order fields
-  totalAmount            Float                @default(0.0)
-  discount               Float?               @default(0.0)
-  shippingAddress        String?
-  shippingDate           DateTime?
-  estimatedDeliveryDate  DateTime?
-  trackingNumber         String?
-  paymentStatus          payment_status       @default(PENDING)
-  paymentMethod          String?
-  paymentDate            DateTime?
-  notes                  String?
-  isCancelled            Boolean              @default(false)
-  cancelReason           String?
+model payment_info {
+  id            String         @id @default(cuid())
+  productOrder  product_order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId       String         @unique
+  amount        Float // Total amount for the order
+  discount      Float?         @default(0.0) // Discount on the order, if any
+  paymentMethod String? // Payment method used by the user
+  paymentDate   DateTime? // Date of payment
+  paymentStatus payment_status @default(PENDING) // Status of payment
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 
-  @@index([id, productId, createdAt, updatedAt, orderDate, order_status, vendorId, otherUsersId])
-  @@map("product_order")
+  @@index([orderId, paymentStatus])
 }
 
 model product_stock_report {
@@ -415,6 +468,8 @@ model product_stock_report {
   isActive                 product_status         @default(ACTIVE)
   vendor                   Vendor                 @relation(fields: [vendorId], references: [id], onDelete: Cascade) // Link to vendor
   vendorId                 String
+  zone                     Zone                   @relation(fields: [zoneId], references: [id])
+  zoneId                   String
 
   @@index([id, product_stock_purchaseId, productId, product_stock, product_selling_price, product_purchase_price, product_sold_quantity, isActive, updatedAt, createdAt])
   @@map("product_stock_report")
@@ -512,6 +567,9 @@ model Zone {
   vendor                 Vendor                   @relation(fields: [vendorId], references: [id], onDelete: Cascade) // Link to vendor
   vendorId               String
   product_stock_purchase product_stock_purchase[]
+  product_inventory      product_inventory[]
+  product_order          product_order[]
+  product_stock_report   product_stock_report[]
 
   @@index([id, isActive, division_id, district_id, upazila_id, union_id, operatorId, vendorId])
   @@map("zone")

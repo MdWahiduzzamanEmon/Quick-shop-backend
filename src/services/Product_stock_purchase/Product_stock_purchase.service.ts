@@ -128,13 +128,36 @@ export const createProductStockPurchase = async ({
   //update product stock
   if (productStockPurchase?.productId) {
     await db.product.update({
-      where: { id: productStockPurchase?.productId },
+      where: {
+        id: productStockPurchase?.productId,
+      },
       data: {
-        product_stock: {
-          increment: productStockPurchase?.product_quantity,
+        isProductPurchased: true,
+        product_inventory: {
+          upsert: {
+            where: {
+              productId: productStockPurchase?.productId,
+              zoneId,
+            },
+            create: {
+              zoneId,
+              stockAvailable: parseInt(product_quantity.toString()),
+              productCustomerPrice: parseFloat(
+                product_selling_price.toString()
+              ),
+              productRetailPrice: parseFloat(product_retail_price.toString()),
+            },
+            update: {
+              stockAvailable: {
+                increment: parseInt(product_quantity.toString()),
+              },
+              productCustomerPrice: parseFloat(
+                product_selling_price.toString()
+              ),
+              productRetailPrice: parseFloat(product_retail_price.toString()),
+            },
+          },
         },
-        product_c_mrp: productStockPurchase?.product_selling_price,
-        product_r_mrp: productStockPurchase?.product_retail_price,
       },
     });
   }
@@ -142,7 +165,7 @@ export const createProductStockPurchase = async ({
   // Start creating the product stock history without awaiting it
   (async () => {
     try {
-      await createProductStockHistory(productStockPurchase);
+      await createProductStockHistory(productStockPurchase, zoneId);
       console.log("Product stock history created successfully");
     } catch (error) {
       console.error("Failed to create product stock history", error);
