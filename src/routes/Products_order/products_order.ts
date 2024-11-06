@@ -153,7 +153,7 @@ async function createProductsOrderHandler(
     if (quantity > checkProductInventory.stockAvailable) {
       showResponse(res, {
         status: 400,
-        message: "Bad Request! Invalid quantity",
+        message: "You can't order more than available stock",
         requiredFields: ["quantity"],
       });
       return;

@@ -493,6 +493,7 @@ const deleteProductHandler: RequestHandler = async (
 
     // first check if product exists
     const existProduct = (await getSingleProduct(productID, vendorId)) as any;
+    // console.log("existProduct", existProduct);
     if (!existProduct) {
       showResponse(res, {
         status: 400,
@@ -522,6 +523,7 @@ const deleteProductHandler: RequestHandler = async (
       });
     }
   } catch (error: any) {
+    console.log("error", error);
     errorMessage(res, error, next);
   }
 };

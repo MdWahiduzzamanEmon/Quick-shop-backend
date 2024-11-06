@@ -345,7 +345,7 @@ model product_stock_purchase {
   purchase_date          DateTime               @default(now())
   supplier               Supplier               @relation(fields: [supplierId], references: [id])
   supplierId             String
-  product                product                @relation(fields: [productId], references: [id])
+  product                product                @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId              String
   purchaseUniqueId       String                 @unique
   product_quantity       Int
@@ -381,7 +381,7 @@ enum product_order_status {
 
 model product_order {
   id             String               @id @default(cuid())
-  product        product              @relation(fields: [productId], references: [id])
+  product        product              @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId      String
   vendor         Vendor               @relation(fields: [vendorId], references: [id], onDelete: Cascade)
   vendorId       String
@@ -456,7 +456,7 @@ model product_stock_report {
   id                       String                 @id @default(cuid())
   product_stock_purchase   product_stock_purchase @relation(fields: [product_stock_purchaseId], references: [id])
   product_stock_purchaseId String
-  product                  product                @relation(fields: [productId], references: [id])
+  product                  product                @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId                String
   product_stock            Int                    @default(0)
   product_selling_price    Float                  @default(0)

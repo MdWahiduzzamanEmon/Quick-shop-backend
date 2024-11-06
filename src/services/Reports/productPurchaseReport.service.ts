@@ -27,8 +27,14 @@ export const getAllProductStockPurchaseReport = async (
             id: true,
             product_name: true,
             product_code: true,
+            product_inventory: {
+              select: {
+                quantitySold: true,
+              },
+            },
           },
         },
+
         product_stock_purchase: {
           select: {
             id: true,
@@ -130,18 +136,17 @@ export const processOrderForProduct = async (
   zoneId: string,
   orderQuantity: number
 ) => {
-  // Step 1: Retrieve stock report sorted by createdAt
+  // Step 1: Retrieve stock report sorted by createdAt (oldest first)
   const stockReport = await getAllProductStockPurchaseReportByProductId(
     productId,
     zoneId
   );
 
-  let remainingQuantity = orderQuantity; // Track remaining order quantity to be deducted
-  let cumulativeSoldQuantity = 0; // Track cumulative sold quantity for all processed rows
+  let remainingQuantity = orderQuantity; // Track remaining quantity to be deducted
 
   // Step 2: Iterate through the stock report and deduct quantities
   for (const stockEntry of stockReport) {
-    if (remainingQuantity <= 0) break; // Stop once the full order is processed
+    if (remainingQuantity <= 0) break; // Stop once order is fully processed
 
     if (stockEntry.product_stock > 0) {
       // Determine how much to deduct from the current stock
@@ -150,23 +155,21 @@ export const processOrderForProduct = async (
         remainingQuantity
       );
 
-      // Step 3: Update the cumulative sold quantity
-      cumulativeSoldQuantity += deductQuantity;
-
-      // Step 4: Update stock and cumulative sold quantity for this entry
+      // Update the stock for the current entry
       const newStock = stockEntry.product_stock - deductQuantity;
-      const newSoldQuantity = cumulativeSoldQuantity; // Update sold quantity to the cumulative amount
 
-      // Update the stock and sold quantity in the database
+      // Step 3: Update this row with the cumulative sold quantity
       await db.product_stock_report.update({
         where: { id: stockEntry.id },
         data: {
-          product_stock: newStock, // Updated stock after deduction
-          product_sold_quantity: newSoldQuantity, // Reflect cumulative sold amount
+          product_stock: newStock,
+          product_sold_quantity: {
+            increment: deductQuantity,
+          },
         },
       });
 
-      // Step 5: Decrease the remaining quantity of the order
+      // Step 4: Update the remaining quantity to be deducted
       remainingQuantity -= deductQuantity;
     }
   }

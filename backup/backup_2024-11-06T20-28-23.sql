@@ -4680,6 +4680,7 @@ cm308lode000bbgasu8nrfulb	bepihoc@mailinator.com	Sapiente aliqua Fug	keciraqy	$2
 cm308mcg0000ebgas4szfpqjr	riry@mailinator.com	Ipsum quae nostrum 	jiketabur	$2b$10$WyPDLw5bbJk1ZdZXFVKd6.f3qXQGC0Sg2n9gYmhX6A2q7q4NCrFem	2024-11-02 14:07:16.608	2024-11-02 14:07:16.608	cm2uswab2000112ok44tt2s4f
 cm308pduq000hbgasyhv5t0oz	tizycesi@mailinator.com	Voluptas aut exercit	vulavozilu	$2b$10$Hw7/fwEYUQXu7P.EKbHqVe4yGXpS52V5CFLXsxiwcomsUnQWMs0I.	2024-11-02 14:09:38.403	2024-11-02 14:09:38.403	cm2uswab2000112ok44tt2s4f
 cm308q6ep000kbgas0myv6orh	zinufel@mailinator.com	Nihil repudiandae po	mohusabyle	$2b$10$V1JEq4va1ehpP71s7rdDjurhoC/RVFVD3p8sooCSWRHzI4490geES	2024-11-02 14:10:15.409	2024-11-02 14:10:15.409	cm2uswab2000112ok44tt2s4f
+cm35yqutq0001zh9xxwppx1ni	test@gmail.com	123321123	neon	$2b$10$IsWbPdcGEciO8UnGSrOXVuyqz5bf3wFyTO/0L.UTu52xwtcXsiv9G	2024-11-06 14:17:27.949	2024-11-06 14:17:27.949	cm2uswab2000112ok44tt2s4f
 \.
 
 
@@ -4736,6 +4737,31 @@ cm308xj83000nbgasy087itm9	cm308pduq000ibgasv21ka107
 --
 
 COPY public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) FROM stdin;
+fa71ad5b-b712-43cf-bda5-3d052f90ef60	a6d2c2aa47ef7fca371cba89fe6798b27df5eca39dc264d40b134aaa305191a9	2024-11-06 14:26:20.432309+00	20241102125126_new	\N	\N	2024-11-06 14:26:18.274551+00	1
+b5804c0d-302c-497d-bdca-20dde834e8b9	d80209ccc458f17e1425872e25f9864380276137bd273f423af0be0845e1a059	2024-11-06 14:26:22.421049+00	20241102134505_up	\N	\N	2024-11-06 14:26:21.021376+00	1
+8506bc71-cc80-4cd4-b0dc-fd2c8acdd256	3bd40cfc6d10e0693812b52bbf9003c2ef4fb97f0472a0bb3d5e1321807ce127	2024-11-06 14:26:24.380938+00	20241104161257_product_purchase	\N	\N	2024-11-06 14:26:22.983004+00	1
+2bbf8574-2dd9-465b-82b0-31eeb1fb53fc	8ff0e684eeb538a7e3310101257a924ae34f456ba82cdbd5663e0ca6b40dcb97	2024-11-06 14:26:26.301614+00	20241104175052_uuu	\N	\N	2024-11-06 14:26:24.954651+00	1
+c76f0efb-7cfe-4bc6-ae3c-fc34b96353b9	160ade9898d4c9c666f6cb6c8d73d6b0b347b96bf83f58d5532005670096007c	2024-11-06 14:26:28.459352+00	20241106085731_	\N	\N	2024-11-06 14:26:27.036066+00	1
+951af4d2-ad1f-4a68-badc-a98edb7ea7e0	e2c181fd5bdc4ed2a97c601a3654bd9f65ff9be010bb685b323ff54ff9c0d4ea	2024-11-06 14:26:30.34082+00	20241106092550_	\N	\N	2024-11-06 14:26:29.01861+00	1
+4ab1ecc5-bdd7-409d-834c-d5788a72c653	c098f76e120844f246ace7a11ef07fe5c9f3de32b67a9d2e27be8834d4b038f2	2024-11-06 14:26:32.334143+00	20241106102706_new	\N	\N	2024-11-06 14:26:30.910929+00	1
+9d2c791c-69ef-4555-b6ef-930de09bf5ce	08145a06cca8fdf19bcb470f2dd2a2e0785f651069122acee30b9cdec5795e75	2024-11-06 14:26:34.249027+00	20241106104552_	\N	\N	2024-11-06 14:26:32.931272+00	1
+e37b62c4-73cd-4ba3-b1b2-be36852f40ef	6864b8ade9fb10972c75dcb71411d918ac6155c351cd05b9523900250c72f18e	2024-11-06 14:26:36.20934+00	20241106113136_	\N	\N	2024-11-06 14:26:34.788081+00	1
+18d35577-11e1-4fd1-9bd4-10d0e2ec0092	e4bd5f1a42a61479f5a663b3d22c90e3e69936c154269857010fbb3c62f66340	2024-11-06 14:26:38.134782+00	20241106120100_	\N	\N	2024-11-06 14:26:36.778473+00	1
+dbe29215-c1af-43b8-a4a4-ac17a3f3f81f	8f18c0dfe3a4855305c78647df97489749a2116c0dd18e3e3d3504dd04c53202	2024-11-06 14:26:40.125131+00	20241106123804_	\N	\N	2024-11-06 14:26:38.654206+00	1
+705def58-cd34-4193-b9d8-61237dcc1fab	2e5ed98988b219b7c0afd50e80aad6711a2df6b68011f9956e79e50748b5f8ea	2024-11-06 14:26:42.021498+00	20241106125550_	\N	\N	2024-11-06 14:26:40.654593+00	1
+72d51832-2227-4331-9cdc-c0afe44a92cb	01b1e1ce67b9c7a6ef6cad3f4fd04d8093d8ae30a9369c79360c45a203de1cc0	2024-11-06 14:26:43.897494+00	20241106142553_	\N	\N	2024-11-06 14:26:42.534991+00	1
+6586959e-131f-4aaa-a318-90a937016927	a6d2c2aa47ef7fca371cba89fe6798b27df5eca39dc264d40b134aaa305191a9	2024-11-06 14:16:36.312879+00	20241102125126_new	\N	\N	2024-11-06 14:16:34.22253+00	1
+96053a16-469f-4fef-b122-942a1e368a79	d80209ccc458f17e1425872e25f9864380276137bd273f423af0be0845e1a059	2024-11-06 14:16:38.07847+00	20241102134505_up	\N	\N	2024-11-06 14:16:36.813984+00	1
+ddcfdca8-7542-481d-8f5e-748fe6ce7ce4	3bd40cfc6d10e0693812b52bbf9003c2ef4fb97f0472a0bb3d5e1321807ce127	2024-11-06 14:16:40.044887+00	20241104161257_product_purchase	\N	\N	2024-11-06 14:16:38.587315+00	1
+ad4d993e-8a71-4b19-8eaf-14486a7934f4	8ff0e684eeb538a7e3310101257a924ae34f456ba82cdbd5663e0ca6b40dcb97	2024-11-06 14:16:41.806133+00	20241104175052_uuu	\N	\N	2024-11-06 14:16:40.543377+00	1
+567d97bf-6d11-4bc8-8a27-21707591aabf	160ade9898d4c9c666f6cb6c8d73d6b0b347b96bf83f58d5532005670096007c	2024-11-06 14:16:43.564224+00	20241106085731_	\N	\N	2024-11-06 14:16:42.305614+00	1
+6d600544-ee00-4baa-b27d-1eb47b217db7	e2c181fd5bdc4ed2a97c601a3654bd9f65ff9be010bb685b323ff54ff9c0d4ea	2024-11-06 14:16:45.386304+00	20241106092550_	\N	\N	2024-11-06 14:16:44.067217+00	1
+e27960aa-0ad0-487d-8c5e-d3ecdbaf17b3	c098f76e120844f246ace7a11ef07fe5c9f3de32b67a9d2e27be8834d4b038f2	2024-11-06 14:16:47.213231+00	20241106102706_new	\N	\N	2024-11-06 14:16:45.894881+00	1
+7822c6b9-ef5b-449b-a2bf-8b38042ed23f	08145a06cca8fdf19bcb470f2dd2a2e0785f651069122acee30b9cdec5795e75	2024-11-06 14:16:48.979066+00	20241106104552_	\N	\N	2024-11-06 14:16:47.714968+00	1
+714ff55c-5dba-43e0-8bdb-18871c311e86	6864b8ade9fb10972c75dcb71411d918ac6155c351cd05b9523900250c72f18e	2024-11-06 14:16:50.738401+00	20241106113136_	\N	\N	2024-11-06 14:16:49.480718+00	1
+48d3e3c5-fb49-4b92-b921-b3d2096224ea	e4bd5f1a42a61479f5a663b3d22c90e3e69936c154269857010fbb3c62f66340	2024-11-06 14:16:52.52621+00	20241106120100_	\N	\N	2024-11-06 14:16:51.243514+00	1
+bfd05850-0ab5-4944-918a-e97d6311acfe	8f18c0dfe3a4855305c78647df97489749a2116c0dd18e3e3d3504dd04c53202	2024-11-06 14:16:54.299778+00	20241106123804_	\N	\N	2024-11-06 14:16:53.030555+00	1
+6bb0f48d-c729-4427-82ab-74a3d7a7800c	2e5ed98988b219b7c0afd50e80aad6711a2df6b68011f9956e79e50748b5f8ea	2024-11-06 14:16:56.108069+00	20241106125550_	\N	\N	2024-11-06 14:16:54.858677+00	1
 89923808-8872-427f-8aff-70ed6e71aa48	a6d2c2aa47ef7fca371cba89fe6798b27df5eca39dc264d40b134aaa305191a9	2024-11-06 11:33:40.645342+00	20241102125126_new	\N	\N	2024-11-06 11:33:38.500686+00	1
 6e50ddc9-530e-47ed-8c71-9342e3d3d4d6	d80209ccc458f17e1425872e25f9864380276137bd273f423af0be0845e1a059	2024-11-06 11:33:42.695869+00	20241102134505_up	\N	\N	2024-11-06 11:33:41.262252+00	1
 6814e0a8-8435-48d7-8db0-e0555eb3fe9f	3bd40cfc6d10e0693812b52bbf9003c2ef4fb97f0472a0bb3d5e1321807ce127	2024-11-06 11:33:44.618573+00	20241104161257_product_purchase	\N	\N	2024-11-06 11:33:43.31012+00	1
@@ -4906,6 +4932,7 @@ cm35sxcs50000lssc4xvzyspr	cm2uswab2000212okdwag9ulu	::1	PostmanRuntime/7.42.0	Po
 --
 
 COPY public."otherUsers" (id, "userId", "firstName", "lastName", profile_picture, role, "isActive", "userUniqueId", "createdAt", "updatedAt", "order", "userJoinDate") FROM stdin;
+cm35yqutq0002zh9xhg2yxv8v	cm35yqutq0001zh9xxwppx1ni	Md	Zaman	{"url": "https://res.cloudinary.com/dwkd71ets/image/upload/v1730902643/uploads/rb7agwagpwm5firo7tfd.png", "size": 944594, "filename": "1685788329729.png", "publicId": "uploads/rb7agwagpwm5firo7tfd", "extension": "png", "fieldName": "profile_picture"}	GENERAL_USER	ACTIVE	CS-33EEW6UZ	2024-11-06 14:17:27.949	2024-11-06 14:17:27.949	0	2024-11-06 14:17:27.949
 \.
 
 
@@ -4929,7 +4956,7 @@ cm2ye95rw0001kkkns1hfryuj	test	\N	PD-HMVQFJG7	KG	REGULAR	ACTIVE	2024-11-01 07:09
 cm2w8fdh700028l39gb5qracr	Head Phone	test des....	PD-367505	PER	CHARGEABLE	ACTIVE	2024-10-30 18:50:46.651	2024-11-01 07:25:12.734	cm2uswab2000112ok44tt2s4f	cm2vsm2o30000e71b4xxcfsjj	cm2uswab2000212okdwag9ulu	0	f
 cm2x9zi920001qnfddwxtxi5o	Mobile	mm	PD-761990	GRAM	REGULAR	INACTIVE	2024-10-31 12:22:11.469	2024-11-01 07:25:19.562	cm2uswab2000112ok44tt2s4f	cm2vsm2o30000e71b4xxcfsjj	cm2uswab2000212okdwag9ulu	0	f
 cm2x9fl040004e4cw9vec15rt	Macbook	Macbook m2	PD-555070	PIECE	REGULAR	INACTIVE	2024-10-31 12:06:41.946	2024-11-01 07:25:27.778	cm2uswab2000112ok44tt2s4f	cm2x9b7lj0002e4cwbegmkn5g	cm2uswab2000212okdwag9ulu	0	f
-cm2w8a4rt00022e6d0f1q7wk1	Head Phone.	test des.	PD-870430	UNIT	REGULAR	ACTIVE	2024-10-30 18:46:40.395	2024-11-06 11:37:25.419	cm2uswab2000112ok44tt2s4f	cm2vsm2o50001e71b3b2lr4kv	cm2uswab2000212okdwag9ulu	0	t
+cm35z3i0f0001qysxxbv9xri4	Monitor	test des	PD-9LNQC3CS	UNIT	REGULAR	ACTIVE	2024-11-06 14:27:17.869	2024-11-06 14:27:41.988	cm2uswab2000112ok44tt2s4f	cm2vsm2o50001e71b3b2lr4kv	cm2uswab2000212okdwag9ulu	0	t
 \.
 
 
@@ -4937,7 +4964,7 @@ cm2w8a4rt00022e6d0f1q7wk1	Head Phone.	test des.	PD-870430	UNIT	REGULAR	ACTIVE	20
 -- Data for Name: product_order; Type: TABLE DATA; Schema: public; Owner: quick_shop_db_user
 --
 
-COPY public.product_order (id, "productId", "createdAt", "updatedAt", "vendorId", "orderDate", "otherUsersId", "totalAmount", discount, "deliveryCharge", "orderStatus", quantity, subtotal, tax, "unitPrice", "zoneId") FROM stdin;
+COPY public.product_order (id, "productId", "createdAt", "updatedAt", "orderDate", "otherUsersId", "totalAmount", discount, "deliveryCharge", "orderStatus", quantity, subtotal, tax, "unitPrice", "zoneId", "vendorId") FROM stdin;
 \.
 
 
@@ -4955,8 +4982,6 @@ COPY public.payment_info (id, "orderId", amount, discount, "paymentMethod", "pay
 
 COPY public.product_image (id, image, "isActive", "createdAt", "updatedAt", "productId") FROM stdin;
 cm2w9qk9p0001vl72mum1iy0f	{"url": "https://res.cloudinary.com/dwkd71ets/image/upload/v1730316445/uploads/efkppaqj1akeyyhzsfr8.jpg", "size": 454539, "filename": "EGg6tcTUwAAP_6K.jpeg", "publicId": "uploads/efkppaqj1akeyyhzsfr8", "extension": "jpeg", "fieldName": "product_images"}	ACTIVE	2024-10-30 19:27:27.996	2024-10-30 20:28:36.951	cm2w8fdh700028l39gb5qracr
-cm2wckgb90001rv0mphn3e6df	{"url": "https://res.cloudinary.com/dwkd71ets/image/upload/v1730321197/uploads/y4t7pqowillzegkonaba.jpg", "size": 1480396, "filename": "1685788329729.jpg", "publicId": "uploads/y4t7pqowillzegkonaba", "extension": "jpeg", "fieldName": "product_images"}	ACTIVE	2024-10-30 20:46:42.067	2024-10-30 20:46:42.067	cm2w8a4rt00022e6d0f1q7wk1
-cm2wckgp90003rv0mea9brac0	{"url": "https://res.cloudinary.com/dwkd71ets/image/upload/v1730321197/uploads/md6ogu7ztiycnir5vxgh.png", "size": 944594, "filename": "1685788329729.png", "publicId": "uploads/md6ogu7ztiycnir5vxgh", "extension": "png", "fieldName": "product_images"}	ACTIVE	2024-10-30 20:46:42.573	2024-10-30 20:46:42.573	cm2w8a4rt00022e6d0f1q7wk1
 cm2wdag4d0001442t70hxjk27	{"url": "https://res.cloudinary.com/dwkd71ets/image/upload/v1730322412/uploads/shu2b1uvn1i7ws6bs3om.png", "size": 38203, "filename": "ByteBridgePNG3Color.png", "publicId": "uploads/shu2b1uvn1i7ws6bs3om", "extension": "png", "fieldName": "product_images"}	ACTIVE	2024-10-30 21:06:54.875	2024-10-30 21:06:54.875	cm2w8fdh700028l39gb5qracr
 cm2wdagod0003442txmq7f6pg	{"url": "https://res.cloudinary.com/dwkd71ets/image/upload/v1730322411/uploads/sz49o7sjp4qde19o9739.png", "size": 5090, "filename": "download.png", "publicId": "uploads/sz49o7sjp4qde19o9739", "extension": "png", "fieldName": "product_images"}	ACTIVE	2024-10-30 21:06:55.597	2024-10-30 21:06:55.597	cm2w8fdh700028l39gb5qracr
 cm2wdb4vv0005442tm9t0hvdz	{"url": "https://res.cloudinary.com/dwkd71ets/image/upload/v1730322441/uploads/txa96nhhyit8zj4jtaex.png", "size": 33065, "filename": "Screenshot 2024-10-27 at 3.48.10â¯AM.png", "publicId": "uploads/txa96nhhyit8zj4jtaex", "extension": "png", "fieldName": "product_images"}	ACTIVE	2024-10-30 21:07:26.971	2024-10-30 21:07:26.971	cm2w8fdh700028l39gb5qracr
@@ -4983,7 +5008,7 @@ cm2x9zi960006qnfd116qazyq	{"url": "https://res.cloudinary.com/dwkd71ets/image/up
 --
 
 COPY public.product_inventory (id, "productId", "stockAvailable", "quantitySold", "productStockLimit", "productCustomerPrice", "productRetailPrice", "lastUpdated", "createdAt", "updatedAt", "zoneId") FROM stdin;
-cm35t11gr000310wglu82666b	cm2w8a4rt00022e6d0f1q7wk1	10	0	5	65	60	2024-11-06 11:37:25.419	2024-11-06 11:37:25.419	2024-11-06 11:37:25.419	cm2xn09y20003o813z01r7dp9
+cm35z40mc0005qysxy4jd0klh	cm35z3i0f0001qysxxbv9xri4	15	0	5	65	60	2024-11-06 14:27:41.988	2024-11-06 14:27:41.988	2024-11-06 14:27:41.988	cm2xn09y20003o813z01r7dp9
 \.
 
 
@@ -4992,7 +5017,7 @@ cm35t11gr000310wglu82666b	cm2w8a4rt00022e6d0f1q7wk1	10	0	5	65	60	2024-11-06 11:3
 --
 
 COPY public.product_stock_purchase (id, purchase_date, "supplierId", "productId", "purchaseUniqueId", product_quantity, product_selling_price, product_purchase_price, product_retail_price, product_old_mrp, special_offer, "zoneId", "vendorId", "createdById", "isActive", "createdAt", "updatedAt") FROM stdin;
-cm35t10zr000110wgk7f7c957	2024-11-06 11:37:24.556	cm308407q0001x6c8fdyn7obn	cm2w8a4rt00022e6d0f1q7wk1	PSP-9X703WH6	10	65	50	60	45	15% Extra	cm2xn09y20003o813z01r7dp9	cm2uswab2000112ok44tt2s4f	cm2uswab2000212okdwag9ulu	ACTIVE	2024-11-06 11:37:24.556	2024-11-06 11:37:24.556
+cm35z40840003qysxq10pg16i	2024-11-06 14:27:41.225	cm308407q0001x6c8fdyn7obn	cm35z3i0f0001qysxxbv9xri4	PSP-A0L54G89	15	65	50	60	45	15% Extra	cm2xn09y20003o813z01r7dp9	cm2uswab2000112ok44tt2s4f	cm2uswab2000212okdwag9ulu	ACTIVE	2024-11-06 14:27:41.225	2024-11-06 14:27:41.225
 \.
 
 
@@ -5000,8 +5025,8 @@ cm35t10zr000110wgk7f7c957	2024-11-06 11:37:24.556	cm308407q0001x6c8fdyn7obn	cm2w
 -- Data for Name: product_stock_report; Type: TABLE DATA; Schema: public; Owner: quick_shop_db_user
 --
 
-COPY public.product_stock_report (id, "product_stock_purchaseId", "productId", product_stock, product_selling_price, product_purchase_price, product_sold_quantity, "createdAt", "updatedAt", "isActive", "vendorId", product_retail_price) FROM stdin;
-cm35t13k3000410wguzufji2y	cm35t10zr000110wgk7f7c957	cm2w8a4rt00022e6d0f1q7wk1	10	65	50	0	2024-11-06 11:37:28.131	2024-11-06 11:37:28.131	ACTIVE	cm2uswab2000112ok44tt2s4f	60
+COPY public.product_stock_report (id, "product_stock_purchaseId", "productId", product_stock, product_selling_price, product_purchase_price, product_sold_quantity, "createdAt", "updatedAt", "isActive", "vendorId", product_retail_price, "zoneId") FROM stdin;
+cm35z42n80006qysxndbaw6g2	cm35z40840003qysxq10pg16i	cm35z3i0f0001qysxxbv9xri4	15	65	50	0	2024-11-06 14:27:44.613	2024-11-06 14:27:44.613	ACTIVE	cm2uswab2000112ok44tt2s4f	60	cm2xn09y20003o813z01r7dp9
 \.
 
 

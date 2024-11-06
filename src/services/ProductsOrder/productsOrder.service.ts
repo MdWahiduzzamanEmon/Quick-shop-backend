@@ -70,6 +70,13 @@ const updateProductInventory = async ({
       quantitySold: {
         increment: order?.quantity,
       },
+      product: {
+        update: {
+          total_order_placed: {
+            increment: 1,
+          },
+        },
+      },
     },
   });
 
