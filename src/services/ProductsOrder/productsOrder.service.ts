@@ -1,9 +1,133 @@
+import { product_order_status } from "@prisma/client";
+import { paginationCustomResult } from "../../Others/paginationCustomResult";
 import { CREATE_PRODUCT_ORDER_TYPE_BODY } from "../../routes/Products_order/products_order";
 import { db } from "../../utils/db.server";
+import { processOrderForProduct } from "../Reports/productPurchaseReport.service";
+import moment from "moment";
 import {
-  getAllProductStockPurchaseReportByProductId,
-  processOrderForProduct,
-} from "../Reports/productPurchaseReport.service";
+  DateFilterOptions,
+  getDateRangeForFilter,
+} from "../../constant/getDateRangeForFilter";
+
+//getAllOrderList
+// Modify getAllOrderList to use getDateRangeForFilter
+export const getAllOrderList = async (
+  pageNumber: number,
+  rowPerPage: number,
+  pagination: boolean,
+  vendorId: string,
+  status: product_order_status,
+  orderById: string,
+  zoneId: string,
+  productId: string,
+  date_range: string,
+  date: DateFilterOptions
+) => {
+  const pageNumbers = pageNumber ? parseInt(pageNumber.toString()) : 1;
+  const resultPerPage = rowPerPage ? parseInt(rowPerPage.toString()) : 10;
+
+  let dateForFilter = getDateRangeForFilter(date, date_range);
+
+  const [result, total] = await Promise.all([
+    db.product_order.findMany({
+      where: {
+        ...(vendorId && { vendorId }),
+        ...(status && { orderStatus: status }),
+        ...(orderById && { orderBy: { id: orderById } }),
+        ...(zoneId && { zoneId }),
+        ...(productId && { productId }),
+        ...(dateForFilter && {
+          orderDate: {
+            gte: dateForFilter.startDate,
+            lte: dateForFilter.endDate,
+          },
+        }),
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      ...(pagination && {
+        skip: (pageNumbers - 1) * resultPerPage,
+        take: resultPerPage,
+      }),
+      select: {
+        id: true,
+        vendorId: true,
+        quantity: true,
+        unitPrice: true,
+        discount: true,
+        tax: true,
+        deliveryCharge: true,
+        subtotal: true,
+        totalAmount: true,
+        orderDate: true,
+        orderStatus: true,
+        product: {
+          select: {
+            id: true,
+            product_name: true,
+            product_code: true,
+          },
+        },
+        orderBy: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            role: true,
+            userUniqueId: true,
+          },
+        },
+        zone: {
+          select: {
+            id: true,
+            zone_name: true,
+            contact_no: true,
+            operator: {
+              select: {
+                id: true,
+                fullName: true,
+                employeeID: true,
+                address: true,
+                whatsapp: true,
+              },
+            },
+          },
+        },
+        payment_info: true,
+        shipping_info: true,
+      },
+    }),
+    pagination
+      ? db.product_order.count({
+          where: {
+            ...(vendorId && { vendorId }),
+            ...(status && { orderStatus: status }),
+            ...(orderById && { orderBy: { id: orderById } }),
+            ...(zoneId && { zoneId }),
+            ...(productId && { productId }),
+            ...(dateForFilter && {
+              orderDate: {
+                gte: dateForFilter.startDate,
+                lte: dateForFilter.endDate,
+              },
+            }),
+          },
+        })
+      : Promise.resolve(0),
+  ]);
+
+  if (!pagination) return result;
+
+  const res = paginationCustomResult({
+    pageNumbers,
+    resultPerPage,
+    result,
+    totalResultCount: total,
+  });
+
+  return res;
+};
 
 export const createProductOrder = async ({
   productId,

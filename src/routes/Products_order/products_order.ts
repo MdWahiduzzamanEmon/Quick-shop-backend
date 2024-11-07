@@ -3,9 +3,13 @@ import type { Request, Response, NextFunction, RequestHandler } from "express";
 import { verifyTokenMiddleware } from "../../Others/JWT";
 import errorMessage from "../../Others/ErrorMessage/errorMessage";
 import { showResponse } from "../../constant/showResponse";
-import { Role } from "@prisma/client";
+import { product_order_status, Role } from "@prisma/client";
 import { getProductInventory } from "../../services/Products/products.service";
-import { createProductOrder } from "../../services/ProductsOrder/productsOrder.service";
+import {
+  createProductOrder,
+  getAllOrderList,
+} from "../../services/ProductsOrder/productsOrder.service";
+import { generateETag } from "../../Others/OTP/otp";
 
 export const productsOrderRouter = express.Router();
 
@@ -235,7 +239,79 @@ async function getAllOrdersHandler(
   req: Request,
   res: Response,
   next: NextFunction
-) {}
+) {
+  const reqData = req as any;
+  try {
+    const { role: TOKEN_ROLE, vendorId } = reqData?.user;
+    //only GENERAL_USER and retailer can make order
+    if (TOKEN_ROLE !== "ADMIN") {
+      showResponse(res, {
+        status: 403,
+        message: "Forbidden! You are not authorized to get orders",
+      });
+      return;
+    }
+
+    const {
+      pageNumber,
+      rowPerPage,
+      pagination,
+      status,
+      orderById,
+      zoneId,
+      productId,
+      date_range,
+      date,
+    } = reqData.query as any;
+
+    if (status && !(status in product_order_status)) {
+      showResponse(res, {
+        status: 400,
+        message: "Bad Request! Invalid status",
+        requiredFields: ["status"],
+      });
+      return;
+    }
+
+    const productOrders = await getAllOrderList(
+      pageNumber,
+      rowPerPage,
+      pagination,
+      vendorId,
+      status,
+      orderById,
+      zoneId,
+      productId,
+      date_range,
+      date
+    );
+
+    // Cache for 24 hr, but verify every on each request with no-cache
+    res.setHeader("Cache-Control", `max-age=${60 * 60 * 24}, no-cache`);
+
+    // Generate ETag based on new data and set it in the response
+    // Generate ETag based on new data and set it in the response
+    const etag = generateETag(productOrders);
+    res.setHeader("ETag", `"${etag}"`);
+
+    const ifNoneMatchValue = req.headers["if-none-match"];
+
+    // Check if the client has the latest data
+    if (ifNoneMatchValue === `"${etag}"`) {
+      // 304 Not Modified
+      res.status(304).end();
+      return;
+    }
+
+    showResponse(res, {
+      status: 200,
+      message: "Orders fetched successfully",
+      data: productOrders,
+    });
+  } catch (error) {
+    errorMessage(res, error, next);
+  }
+}
 
 async function getSingleOrderHandler(
   req: Request,

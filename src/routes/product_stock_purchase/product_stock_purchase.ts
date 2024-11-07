@@ -59,6 +59,7 @@ async function getProductStockPurchaseHandler(
       });
       return;
     }
+
     const { pageNumber, rowPerPage, pagination, purchaseUniqueId } =
       reqData.query as any;
 
