@@ -83,15 +83,6 @@ export const getAllOrderList = async (
             id: true,
             zone_name: true,
             contact_no: true,
-            operator: {
-              select: {
-                id: true,
-                fullName: true,
-                employeeID: true,
-                address: true,
-                whatsapp: true,
-              },
-            },
           },
         },
         payment_info: true,

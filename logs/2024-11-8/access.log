@@ -114,3 +114,19 @@
 
 ::1 - - [07/Nov/2024:18:31:57 +0000] "GET /api/v1/orders?pagination=true&date_range=2024-11-06,2024-11-07&date=Custom HTTP/1.1" 200 7894 "-" "PostmanRuntime/7.42.0"
 
+::1 - - [07/Nov/2024:18:34:20 +0000] "GET /api/v1/vendors/cm2uswab2000112ok44tt2s4f HTTP/1.1" 401 26 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [07/Nov/2024:18:34:27 +0000] "GET /api/v1/vendors/cm2uswab2000112ok44tt2s4f HTTP/1.1" 401 26 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [07/Nov/2024:18:38:52 +0000] "POST /api/v1/login/ HTTP/1.1" 200 956 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [07/Nov/2024:18:38:54 +0000] "GET /api/v1/user-login-history/?last_login=true HTTP/1.1" 200 253 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [07/Nov/2024:18:38:55 +0000] "GET /api/v1/vendors/cm2uswab2000112ok44tt2s4f HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [07/Nov/2024:18:39:04 +0000] "GET /api/v1/orders?pagination=true&pageNumber=1 HTTP/1.1" 200 7894 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [07/Nov/2024:18:39:08 +0000] "GET /api/v1/orders?pagination=true&pageNumber=1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
+::1 - - [07/Nov/2024:18:41:34 +0000] "GET /api/v1/orders?pagination=true&pageNumber=1 HTTP/1.1" 200 6224 "http://localhost:5173/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+
