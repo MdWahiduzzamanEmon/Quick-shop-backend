@@ -228,6 +228,7 @@ export const getAllSuppliersNameList = async ({
     select: {
       id: true,
       supplierName: true,
+      supplierUniqueId: true,
     },
   });
 };

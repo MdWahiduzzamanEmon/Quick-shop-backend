@@ -454,7 +454,7 @@ model payment_info {
 
 model product_stock_report {
   id                       String                 @id @default(cuid())
-  product_stock_purchase   product_stock_purchase @relation(fields: [product_stock_purchaseId], references: [id])
+  product_stock_purchase   product_stock_purchase @relation(fields: [product_stock_purchaseId], references: [id], onDelete: Cascade)
   product_stock_purchaseId String
   product                  product                @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId                String

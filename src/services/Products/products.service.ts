@@ -63,6 +63,11 @@ export const getAllProducts = async (
             productRetailPrice: true,
           },
         },
+        product_stock_purchase: {
+          select: {
+            zoneId: true,
+          },
+        },
       },
       orderBy: {
         createdAt: "desc",
@@ -450,6 +455,7 @@ export const getProductsNameList = async (
     select: {
       id: true,
       product_name: true,
+      product_code: true,
     },
   });
 

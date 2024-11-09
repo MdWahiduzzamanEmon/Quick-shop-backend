@@ -174,3 +174,69 @@ export const createProductStockPurchase = async ({
 
   return productStockPurchase;
 };
+
+//    // check is any product order place with this product stock purchase
+
+export const checkProductOrderPlaceInProductStockPurchase = async (
+  purchaseId: string,
+  vendorId: string
+) => {
+  return await db.product_stock_purchase.findFirst({
+    where: {
+      id: purchaseId,
+      vendorId,
+    },
+    select: {
+      product: {
+        select: {
+          id: true,
+          total_order_placed: true,
+          product_inventory: {
+            select: {
+              stockAvailable: true,
+            },
+          },
+        },
+      },
+    },
+  });
+};
+
+//deleteProductStockPurchaseHandler
+
+export const deleteProductStockPurchase = async (
+  purchaseId: string,
+  vendorId: string,
+  checkIsPlaceOrder: any
+) => {
+  const res = await db.product_stock_purchase.delete({
+    where: {
+      id: purchaseId,
+      vendorId,
+    },
+  });
+
+  //before res send also decrease stock in product invesntory
+  await db.product.update({
+    where: {
+      id: checkIsPlaceOrder?.product?.id,
+    },
+    data: {
+      isProductPurchased: false,
+      product_inventory: {
+        update: {
+          stockAvailable: {
+            decrement:
+              checkIsPlaceOrder?.product?.product_inventory?.stockAvailable,
+          },
+          productCustomerPrice:
+            checkIsPlaceOrder?.product?.product_inventory?.productCustomerPrice,
+          productRetailPrice:
+            checkIsPlaceOrder?.product?.product_inventory?.productRetailPrice,
+        },
+      },
+    },
+  });
+
+  return res;
+};

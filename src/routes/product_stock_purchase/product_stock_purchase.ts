@@ -4,7 +4,9 @@ import { verifyTokenMiddleware } from "../../Others/JWT";
 import errorMessage from "../../Others/ErrorMessage/errorMessage";
 import { showResponse } from "../../constant/showResponse";
 import {
+  checkProductOrderPlaceInProductStockPurchase,
   createProductStockPurchase,
+  deleteProductStockPurchase,
   getAllProductStockPurchase,
 } from "../../services/Product_stock_purchase/Product_stock_purchase.service";
 import { generateETag } from "../../Others/OTP/otp";
@@ -29,11 +31,11 @@ productStockPurchaseRouter.get(
   getSingleProductStockPurchaseHandler
 );
 
-productStockPurchaseRouter.put(
-  "/product-purchase/:id",
-  verifyTokenMiddleware,
-  updateProductStockPurchaseHandler
-);
+// productStockPurchaseRouter.put(
+//   "/product-purchase/:id",
+//   verifyTokenMiddleware,
+//   updateProductStockPurchaseHandler
+// );
 
 productStockPurchaseRouter.delete(
   "/product-purchase/:id",
@@ -240,18 +242,55 @@ async function getSingleProductStockPurchaseHandler(
   next: NextFunction
 ) {}
 
-//update product stock purchase
-
-async function updateProductStockPurchaseHandler(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {}
-
 //delete product stock purchase
 
 async function deleteProductStockPurchaseHandler(
   req: Request,
   res: Response,
   next: NextFunction
-) {}
+) {
+  const reqData = req as any;
+  try {
+    const { id } = req.params as { id: string };
+    const { vendorId, role } = reqData?.user;
+
+    if (role !== "ADMIN") {
+      showResponse(res, {
+        status: 403,
+        message: "Forbidden! You are not authorized to perform this action",
+      });
+      return;
+    }
+
+    // check is any product order place with this product stock purchase
+    const checkIsPlaceOrder =
+      (await checkProductOrderPlaceInProductStockPurchase(id, vendorId)) as any;
+
+    if (checkIsPlaceOrder?.product?.total_order_placed) {
+      showResponse(res, {
+        status: 400,
+        message:
+          "Sorry! You can't delete this product stock purchase because some orders are placed with this product",
+      });
+      return;
+    }
+    const result = await deleteProductStockPurchase(
+      id,
+      vendorId,
+      checkIsPlaceOrder
+    );
+    if (!result) {
+      showResponse(res, {
+        status: 400,
+        message: "Could not delete product stock purchase",
+      });
+      return;
+    }
+    showResponse(res, {
+      status: 200,
+      message: "Product stock purchase deleted successfully",
+    });
+  } catch (error: any) {
+    errorMessage(res, error, next);
+  }
+}
