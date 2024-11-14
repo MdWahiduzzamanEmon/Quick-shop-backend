@@ -153,7 +153,6 @@ async function createProductStockPurchaseHandler(
       !product_selling_price ||
       !product_purchase_price ||
       !product_retail_price ||
-      !product_old_mrp ||
       !zoneId
     ) {
       showResponse(res, {
@@ -200,7 +199,7 @@ async function createProductStockPurchaseHandler(
       return;
     }
 
-    if (product_old_mrp <= 0) {
+    if (product_old_mrp && product_old_mrp <= 0) {
       showResponse(res, {
         status: 400,
         success: false,
@@ -224,7 +223,16 @@ async function createProductStockPurchaseHandler(
       createdById,
     };
 
-    await createProductStockPurchase(data);
+    const result = await createProductStockPurchase(data);
+
+    if (!result) {
+      showResponse(res, {
+        status: 400,
+        message: "Could not create product stock purchase",
+      });
+      return;
+    }
+
     showResponse(res, {
       status: 201,
       message: "Product stock purchase created successfully",

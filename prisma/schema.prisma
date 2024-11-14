@@ -352,7 +352,7 @@ model product_stock_purchase {
   product_selling_price  Float
   product_purchase_price Float
   product_retail_price   Float
-  product_old_mrp        Float
+  product_old_mrp        Float 
   special_offer          String?
   zone                   Zone                   @relation(fields: [zoneId], references: [id])
   zoneId                 String

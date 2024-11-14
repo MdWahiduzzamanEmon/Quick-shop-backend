@@ -110,17 +110,39 @@ export const createProductStockPurchase = async ({
   const productStockPurchase = await db.product_stock_purchase.create({
     data: {
       ...(purchase_date && { purchase_date: convertIsoDate(purchase_date) }),
-      supplierId,
-      productId,
+      supplier: {
+        connect: {
+          id: supplierId,
+        },
+      },
+      product: {
+        connect: {
+          id: productId,
+        },
+      },
       product_quantity: parseInt(product_quantity.toString()),
       product_selling_price: parseFloat(product_selling_price.toString()),
       product_purchase_price: parseFloat(product_purchase_price.toString()),
       product_retail_price: parseFloat(product_retail_price.toString()),
-      product_old_mrp: parseFloat(product_old_mrp.toString()),
+      product_old_mrp: product_old_mrp
+        ? parseFloat(product_old_mrp.toString())
+        : 0,
       special_offer: special_offer || "",
-      zoneId,
-      vendorId,
-      createdById,
+      zone: {
+        connect: {
+          id: zoneId,
+        },
+      },
+      vendor: {
+        connect: {
+          id: vendorId,
+        },
+      },
+      createdBy: {
+        connect: {
+          id: createdById,
+        },
+      },
       purchaseUniqueId: generateUniqueID("PSP"),
     },
   });
@@ -187,10 +209,12 @@ export const checkProductOrderPlaceInProductStockPurchase = async (
       vendorId,
     },
     select: {
+      product_quantity: true,
       product: {
         select: {
           id: true,
           total_order_placed: true,
+
           product_inventory: {
             select: {
               stockAvailable: true,
@@ -217,26 +241,33 @@ export const deleteProductStockPurchase = async (
   });
 
   //before res send also decrease stock in product invesntory
-  await db.product.update({
+
+  const product = await db.product.findFirst({
     where: {
       id: checkIsPlaceOrder?.product?.id,
     },
-    data: {
-      isProductPurchased: false,
-      product_inventory: {
-        update: {
-          stockAvailable: {
-            decrement:
-              checkIsPlaceOrder?.product?.product_inventory?.stockAvailable,
-          },
-          productCustomerPrice:
-            checkIsPlaceOrder?.product?.product_inventory?.productCustomerPrice,
-          productRetailPrice:
-            checkIsPlaceOrder?.product?.product_inventory?.productRetailPrice,
-        },
-      },
+    select: {
+      product_inventory: true,
     },
   });
+
+  const previousInventoryStock =
+    product?.product_inventory?.stockAvailable ?? 0;
+  const productQuantity = checkIsPlaceOrder?.product_quantity;
+
+  const newInventoryStock =
+    previousInventoryStock - parseInt(productQuantity.toString());
+
+  if (product?.product_inventory) {
+    await db.product_inventory.update({
+      where: {
+        id: product?.product_inventory?.id,
+      },
+      data: {
+        stockAvailable: newInventoryStock,
+      },
+    });
+  }
 
   return res;
 };
