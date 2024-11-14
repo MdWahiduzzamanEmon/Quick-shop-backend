@@ -10,6 +10,8 @@ import {
   getAllProductStockPurchase,
 } from "../../services/Product_stock_purchase/Product_stock_purchase.service";
 import { generateETag } from "../../Others/OTP/otp";
+import notifyAboutPurchaseProduct from "../../Socket/NotifyAboutPurchaseProduct/NotifyAboutPurchaseProduct";
+import moment from "moment";
 
 export const productStockPurchaseRouter = express.Router();
 
@@ -236,6 +238,26 @@ async function createProductStockPurchaseHandler(
     showResponse(res, {
       status: 201,
       message: "Product stock purchase created successfully",
+    });
+
+    const productPurchaseResponse = {
+      title: "Product Purchase",
+      message: `${
+        result?.product?.product_name
+      } purchased successfully with quantity ${
+        result?.product_quantity
+      } at price ${result?.product_purchase_price} from ${
+        result?.supplier?.supplierName
+      } on ${moment(result?.purchase_date).format("DD-MM-YYYY HH:mm")} in ${
+        result?.zone?.zone_name
+      } zone by ${result?.zone?.operator?.fullName} (${
+        result?.zone?.operator?.employeeID
+      })`,
+    };
+
+    await notifyAboutPurchaseProduct({
+      vendorId,
+      productPurchaseResponse,
     });
   } catch (error: any) {
     errorMessage(res, error, next);

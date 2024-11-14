@@ -145,6 +145,41 @@ export const createProductStockPurchase = async ({
       },
       purchaseUniqueId: generateUniqueID("PSP"),
     },
+
+    select: {
+      id: true,
+      productId: true,
+      vendorId: true,
+      product: {
+        select: {
+          product_name: true,
+        },
+      },
+      supplier: {
+        select: {
+          supplierName: true,
+        },
+      },
+      zone: {
+        select: {
+          zone_name: true,
+          operator: {
+            select: {
+              id: true,
+              fullName: true,
+              employeeID: true,
+              address: true,
+              whatsapp: true,
+            },
+          },
+        },
+      },
+      product_quantity: true,
+      product_selling_price: true,
+      product_purchase_price: true,
+      product_retail_price: true,
+      purchase_date: true,
+    },
   });
 
   //update product stock

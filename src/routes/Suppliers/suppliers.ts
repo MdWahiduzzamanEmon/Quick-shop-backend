@@ -566,7 +566,7 @@ async function getAllSuppliersNameListHandler(
   try {
     const { vendorId, role: TOKEN_ROLE } = reqData?.user;
     //check if user is an admin
-    if (TOKEN_ROLE !== "ADMIN") {
+    if (TOKEN_ROLE !== "ADMIN" && TOKEN_ROLE !== "OPERATOR") {
       showResponse(res, {
         status: 403,
         message: "Forbidden! You are not authorized to perform this action",
