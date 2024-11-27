@@ -76,7 +76,7 @@ async function createProductsOrderHandler(
     const { role, id: USER_ID, vendorId } = reqData?.user;
     // console.log("role", reqData?.user);
     //only GENERAL_USER and retailer can make order
-    if (!(role in Role) || role === "ADMIN") {
+    if (!(role in Role) && role === "ADMIN") {
       showResponse(res, {
         status: 403,
         message: "Forbidden! You are not authorized to make order",
