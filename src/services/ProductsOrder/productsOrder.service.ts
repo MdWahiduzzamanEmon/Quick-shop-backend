@@ -52,22 +52,22 @@ export const getAllOrderList = async (
       select: {
         id: true,
         vendorId: true,
-        quantity: true,
-        unitPrice: true,
-        discount: true,
+        // quantity: true,
+        // unitPrice: true,
+        // discount: true,
         tax: true,
         deliveryCharge: true,
         subtotal: true,
         totalAmount: true,
         orderDate: true,
         orderStatus: true,
-        product: {
-          select: {
-            id: true,
-            product_name: true,
-            product_code: true,
-          },
-        },
+        // product: {
+        //   select: {
+        //     id: true,
+        //     product_name: true,
+        //     product_code: true,
+        //   },
+        // },
         orderBy: {
           select: {
             id: true,
@@ -128,11 +128,8 @@ export const getAllOrderList = async (
 };
 
 export const createProductOrder = async ({
-  productId,
+  productIds,
   vendorId,
-  quantity,
-  unitPrice,
-  discount,
   tax,
   deliveryCharge,
   subtotal,
@@ -142,12 +139,11 @@ export const createProductOrder = async ({
   customerId,
 }: CREATE_PRODUCT_ORDER_TYPE_BODY) => {
   const order = await db.product_order.create({
+    include: {
+      order_products: true,
+    },
     data: {
-      productId,
       vendorId,
-      quantity,
-      unitPrice,
-      discount,
       tax,
       deliveryCharge,
       subtotal,
@@ -155,21 +151,43 @@ export const createProductOrder = async ({
       orderById,
       zoneId,
       ...(customerId && { customerId }),
+      order_products: {
+        createMany: {
+          data: productIds.map((product) => ({
+            productId: product.productId,
+            quantity: product.quantity,
+            unitPrice: product.unitPrice,
+            discount: product.discount,
+          })),
+        },
+      },
     },
   });
 
   //update product inventory
-  if (order?.productId) {
-    (async () => {
+  if (order?.order_products) {
+    // (async () => {
+    //   try {
+    //     await updateProductInventory({
+    //       order,
+    //       zoneId,
+    //     });
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // })();
+    async () => {
       try {
-        await updateProductInventory({
-          order,
-          zoneId,
+        order.order_products.forEach(async (orderProduct) => {
+          await updateProductInventory({
+            order: orderProduct,
+            zoneId,
+          });
         });
       } catch (error) {
         console.error(error);
       }
-    })();
+    };
   }
 
   return order;

@@ -52,11 +52,15 @@ productsOrderRouter.put(
 //handlers
 
 export type CREATE_PRODUCT_ORDER_TYPE_BODY = {
-  productId: string;
+  productIds: [
+    {
+      productId: string;
+      quantity: number;
+      unitPrice: number;
+      discount: number;
+    }
+  ];
   vendorId: string;
-  quantity: number;
-  unitPrice: number;
-  discount: number;
   tax: number;
   deliveryCharge: number;
   subtotal: number;
@@ -89,7 +93,7 @@ async function createProductsOrderHandler(
       return;
     }
     const {
-      productId,
+      productIds,
       quantity,
       unitPrice,
       discount,
@@ -99,7 +103,7 @@ async function createProductsOrderHandler(
       customerId,
     } = reqData?.body;
 
-    if (!productId || !quantity || !unitPrice || !zoneId) {
+    if (!productIds || !quantity || !unitPrice || !zoneId) {
       showResponse(res, {
         status: 400,
         message: "Bad Request! Required fields are missing",
@@ -108,7 +112,7 @@ async function createProductsOrderHandler(
       return;
     }
 
-    if (typeof productId !== "string" || typeof zoneId !== "string") {
+    if (typeof productIds !== "string" || typeof zoneId !== "string") {
       showResponse(res, {
         status: 400,
         message: "Bad Request! Invalid data type. Data type must be string",
@@ -127,7 +131,7 @@ async function createProductsOrderHandler(
     }
 
     //if role is customer then get
-    const checkProductInventory = await getProductInventory(productId, zoneId);
+    const checkProductInventory = await getProductInventory(productIds, zoneId);
     // console.log("checkProductInventory", checkProductInventory);
 
     if (!checkProductInventory) {
@@ -138,47 +142,39 @@ async function createProductsOrderHandler(
       return;
     }
 
-    if (checkProductInventory.stockAvailable === 0) {
-      showResponse(res, {
-        status: 400,
-        message: "Product is out of stock",
-      });
-      return;
-    }
-
-    const productCustomerPrice = Number(
-      checkProductInventory.productCustomerPrice
-    );
-    const productRetailPrice = Number(checkProductInventory.productRetailPrice);
+    // const productCustomerPrice = Number(
+    //   checkProductInventory.productCustomerPrice
+    // );
+    // const productRetailPrice = Number(checkProductInventory.productRetailPrice);
 
     // console.log("productCustomerPrice", checkProductInventory);
 
-    if (role === Role.GENERAL_USER && unitPrice !== productCustomerPrice) {
-      showResponse(res, {
-        status: 400,
-        message: "Bad Request! Invalid unit price for customer",
-        requiredFields: ["unitPrice"],
-      });
-      return;
-    }
+    // if (role === Role.GENERAL_USER && unitPrice !== productCustomerPrice) {
+    //   showResponse(res, {
+    //     status: 400,
+    //     message: "Bad Request! Invalid unit price for customer",
+    //     requiredFields: ["unitPrice"],
+    //   });
+    //   return;
+    // }
 
-    if (role === Role.RETAILER && unitPrice !== productRetailPrice) {
-      showResponse(res, {
-        status: 400,
-        message: "Bad Request! Invalid unit price for retailer",
-        requiredFields: ["unitPrice"],
-      });
-      return;
-    }
+    // if (role === Role.RETAILER && unitPrice !== productRetailPrice) {
+    //   showResponse(res, {
+    //     status: 400,
+    //     message: "Bad Request! Invalid unit price for retailer",
+    //     requiredFields: ["unitPrice"],
+    //   });
+    //   return;
+    // }
 
-    if (quantity > checkProductInventory.stockAvailable) {
-      showResponse(res, {
-        status: 400,
-        message: "You can't order more than available stock",
-        requiredFields: ["quantity"],
-      });
-      return;
-    }
+    // if (quantity > checkProductInventory.stockAvailable) {
+    //   showResponse(res, {
+    //     status: 400,
+    //     message: "You can't order more than available stock",
+    //     requiredFields: ["quantity"],
+    //   });
+    //   return;
+    // }
 
     if (discount && typeof discount !== "number" && discount < 0) {
       showResponse(res, {
@@ -221,7 +217,7 @@ async function createProductsOrderHandler(
     const totalAmount = amountAfterTax + deliveryChargeAmount;
 
     const body: CREATE_PRODUCT_ORDER_TYPE_BODY = {
-      productId,
+      productIds,
       vendorId,
       quantity,
       unitPrice,

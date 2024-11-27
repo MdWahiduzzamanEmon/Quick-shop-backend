@@ -420,15 +420,15 @@ export const createProductImage = async (
 
 //get product inventory by product id
 export const getProductInventory = async (
-  productId: string,
+  productIds: string,
   zoneId: string
 ) => {
-  const inventory = await db.product_inventory.findFirst({
+  const inventory = await db.product_inventory.findMany({
     where: {
       AND: [
         {
           product: {
-            id: productId,
+            id: productIds,
             isProductPurchased: true,
           },
         },

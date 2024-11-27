@@ -299,8 +299,8 @@ model product {
   product_images         product_image[] // A product can have multiple images
   product_stock_purchase product_stock_purchase[]
   product_stock_report   product_stock_report[]
-  product_order          product_order[]
   product_inventory      product_inventory? // A product can have multiple inventory
+  order_products         order_products[] // A product can have multiple order products
 
   @@index([id, product_name, isActive, isProductPurchased])
   @@map("product")
@@ -394,19 +394,30 @@ enum delivery_type {
   HOME_DELIVERY
 }
 
+model order_products {
+  id              String         @id @default(cuid())
+  products        product        @relation(fields: [productId], references: [id], onDelete: Cascade) 
+  productId       String 
+  quantity        Int
+  unitPrice       Float
+  discount        Float
+  createdAt       DateTime       @default(now())
+  product_order   product_order? @relation(fields: [product_orderId], references: [id])
+  product_orderId String?
+
+  @@map("order_products")
+}
+
 model product_order {
-  id             String               @id @default(cuid())
-  product        product              @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId      String
-  vendor         Vendor               @relation(fields: [vendorId], references: [id], onDelete: Cascade)
-  vendorId       String
-  quantity       Int // Quantity ordered by user
-  unitPrice      Float // Unit price at time of order
-  discount       Float?               @default(0.0) // Discount on the order
-  tax            Float?               @default(0.0) // Tax applied
-  deliveryCharge Float?               @default(0.0) // Delivery charge
+  id       String @id @default(cuid())
+  vendor   Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId String
+
+  tax            Float? @default(0.0) // Tax applied
+  deliveryCharge Float? @default(0.0) // Delivery charge
   subtotal       Float // Calculated subtotal (unitPrice * productOrderQuantity)
   totalAmount    Float // Calculated total after discount, tax, and delivery charges
+
   orderDate      DateTime             @default(now())
   orderBy        User                 @relation(fields: [orderById], references: [id]) // User who placed the order
   orderById      String
@@ -421,8 +432,9 @@ model product_order {
   zoneId         String
   orderType      order_type           @default(WEBSITE)
   deliveryType   delivery_type        @default(HOME_DELIVERY)
+  order_products order_products[]
 
-  @@index([id, productId, createdAt, updatedAt, orderDate, orderStatus, vendorId, zoneId, orderById])
+  @@index([id, createdAt, updatedAt, orderDate, orderStatus, vendorId, zoneId, orderById])
   @@map("product_order")
 }
 
