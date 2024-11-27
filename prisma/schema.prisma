@@ -149,19 +149,20 @@ model Supplier {
 
 // Model for general user and retailer
 model otherUsers {
-  id              String      @id @default(cuid())
-  User            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId          String      @unique
+  id              String          @id @default(cuid())
+  User            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String          @unique
   firstName       String?
   lastName        String?
-  profile_picture Json        @default("{}")
-  role            Role        @default(GENERAL_USER)
-  isActive        User_status @default(ACTIVE)
-  userUniqueId    String?     @unique @default(cuid())
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-  order           Int         @default(0) // For sorting purpose
-  userJoinDate    DateTime    @default(now())
+  profile_picture Json            @default("{}")
+  role            Role            @default(GENERAL_USER)
+  isActive        User_status     @default(ACTIVE)
+  userUniqueId    String?         @unique @default(cuid())
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  order           Int             @default(0) // For sorting purpose
+  userJoinDate    DateTime        @default(now())
+  product_order   product_order[]
 
   @@index([id, userId, role, isActive, userUniqueId])
   @@map("otherUsers")
@@ -394,30 +395,34 @@ enum delivery_type {
 }
 
 model product_order {
-  id             String               @id @default(cuid())
-  product        product              @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id             String      @id @default(cuid())
+  product        product     @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId      String
-  vendor         Vendor               @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendor         Vendor      @relation(fields: [vendorId], references: [id], onDelete: Cascade)
   vendorId       String
   quantity       Int // Quantity ordered by user
   unitPrice      Float // Unit price at time of order
-  discount       Float?               @default(0.0) // Discount on the order
-  tax            Float?               @default(0.0) // Tax applied
-  deliveryCharge Float?               @default(0.0) // Delivery charge
+  discount       Float?      @default(0.0) // Discount on the order
+  tax            Float?      @default(0.0) // Tax applied
+  deliveryCharge Float?      @default(0.0) // Delivery charge
   subtotal       Float // Calculated subtotal (unitPrice * productOrderQuantity)
   totalAmount    Float // Calculated total after discount, tax, and delivery charges
-  orderDate      DateTime             @default(now())
-  orderBy        User                 @relation(fields: [id], references: [id], onDelete: Cascade)
+  orderDate      DateTime    @default(now())
+  orderBy        User        @relation(fields: [id], references: [id], onDelete: Cascade)
   orderById      String
-  orderStatus    product_order_status @default(PENDING)
-  shipping_info  shipping_info?
-  payment_info   payment_info?
-  createdAt      DateTime             @default(now())
-  updatedAt      DateTime             @updatedAt
-  zone           Zone                 @relation(fields: [zoneId], references: [id])
-  zoneId         String
-  orderType      order_type           @default(WEBSITE)
-  deliveryType   delivery_type        @default(HOME_DELIVERY)
+  customerId     String?
+  customer       otherUsers? @relation(fields: [otherUsersId], references: [id]) // Customer who placed the order
+
+  orderStatus   product_order_status @default(PENDING)
+  shipping_info shipping_info?
+  payment_info  payment_info?
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+  zone          Zone                 @relation(fields: [zoneId], references: [id])
+  zoneId        String
+  orderType     order_type           @default(WEBSITE)
+  deliveryType  delivery_type        @default(HOME_DELIVERY)
+  otherUsersId  String?
 
   @@index([id, productId, createdAt, updatedAt, orderDate, orderStatus, vendorId, zoneId, orderById])
   @@map("product_order")

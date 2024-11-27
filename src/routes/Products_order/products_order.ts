@@ -63,6 +63,7 @@ export type CREATE_PRODUCT_ORDER_TYPE_BODY = {
   totalAmount: number;
   orderById: string;
   zoneId: string;
+  customerId?: string;
 };
 
 async function createProductsOrderHandler(
@@ -75,7 +76,7 @@ async function createProductsOrderHandler(
     const { role, id: USER_ID, vendorId } = reqData?.user;
     // console.log("role", reqData?.user);
     //only GENERAL_USER and retailer can make order
-    if (!(role in Role)) {
+    if (!(role in Role) || role === "ADMIN") {
       showResponse(res, {
         status: 403,
         message: "Forbidden! You are not authorized to make order",
@@ -90,6 +91,7 @@ async function createProductsOrderHandler(
       tax,
       deliveryCharge,
       zoneId,
+      customerId,
     } = reqData?.body;
 
     if (!productId || !quantity || !unitPrice || !zoneId) {
@@ -106,6 +108,15 @@ async function createProductsOrderHandler(
         status: 400,
         message: "Bad Request! Invalid data type. Data type must be string",
         requiredFields: ["productId", "zoneId"],
+      });
+      return;
+    }
+
+    if (role === "ADMIN" && !customerId) {
+      showResponse(res, {
+        status: 400,
+        message: "Bad Request! Required fields are missing",
+        requiredFields: ["customerId"],
       });
       return;
     }
