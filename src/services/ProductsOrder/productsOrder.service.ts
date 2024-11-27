@@ -52,22 +52,23 @@ export const getAllOrderList = async (
       select: {
         id: true,
         vendorId: true,
-        // quantity: true,
-        // unitPrice: true,
-        // discount: true,
+
         tax: true,
         deliveryCharge: true,
         subtotal: true,
         totalAmount: true,
         orderDate: true,
         orderStatus: true,
-        // product: {
-        //   select: {
-        //     id: true,
-        //     product_name: true,
-        //     product_code: true,
-        //   },
-        // },
+        order_products: {
+          select: {
+            id: true,
+            productId: true,
+            quantity: true,
+            unitPrice: true,
+            discount: true,
+          },
+        },
+
         orderBy: {
           select: {
             id: true,

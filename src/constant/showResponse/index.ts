@@ -20,7 +20,7 @@ export const showResponse = (
     ...rest
   }: IShowResponseData
 ) => {
-  return res.status(status).json({
+  return res?.status(status)?.json({
     success: status === 200 ? true : status === 201 ? true : false,
     status,
     message,

@@ -103,24 +103,6 @@ async function createProductsOrderHandler(
       customerId,
     } = reqData?.body;
 
-    if (!productIds || !quantity || !unitPrice || !zoneId) {
-      showResponse(res, {
-        status: 400,
-        message: "Bad Request! Required fields are missing",
-        requiredFields: ["productId", "quantity", "unitPrice", "zoneId"],
-      });
-      return;
-    }
-
-    if (typeof productIds !== "string" || typeof zoneId !== "string") {
-      showResponse(res, {
-        status: 400,
-        message: "Bad Request! Invalid data type. Data type must be string",
-        requiredFields: ["productId", "zoneId"],
-      });
-      return;
-    }
-
     if (role === "ADMIN" && !customerId) {
       showResponse(res, {
         status: 400,
@@ -130,9 +112,77 @@ async function createProductsOrderHandler(
       return;
     }
 
+    if (!Array.isArray(productIds) || typeof zoneId !== "string") {
+      showResponse(res, {
+        status: 400,
+        message:
+          "Bad Request! Invalid data type. ProductIds must be array and zoneId must be string",
+        requiredFields: ["productIds", "zoneId"],
+      });
+      return;
+    }
+
+    if (productIds.length > 0) {
+      for (let i = 0; i < productIds.length; i++) {
+        //quantity, unitPrice, discount must be number and greater than 0
+
+        if (
+          typeof productIds[i].quantity !== "number" ||
+          productIds[i].quantity <= 0
+        ) {
+          showResponse(res, {
+            status: 400,
+            message:
+              "Bad Request! Invalid quantity value. Must be greater than 0",
+          });
+          return;
+        }
+        if (
+          typeof productIds[i].unitPrice !== "number" ||
+          productIds[i].unitPrice <= 0
+        ) {
+          showResponse(res, {
+            status: 400,
+            message: "Bad Request! Invalid unit price. Must be greater than 0",
+          });
+          return;
+        }
+        if (typeof productIds[i].discount !== "number") {
+          showResponse(res, {
+            status: 400,
+            message: "Bad Request! Invalid discount value",
+          });
+        }
+
+        if (
+          !productIds[i].productId ||
+          !productIds[i].quantity ||
+          !productIds[i].unitPrice
+        ) {
+          showResponse(res, {
+            status: 400,
+            message: "Bad Request! Required fields are missing",
+            requiredFields: ["productId", "quantity", "unitPrice", "discount"],
+          });
+          return;
+        }
+      }
+    }
+
     //if role is customer then get
-    const checkProductInventory = await getProductInventory(productIds, zoneId);
-    // console.log("checkProductInventory", checkProductInventory);
+
+    const checkProductInventory = await getProductInventory(
+      productIds as [
+        {
+          productId: string;
+          quantity: number;
+          unitPrice: number;
+          discount: number;
+        }
+      ],
+      zoneId
+    );
+    console.log("checkProductInventory", checkProductInventory);
 
     if (!checkProductInventory) {
       showResponse(res, {
@@ -176,15 +226,6 @@ async function createProductsOrderHandler(
     //   return;
     // }
 
-    if (discount && typeof discount !== "number" && discount < 0) {
-      showResponse(res, {
-        status: 400,
-        message: "Bad Request! Invalid discount",
-        requiredFields: ["discount"],
-      });
-      return;
-    }
-
     if (tax && typeof tax !== "number" && tax < 0) {
       showResponse(res, {
         status: 400,
@@ -207,10 +248,21 @@ async function createProductsOrderHandler(
       return;
     }
 
-    const subTotal = Number(unitPrice) * Number(quantity);
-    const discountAmount = (Number(subTotal) * Number(discount)) / 100 || 0;
-    const taxAmount = (Number(subTotal) * Number(tax)) / 100 || 0;
-    const deliveryChargeAmount = Number(deliveryCharge) || 0;
+    // const subTotal = Number(unitPrice) * Number(quantity);
+    // const discountAmount = (Number(subTotal) * Number(discount)) / 100 || 0;
+    // const taxAmount = (Number(subTotal) * Number(tax)) / 100 || 0;
+    // const deliveryChargeAmount = Number(deliveryCharge) || 0;
+    let subTotal = 0;
+    let discountAmount = 0;
+    let taxAmount = 0;
+    let deliveryChargeAmount = 0;
+
+    for (let i = 0; i < productIds.length; i++) {
+      subTotal += productIds[i].unitPrice * productIds[i].quantity;
+      discountAmount += (subTotal * productIds[i].discount) / 100 || 0;
+      taxAmount += (subTotal * tax) / 100 || 0;
+      deliveryChargeAmount += deliveryCharge || 0;
+    }
 
     const amountAfterDiscount = subTotal - discountAmount;
     const amountAfterTax = amountAfterDiscount + taxAmount;
