@@ -3,7 +3,6 @@ import { paginationCustomResult } from "../../Others/paginationCustomResult";
 import { CREATE_PRODUCT_ORDER_TYPE_BODY } from "../../routes/Products_order/products_order";
 import { db } from "../../utils/db.server";
 import { processOrderForProduct } from "../Reports/productPurchaseReport.service";
-import moment from "moment";
 import {
   DateFilterOptions,
   getDateRangeForFilter,
@@ -75,14 +74,6 @@ export const getAllOrderList = async (
             email: true,
             mobile: true,
             username: true,
-            otherUsers: {
-              select: {
-                id: true,
-                firstName: true,
-                lastName: true,
-                role: true,
-              },
-            },
           },
         },
         zone: {
@@ -90,6 +81,15 @@ export const getAllOrderList = async (
             id: true,
             zone_name: true,
             contact_no: true,
+          },
+        },
+        customer: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            role: true,
+            userUniqueId: true,
           },
         },
         payment_info: true,
