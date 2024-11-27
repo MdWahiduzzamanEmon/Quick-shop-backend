@@ -61,7 +61,7 @@ export type CREATE_PRODUCT_ORDER_TYPE_BODY = {
   deliveryCharge: number;
   subtotal: number;
   totalAmount: number;
-  otherUsersId: string;
+  orderById: string;
   zoneId: string;
 };
 
@@ -72,7 +72,7 @@ async function createProductsOrderHandler(
 ) {
   const reqData = req as any;
   try {
-    const { role, customerId: USER_ID, vendorId } = reqData?.user;
+    const { role, id: USER_ID, vendorId } = reqData?.user;
     // console.log("role", reqData?.user);
     //only GENERAL_USER and retailer can make order
     if (!(role in Role)) {
@@ -213,7 +213,7 @@ async function createProductsOrderHandler(
       deliveryCharge: deliveryChargeAmount,
       subtotal: subTotal,
       totalAmount,
-      otherUsersId: USER_ID,
+      orderById: USER_ID,
       zoneId,
     };
 

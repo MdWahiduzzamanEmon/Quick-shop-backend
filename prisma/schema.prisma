@@ -100,6 +100,7 @@ model User {
   Zone                   Zone[]
   admin                  admin?
   product_stock_purchase product_stock_purchase[]
+  product_order          product_order[]
 
   @@unique([email, mobile, username]) // Unique constraint: the combination of email, mobile, and username must be unique
   @@index([id, email, mobile, username])
@@ -148,20 +149,19 @@ model Supplier {
 
 // Model for general user and retailer
 model otherUsers {
-  id              String          @id @default(cuid())
-  User            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId          String          @unique
+  id              String      @id @default(cuid())
+  User            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String      @unique
   firstName       String?
   lastName        String?
-  profile_picture Json            @default("{}")
-  role            Role            @default(GENERAL_USER)
-  isActive        User_status     @default(ACTIVE)
-  userUniqueId    String?         @unique @default(cuid())
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-  order           Int             @default(0) // For sorting purpose
-  userJoinDate    DateTime        @default(now())
-  product_order   product_order[]
+  profile_picture Json        @default("{}")
+  role            Role        @default(GENERAL_USER)
+  isActive        User_status @default(ACTIVE)
+  userUniqueId    String?     @unique @default(cuid())
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  order           Int         @default(0) // For sorting purpose
+  userJoinDate    DateTime    @default(now())
 
   @@index([id, userId, role, isActive, userUniqueId])
   @@map("otherUsers")
@@ -352,7 +352,7 @@ model product_stock_purchase {
   product_selling_price  Float
   product_purchase_price Float
   product_retail_price   Float
-  product_old_mrp        Float 
+  product_old_mrp        Float
   special_offer          String?
   zone                   Zone                   @relation(fields: [zoneId], references: [id])
   zoneId                 String
@@ -379,6 +379,20 @@ enum product_order_status {
   CANCELLED
 }
 
+enum order_type {
+  FACE_TO_FACE
+  PHONE_CALL
+  WHATSAPP
+  MESSENGER
+  WEBSITE
+  APP
+}
+
+enum delivery_type {
+  POS
+  HOME_DELIVERY
+}
+
 model product_order {
   id             String               @id @default(cuid())
   product        product              @relation(fields: [productId], references: [id], onDelete: Cascade)
@@ -393,8 +407,8 @@ model product_order {
   subtotal       Float // Calculated subtotal (unitPrice * productOrderQuantity)
   totalAmount    Float // Calculated total after discount, tax, and delivery charges
   orderDate      DateTime             @default(now())
-  orderBy        otherUsers?          @relation(fields: [otherUsersId], references: [id])
-  otherUsersId   String?
+  orderBy        User                 @relation(fields: [id], references: [id], onDelete: Cascade)
+  orderById      String
   orderStatus    product_order_status @default(PENDING)
   shipping_info  shipping_info?
   payment_info   payment_info?
@@ -402,8 +416,10 @@ model product_order {
   updatedAt      DateTime             @updatedAt
   zone           Zone                 @relation(fields: [zoneId], references: [id])
   zoneId         String
+  orderType      order_type           @default(WEBSITE)
+  deliveryType   delivery_type        @default(HOME_DELIVERY)
 
-  @@index([id, productId, createdAt, updatedAt, orderDate, orderStatus, vendorId, otherUsersId])
+  @@index([id, productId, createdAt, updatedAt, orderDate, orderStatus, vendorId, zoneId, orderById])
   @@map("product_order")
 }
 

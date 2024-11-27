@@ -72,10 +72,17 @@ export const getAllOrderList = async (
         orderBy: {
           select: {
             id: true,
-            firstName: true,
-            lastName: true,
-            role: true,
-            userUniqueId: true,
+            email: true,
+            mobile: true,
+            username: true,
+            otherUsers: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                role: true,
+              },
+            },
           },
         },
         zone: {
@@ -130,7 +137,7 @@ export const createProductOrder = async ({
   deliveryCharge,
   subtotal,
   totalAmount,
-  otherUsersId,
+  orderById,
   zoneId,
 }: CREATE_PRODUCT_ORDER_TYPE_BODY) => {
   const order = await db.product_order.create({
@@ -144,7 +151,7 @@ export const createProductOrder = async ({
       deliveryCharge,
       subtotal,
       totalAmount,
-      otherUsersId,
+      orderById,
       zoneId,
     },
   });
