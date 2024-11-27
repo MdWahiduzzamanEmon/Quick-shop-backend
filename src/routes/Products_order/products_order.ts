@@ -76,11 +76,11 @@ async function createProductsOrderHandler(
     const { role, id: USER_ID, vendorId } = reqData?.user;
     // console.log("role", reqData?.user);
     //only GENERAL_USER and retailer can make order
-    const checkRole ={
+    const checkRole = {
       GENERAL_USER: Role.GENERAL_USER,
       RETAILER: Role.RETAILER,
-      ADMIN: "ADMIN"
-    }
+      ADMIN: "ADMIN",
+    };
     if (!(role in checkRole)) {
       showResponse(res, {
         status: 403,
@@ -128,6 +128,7 @@ async function createProductsOrderHandler(
 
     //if role is customer then get
     const checkProductInventory = await getProductInventory(productId, zoneId);
+    // console.log("checkProductInventory", checkProductInventory);
 
     if (!checkProductInventory) {
       showResponse(res, {
@@ -230,6 +231,7 @@ async function createProductsOrderHandler(
       subtotal: subTotal,
       totalAmount,
       orderById: USER_ID,
+      ...(customerId && { customerId }),
       zoneId,
     };
 
