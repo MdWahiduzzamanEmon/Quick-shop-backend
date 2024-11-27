@@ -139,7 +139,7 @@ export const createProductOrder = async ({
   totalAmount,
   orderById,
   zoneId,
-  customerId
+  customerId,
 }: CREATE_PRODUCT_ORDER_TYPE_BODY) => {
   const order = await db.product_order.create({
     data: {
@@ -154,7 +154,7 @@ export const createProductOrder = async ({
       totalAmount,
       orderById,
       zoneId,
-      customerId
+      ...(customerId && { customerId }),
     },
   });
 
